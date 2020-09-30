@@ -15,7 +15,6 @@ namespace atomic {
 		explicit AuthUser(std::string name, std::string cookie, int id)
 			: m_name{ name }, m_cookie{ cookie }, m_id{ id }
 		{
-		{
 			// TODO: Do cookie verification here
 		}
 

@@ -3,8 +3,10 @@
 
 #define ATOMIC "1.0"
 
-#include "Item.h"
-#include "AuthUser.h"
-#include "User.h"
+#include "./Item.h"
+#include "./AuthUser.h"
+#include "./User.h"
+#include "./Offer.h"
+#include "./Inventory.h"
 
 #endif
