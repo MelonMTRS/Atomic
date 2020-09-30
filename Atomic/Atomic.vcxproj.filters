@@ -44,5 +44,8 @@
     <ClInclude Include="Atomic\Roblox\Wrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Atomic\Offer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
