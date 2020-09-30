@@ -1,7 +1,7 @@
 #include <iostream>
+#include "Atomic/Item.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
     return 0;
 }
