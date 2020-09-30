@@ -35,9 +35,6 @@
     <ClInclude Include="Atomic\Inventory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Atomic\Http.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Atomic\Roblox\Wrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>

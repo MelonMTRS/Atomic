@@ -12,7 +12,7 @@ namespace atomic {
 
 	class Trade {
 		/*
-		Represents a trade object
+		Represents a trade object  
 		*/
 	private:
 		int m_tradeId;
@@ -32,6 +32,12 @@ namespace atomic {
 		// Counters the trade
 		// Trade must be Inbound
 		void counter(atomic::Offer newOffer);
+
+		// Returns the offer
+		atomic::Offer getOffer() { return this->m_offer; }
+
+		// Returns the TradeType of the trade
+		atomic::TradeType getTradeType() { return this->m_TradeType; }
 	};
 }
 

@@ -147,7 +147,6 @@
   <ItemGroup>
     <ClInclude Include="Atomic\atomic.h" />
     <ClInclude Include="Atomic\AuthUser.h" />
-    <ClInclude Include="Atomic\Http.h" />
     <ClInclude Include="Atomic\Inventory.h" />
     <ClInclude Include="Atomic\Item.h" />
     <ClInclude Include="Atomic\Offer.h" />

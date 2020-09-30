@@ -6,11 +6,10 @@
 namespace atomic {
 	class User {
 	private:
-		std::string m_name;
 		int m_id;
 	public:
-		User(std::string name, int id, bool confirmExistence=false)
-			: m_name{ name }, m_id{ id }
+		User(int id, bool confirmExistence=false)
+			: m_id{ id }
 		{
 			if (confirmExistence) {
 				// TODO: Confirm if User does exist
