@@ -5,7 +5,7 @@ Atomic is a free and open source roblox trading bot
 # Releases
 
 You can download the latest release [here](https://github.com/viown/Atomic/releases)  
-Both binary and open source options available
+Both binary (.exe) and open source options for each stable version released.
 
 # Compilation
 
