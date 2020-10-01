@@ -10,9 +10,12 @@
 /*
 * Wrapper for the Roblox API
 * All functionality here uses Atomic's classes
+* Non-async
 */
 
 namespace roblox {
+	// Gets the X-CSRF token
+	std::string getXcsrf(std::string cookie);
 	// Returns an AuthUser object from the roblosecurity cookie
 	atomic::AuthUser getUserFromCookie(std::string cookie);
 	// Gets a users inventory
