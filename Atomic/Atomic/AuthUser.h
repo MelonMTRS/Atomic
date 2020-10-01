@@ -1,3 +1,4 @@
+#include "./atomic.h"
 #include <string>
 #ifndef __ATOMIC__AUTHUSER__H
 #define __ATOMIC__AUTHUSER__H
@@ -17,10 +18,10 @@ namespace atomic {
 		{
 			// TODO: Do cookie verification here
 		}
-
 		inline std::string getName() { return this->m_name; }
 		inline std::string getCookie() { return this->m_cookie; }
 		inline int getId() { return this->m_id; }
+		atomic::Inventory getInventory();
 	};
 }
 
