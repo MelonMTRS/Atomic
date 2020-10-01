@@ -1,3 +1,4 @@
+#include <string>
 #ifndef __ATOMIC__ROBLOX__CONVERSION__H
 #define __ATOMIC__ROBLOX__CONVERSION__H
 
@@ -6,7 +7,7 @@
 */
 
 namespace atomic {
-
+	std::string formatCookie(std::string cookie);
 }
 
 #endif

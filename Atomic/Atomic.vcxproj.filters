@@ -21,6 +21,9 @@
     <ClCompile Include="Atomic\Roblox\Wrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Atomic\Conversion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Atomic\Item.h">
@@ -44,7 +47,10 @@
     <ClInclude Include="Atomic\atomic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Atomic\Roblox\Conversion.h">
+    <ClInclude Include="Atomic\Bot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Atomic\Conversion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

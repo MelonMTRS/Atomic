@@ -6,9 +6,6 @@
 namespace atomic {
 	using InventoryObj = std::vector<atomic::Item>;
 	class Inventory {
-		/*
-		Represents a users Inventory object
-		*/
 	private:
 		InventoryObj m_inventory;
 	public:

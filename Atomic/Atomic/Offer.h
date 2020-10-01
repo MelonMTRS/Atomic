@@ -14,9 +14,12 @@ namespace atomic {
 	private:
 		OfferHolder m_offering; // Items the authenticated user is offering
 		OfferHolder m_requesting; // Items the authenticated user is requesting
+		int m_robuxOffering;
+		int m_robuxRequesting;
 	public:
-		Offer(OfferHolder offering, OfferHolder requesting)
-			: m_offering{ offering }, m_requesting{requesting}
+		Offer(OfferHolder offering, OfferHolder requesting, int robuxOffering = 0, int robuxRequesting = 0): 
+			m_offering{ offering }, m_requesting{ requesting },
+			m_robuxOffering{ robuxOffering }, m_robuxRequesting{robuxRequesting}
 		{
 		}
 
