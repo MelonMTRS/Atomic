@@ -150,6 +150,7 @@
     <ClInclude Include="Atomic\Inventory.h" />
     <ClInclude Include="Atomic\Item.h" />
     <ClInclude Include="Atomic\Offer.h" />
+    <ClInclude Include="Atomic\Roblox\Conversion.h" />
     <ClInclude Include="Atomic\Roblox\Wrapper.h" />
     <ClInclude Include="Atomic\User.h" />
   </ItemGroup>

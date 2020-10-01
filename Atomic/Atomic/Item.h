@@ -4,11 +4,9 @@
 
 namespace atomic {
 	struct Item {
-		/*
-			Represents a roblox item
-		*/
 		const std::string name;
 		const int id;
+		const int userAssetId; // Unique Identifier Id
 		const int rap;
 	};
 }
