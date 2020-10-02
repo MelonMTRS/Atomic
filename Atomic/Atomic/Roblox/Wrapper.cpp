@@ -42,11 +42,13 @@ atomic::AuthUser roblox::getUserFromCookie(std::string cookie) {
 atomic::Inventory roblox::getInventory(atomic::User user) {
 	cpr::Url url = {"https://inventory.roblox.com/v1/users/" + std::to_string(user.getId()) + "/assets/collectibles?limit=100"};
 	cpr::Response r = cpr::Get(url);
-	if (r.status_code == 403)
+	switch (r.status_code) {
+	case 403:
 		throw exceptions::HttpError{ "Permission Failure", 403, exceptions::ErrorTypes::PermissionError };
-	else if (r.status_code == 400)
-		throw exceptions::HttpError{"UserDoesNotExist", 400};
-	else if (r.status_code != 200)
+	case 400:
+		throw exceptions::HttpError{ "UserDoesNotExist", 400 };
+	}
+	if (r.status_code != 200)
 		throw exceptions::HttpError{"Inventory fetch failure", r.status_code};
 	rapidjson::Document inventory;
 	inventory.Parse(r.text.c_str());
