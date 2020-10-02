@@ -10,7 +10,7 @@
 * cpr's syntax isn't exactly the most beautiful thing in the world
 */
 
-std::string roblox::getToken(std::string cookie) {
+std::string roblox::getToken(const std::string& cookie) {
 	cpr::Url logout = { "https://auth.roblox.com/v2/logout" };
 	cpr::Cookies authorization = { {".ROBLOSECURITY", atomic::formatCookie(cookie)} };
 	cpr::Body empty{""};
@@ -37,4 +37,25 @@ atomic::AuthUser roblox::getUserFromCookie(std::string cookie) {
 	doc.Parse(nameRequest.text.c_str());
 	name = doc["Username"].GetString();
 	return atomic::AuthUser{name, cookie, id};
+}
+
+atomic::Inventory roblox::getInventory(atomic::User user) {
+	cpr::Url url = {"https://inventory.roblox.com/v1/users/" + std::to_string(user.getId()) + "/assets/collectibles?limit=100"};
+	cpr::Response r = cpr::Get(url);
+	if (r.status_code == 403)
+		throw exceptions::HttpError{ "Permission Failure", 403, exceptions::ErrorTypes::PermissionError };
+	else if (r.status_code != 200)
+		throw exceptions::HttpError{"Inventory fetch failure", r.status_code};
+	rapidjson::Document inventory;
+	inventory.Parse(r.text.c_str());
+	atomic::ItemContainer container;
+	for (auto& v : inventory["data"].GetArray()) {
+		container.push_back(atomic::Item{
+			v["name"].GetString(),
+			v["assetId"].GetInt(),
+			v["userAssetId"].GetInt64(),
+			v["recentAveragePrice"].GetInt()
+		});
+	}
+	return atomic::Inventory{container};
 }

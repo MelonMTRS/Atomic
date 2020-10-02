@@ -3,9 +3,15 @@
 #define __ATOMIC__EXCEPTIONS__H
 
 namespace exceptions {
+	enum class ErrorTypes {
+		DefaultError,
+		PermissionError
+	};
+
 	struct HttpError {
 		const std::string message;
 		const int status_code;
+		exceptions::ErrorTypes errorType = ErrorTypes::DefaultError;
 	};
 
 	struct CaptchaFailure {

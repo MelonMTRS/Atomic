@@ -16,6 +16,7 @@ namespace atomic {
 			}
 		}
 
+		int getId() { return this->m_id; }
 		atomic::Inventory getInventory();
 		void send_trade();
 	};

@@ -4,11 +4,12 @@
 #define __ATOMIC__INVENTORY__H
 
 namespace atomic {
-	using InventoryObj = std::vector<atomic::Item>;
+	using ItemContainer = std::vector<atomic::Item>;
 	class Inventory {
 	private:
-		InventoryObj m_inventory;
+		ItemContainer m_inventory;
 	public:
+		Inventory() = default;
 		template <typename _Array>
 		Inventory(_Array inventory)
 			: m_inventory{inventory}
@@ -16,7 +17,7 @@ namespace atomic {
 		}
 
 		inline void addItem(const atomic::Item item) { this->m_inventory.push_back(item); }
-		inline InventoryObj getInventory() { return this->m_inventory; }
+		inline ItemContainer& getInventory() { return this->m_inventory; }
 	};
 }
 

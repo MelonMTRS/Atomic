@@ -6,7 +6,7 @@ namespace atomic {
 	struct Item {
 		const std::string name;
 		const int id;
-		const int userAssetId; // Unique Identifier Id
+		const std::int64_t userAssetId; // Unique Identifier Id
 		const int rap;
 	};
 }
