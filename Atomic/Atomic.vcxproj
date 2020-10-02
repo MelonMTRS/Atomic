@@ -89,6 +89,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,17 +144,56 @@
   <ItemGroup>
     <ClCompile Include="Atomic\Conversion.cpp" />
     <ClCompile Include="Atomic\Roblox\Wrapper.cpp" />
+    <ClCompile Include="Atomic\Trade.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Atomic\atomic.h" />
     <ClInclude Include="Atomic\AuthUser.h" />
     <ClInclude Include="Atomic\Bot.h" />
+    <ClInclude Include="Atomic\Exceptions.h" />
     <ClInclude Include="Atomic\Inventory.h" />
     <ClInclude Include="Atomic\Item.h" />
     <ClInclude Include="Atomic\Offer.h" />
     <ClInclude Include="Atomic\Conversion.h" />
+    <ClInclude Include="Atomic\rapidjson\allocators.h" />
+    <ClInclude Include="Atomic\rapidjson\cursorstreamwrapper.h" />
+    <ClInclude Include="Atomic\rapidjson\document.h" />
+    <ClInclude Include="Atomic\rapidjson\encodedstream.h" />
+    <ClInclude Include="Atomic\rapidjson\encodings.h" />
+    <ClInclude Include="Atomic\rapidjson\error\en.h" />
+    <ClInclude Include="Atomic\rapidjson\error\error.h" />
+    <ClInclude Include="Atomic\rapidjson\filereadstream.h" />
+    <ClInclude Include="Atomic\rapidjson\filewritestream.h" />
+    <ClInclude Include="Atomic\rapidjson\fwd.h" />
+    <ClInclude Include="Atomic\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="Atomic\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="Atomic\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="Atomic\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="Atomic\rapidjson\internal\itoa.h" />
+    <ClInclude Include="Atomic\rapidjson\internal\meta.h" />
+    <ClInclude Include="Atomic\rapidjson\internal\pow10.h" />
+    <ClInclude Include="Atomic\rapidjson\internal\regex.h" />
+    <ClInclude Include="Atomic\rapidjson\internal\stack.h" />
+    <ClInclude Include="Atomic\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="Atomic\rapidjson\internal\strtod.h" />
+    <ClInclude Include="Atomic\rapidjson\internal\swap.h" />
+    <ClInclude Include="Atomic\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="Atomic\rapidjson\memorybuffer.h" />
+    <ClInclude Include="Atomic\rapidjson\memorystream.h" />
+    <ClInclude Include="Atomic\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="Atomic\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="Atomic\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="Atomic\rapidjson\pointer.h" />
+    <ClInclude Include="Atomic\rapidjson\prettywriter.h" />
+    <ClInclude Include="Atomic\rapidjson\rapidjson.h" />
+    <ClInclude Include="Atomic\rapidjson\reader.h" />
+    <ClInclude Include="Atomic\rapidjson\schema.h" />
+    <ClInclude Include="Atomic\rapidjson\stream.h" />
+    <ClInclude Include="Atomic\rapidjson\stringbuffer.h" />
+    <ClInclude Include="Atomic\rapidjson\writer.h" />
     <ClInclude Include="Atomic\Roblox\Wrapper.h" />
+    <ClInclude Include="Atomic\Trade.h" />
     <ClInclude Include="Atomic\User.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -13,5 +13,6 @@
 #include "./Offer.h"
 #include "./Inventory.h"
 #include "./Trade.h"
+#include "./Conversion.h"
 
 #endif

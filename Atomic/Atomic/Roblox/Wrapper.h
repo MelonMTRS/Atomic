@@ -15,8 +15,8 @@
 
 namespace roblox {
 	// Gets the X-CSRF token
-	std::string getXcsrf(std::string cookie);
-	// Returns an AuthUser object from the roblosecurity cookie
+	std::string getToken(std::string cookie);
+	// Returns an atomic::AuthUser object from the roblosecurity cookie
 	atomic::AuthUser getUserFromCookie(std::string cookie);
 	// Gets a users inventory
 	atomic::Inventory getInventory(atomic::User user);
