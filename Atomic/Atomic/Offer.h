@@ -4,7 +4,8 @@
 #define __ATOMIC__OFFER__H
 
 /*
-	`Offer` is an object that represents a roblox trade
+	`Offer` is an object that represents a roblox trade,
+	can represent TradeType::Inbound, TradeType::Outbound, TradeType::Completed, TradeType::Inactive
 */
 
 namespace atomic {

@@ -59,3 +59,18 @@ atomic::Inventory roblox::getInventory(atomic::User user) {
 	}
 	return atomic::Inventory{container};
 }
+
+bool roblox::can_trade(atomic::AuthUser user, atomic::User target) {
+	cpr::Url url = {"https://trades.roblox.com/v1/users/" + std::to_string(target.getId()) + "/can-trade-with"};
+	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
+	cpr::Response r = cpr::Get(url, cookies);
+	switch (r.status_code) {
+	case 403:
+		throw exceptions::HttpError{"Permission Error", 403, exceptions::ErrorTypes::PermissionError};
+	case 400:
+		throw exceptions::HttpError{ "InvalidUser", 400 };
+	}
+	rapidjson::Document d;
+	d.Parse(r.text.c_str());
+	return d["canTrade"].GetBool();
+}
