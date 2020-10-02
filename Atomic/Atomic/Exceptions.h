@@ -4,8 +4,16 @@
 
 namespace exceptions {
 	struct HttpError {
-		std::string message;
+		const std::string message;
 		const int status_code;
+	};
+
+	struct CaptchaFailure {
+		const std::string message;
+	};
+
+	struct TradeFormFailure {
+		const std::string message;
 	};
 }
 
