@@ -2,14 +2,14 @@
 
 int main()
 {
-#ifndef _DEBUG
+#ifndef VS_DEBUG
     try {
 #endif
         // Primary code here
-#ifndef _DEBUG
+#ifndef VS_DEBUG
     }
     catch (...) {
-
+        // If any errors go unhandled, handle them here
     }
 #endif
     return 0;
