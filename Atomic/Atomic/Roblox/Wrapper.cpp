@@ -28,7 +28,7 @@ atomic::AuthUser roblox::getUserFromCookie(std::string cookie) {
 	cpr::Response idRequest = cpr::Get(cpr::Url{ "https://www.roblox.com/game/GetCurrentUser.ashx" },
 		cpr::Cookies{ {".ROBLOSECURITY", cookie} });
 	if (idRequest.status_code != 200)
-		throw exceptions::HttpError{"Cookie Authorization Failed", idRequest.status_code};
+		throw exceptions::HttpError{"Cookie Authorization Failed", idRequest.status_code, exceptions::ErrorTypes::AuthorizationError};
 	id = std::stoi(idRequest.text);
 	cpr::Response nameRequest = cpr::Get(cpr::Url{"https://api.roblox.com/users/" + std::to_string(id)});
 	if (nameRequest.status_code != 200)
@@ -44,6 +44,8 @@ atomic::Inventory roblox::getInventory(atomic::User user) {
 	cpr::Response r = cpr::Get(url);
 	if (r.status_code == 403)
 		throw exceptions::HttpError{ "Permission Failure", 403, exceptions::ErrorTypes::PermissionError };
+	else if (r.status_code == 400)
+		throw exceptions::HttpError{"UserDoesNotExist", 400};
 	else if (r.status_code != 200)
 		throw exceptions::HttpError{"Inventory fetch failure", r.status_code};
 	rapidjson::Document inventory;

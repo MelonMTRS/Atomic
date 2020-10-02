@@ -5,7 +5,8 @@
 namespace exceptions {
 	enum class ErrorTypes {
 		DefaultError,
-		PermissionError
+		PermissionError,
+		AuthorizationError
 	};
 
 	struct HttpError {
