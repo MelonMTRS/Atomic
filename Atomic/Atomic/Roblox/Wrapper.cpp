@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../Exceptions.h"
 #include "../Conversion.h"
+#include "../Trade.h"
 #include "./Wrapper.h"
 #include "cpr/cpr.h"
 // JSON
@@ -14,7 +15,7 @@ std::string roblox::getToken(const std::string& cookie) {
 	cpr::Url logout = { "https://auth.roblox.com/v2/logout" };
 	cpr::Cookies authorization = { {".ROBLOSECURITY", atomic::formatCookie(cookie)} };
 	cpr::Body empty{""};
-	cpr::Response r = cpr::Post(logout, authorization, cpr::Body{""}); // Request should fail and return an X-CSRF token along with it
+	cpr::Response r = cpr::Post(logout, authorization, empty); // Request should fail and return an X-CSRF token along with it
 	if (r.status_code != 403)
 		throw exceptions::HttpError{"Http Error", r.status_code};
 	else
@@ -77,4 +78,8 @@ bool roblox::can_trade(atomic::AuthUser user, atomic::User target) {
 	rapidjson::Document d;
 	d.Parse(r.text.c_str());
 	return d["canTrade"].GetBool();
+}
+
+atomic::Trade roblox::get_trade(int tradeId) {
+
 }
