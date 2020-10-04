@@ -131,5 +131,6 @@ atomic::Trade roblox::get_trade(atomic::AuthUser user, int tradeId) {
 	robuxOffering = d["offers"][0]["robux"].GetInt(); // lets be real, no ones gonna offer you more than 2147483647 robux
 	robuxRequesting = d["offers"][1]["robux"].GetInt();
 	atomic::Offer offer = {offering, requesting, robuxOffering, robuxRequesting};
-	return atomic::Trade{tradeId, offer, tradeType};
+	atomic::User trader = { d["offers"][1]["user"]["id"].GetInt() };
+	return atomic::Trade{ tradeId, trader, offer, tradeType };
 }

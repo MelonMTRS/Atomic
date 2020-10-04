@@ -17,12 +17,13 @@ namespace atomic {
 		*/
 	private:
 		int m_tradeId;
+		atomic::User m_trader;
 		atomic::Offer m_offer;
 		atomic::TradeType m_TradeType;
 	public:
-		Trade() = default;
-		Trade(int tradeId, atomic::Offer offer, atomic::TradeType tradeType)
-			: m_tradeId{ tradeId }, m_offer{ offer }, m_TradeType{tradeType}
+		Trade(int tradeId, atomic::User trader, atomic::Offer offer, atomic::TradeType tradeType) : 
+			m_tradeId{ tradeId }, m_trader{ trader },
+			m_offer{ offer }, m_TradeType{ tradeType }
 		{
 			
 		}
@@ -40,6 +41,8 @@ namespace atomic {
 
 		// Returns the TradeType of the trade
 		atomic::TradeType getTradeType() { return this->m_TradeType; }
+
+		atomic::User& getTrader() { return this->m_trader; }
 	};
 }
 
