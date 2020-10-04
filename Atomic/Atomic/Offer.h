@@ -1,4 +1,4 @@
-#include <array>
+#include <vector>
 #include "Item.h"
 #ifndef __ATOMIC__OFFER__H
 #define __ATOMIC__OFFER__H
@@ -9,7 +9,7 @@
 */
 
 namespace atomic {
-	using OfferHolder = std::array<atomic::Item, 4>;
+	using OfferHolder = std::vector<atomic::Item>;
 
 	class Offer {
 	private:

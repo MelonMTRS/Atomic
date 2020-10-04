@@ -26,7 +26,7 @@ namespace roblox {
 	// Whether or not you can send a trade with that user
 	bool can_trade(atomic::AuthUser user, atomic::User target);
 	// Gets a trade by tradeId
-	atomic::Trade get_trade(int tradeId);
+	atomic::Trade get_trade(atomic::AuthUser user, int tradeId);
 }
 
 #endif

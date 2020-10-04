@@ -80,6 +80,56 @@ bool roblox::can_trade(atomic::AuthUser user, atomic::User target) {
 	return d["canTrade"].GetBool();
 }
 
-atomic::Trade roblox::get_trade(int tradeId) {
-
+atomic::Trade roblox::get_trade(atomic::AuthUser user, int tradeId) {
+	// Http
+	cpr::Url url = {"https://trades.roblox.com/v1/trades/" + std::to_string(tradeId)};
+	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
+	cpr::Response r = cpr::Get(url, cookies);
+	// Data
+	atomic::TradeType tradeType;
+	std::vector<atomic::Item> offering = {};
+	std::vector<atomic::Item> requesting = {};
+	int robuxOffering;
+	int robuxRequesting;
+	// Exception handling
+	switch (r.status_code) {
+	case 400:
+		throw exceptions::HttpError{ "Not found or not authorized", 400, exceptions::ErrorTypes::NotFoundError };
+	case 401:
+		throw exceptions::HttpError{ "Permission denied", 401, exceptions::ErrorTypes::AuthorizationError };
+	}
+	// General
+	rapidjson::Document d;
+	d.Parse(r.text.c_str());
+	std::string status = d["status"].GetString();
+	if (status == "Completed")
+		tradeType = atomic::TradeType::Completed;
+	else if (status == "Expired")
+		tradeType = atomic::TradeType::Inactive;
+	else if (status == "Open")
+		tradeType = atomic::TradeType::Outbound;
+	else if (d["isActive"].GetBool())
+		tradeType = atomic::TradeType::Inbound;
+	else
+		tradeType = atomic::TradeType::Unknown;
+	for (auto& v : d["offers"][0]["userAssets"].GetArray()) {
+		offering.push_back(atomic::Item{
+			v["name"].GetString(),
+			v["assetId"].GetInt(),
+			v["id"].GetInt64(),
+			v["recentAveragePrice"].GetInt()
+		});
+	}
+	for (auto& v : d["offers"][1]["userAssets"].GetArray()) {
+		requesting.push_back(atomic::Item{
+			v["name"].GetString(),
+			v["assetId"].GetInt(),
+			v["id"].GetInt64(),
+			v["recentAveragePrice"].GetInt()
+		});
+	}
+	robuxOffering = d["offers"][0]["robux"].GetInt(); // lets be real, no ones gonna offer you more than 2147483647 robux
+	robuxRequesting = d["offers"][1]["robux"].GetInt();
+	atomic::Offer offer = {offering, requesting, robuxOffering, robuxRequesting};
+	return atomic::Trade{tradeId, offer, tradeType};
 }

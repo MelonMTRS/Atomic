@@ -7,7 +7,8 @@ namespace atomic {
 		Inbound,
 		Outbound,
 		Completed,
-		Inactive
+		Inactive,
+		Unknown
 	};
 
 	class Trade {
@@ -19,6 +20,7 @@ namespace atomic {
 		atomic::Offer m_offer;
 		atomic::TradeType m_TradeType;
 	public:
+		Trade() = default;
 		Trade(int tradeId, atomic::Offer offer, atomic::TradeType tradeType)
 			: m_tradeId{ tradeId }, m_offer{ offer }, m_TradeType{tradeType}
 		{
