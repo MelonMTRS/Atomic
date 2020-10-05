@@ -15,8 +15,8 @@ namespace atomic {
 	private:
 		OfferHolder m_offering; // Items the authenticated user is offering
 		OfferHolder m_requesting; // Items the authenticated user is requesting
-		int m_robuxOffering;
-		int m_robuxRequesting;
+		const int m_robuxOffering;
+		const int m_robuxRequesting;
 	public:
 		Offer(OfferHolder offering, OfferHolder requesting, int robuxOffering = 0, int robuxRequesting = 0): 
 			m_offering{ offering }, m_requesting{ requesting },
@@ -24,8 +24,11 @@ namespace atomic {
 		{
 		}
 
-		inline OfferHolder getOffering() { return this->m_offering; }
-		inline OfferHolder getRequesting() { return this->m_requesting; }
+		inline OfferHolder getOffering() noexcept { return this->m_offering; }
+		inline OfferHolder getRequesting() noexcept { return this->m_requesting; }
+
+		inline const int& getRobuxOffered() noexcept { return this->m_robuxOffering; }
+		inline const int& getRobuxRequested() noexcept { return this->m_robuxRequesting; }
 	};
 }
 

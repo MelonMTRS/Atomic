@@ -15,7 +15,7 @@ namespace atomic {
 	// Takes the authenticated users inventory and the victims inventory, then returns an offer.
 	atomic::Offer makeOffer(const atomic::Inventory& AuthInventory, const atomic::Inventory& VictimInventory);
 	// Evaluates a trade, returns TradeAction::Accept if the trade should be accepted, TradeAction::Cancel if not. Trade must be inbound
-	// Important note: This function returns TradeAction::Ignore on trades above 5k rap due to the function being experimental
+	// Important note: This function returns TradeAction::Ignore on trades above 5k rap
 	atomic::TradeAction evaluateTrade(atomic::Trade& trade);
 }
 

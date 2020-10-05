@@ -38,12 +38,12 @@ namespace atomic {
 		void counter(atomic::Offer newOffer);
 
 		// Returns the offer
-		atomic::Offer getOffer() { return this->m_offer; }
+		atomic::Offer& getOffer() noexcept { return this->m_offer; }
 
 		// Returns the TradeType of the trade
-		atomic::TradeType getTradeType() { return this->m_TradeType; }
+		atomic::TradeType& getTradeType() noexcept { return this->m_TradeType; }
 
-		atomic::User& getTrader() { return this->m_trader; }
+		atomic::User& getTrader() noexcept { return this->m_trader; }
 	};
 }
 

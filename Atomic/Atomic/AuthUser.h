@@ -16,13 +16,15 @@ namespace atomic {
 		int m_id;
 	public:
 		AuthUser(std::string name, std::string cookie, int id)
-			: m_name{ name }, m_cookie{atomic::formatCookie(cookie)}, m_id{ id }
+			: m_name{ name }, m_cookie{ atomic::formatCookie(cookie) }, m_id{ id }
 		{
 		}
-		inline std::string getName() { return this->m_name; }
-		inline std::string getCookie() { return this->m_cookie; }
-		inline int getId() { return this->m_id; }
-		atomic::Inventory getInventory();
+
+
+		inline std::string getName() noexcept { return this->m_name; }
+		inline std::string getCookie() noexcept { return this->m_cookie; }
+		inline int getId() noexcept { return this->m_id; }
+		//atomic::Inventory getInventory();
 	};
 }
 
