@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Atomic\Bot.cpp" />
     <ClCompile Include="Atomic\Conversion.cpp" />
     <ClCompile Include="Atomic\Roblox\Wrapper.cpp" />
     <ClCompile Include="Atomic\Trade.cpp" />
