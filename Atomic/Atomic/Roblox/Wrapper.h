@@ -22,7 +22,8 @@ namespace roblox {
 	atomic::Inventory getInventory(atomic::User user);
 	// Counters/Sends a trade to a user
 	void send_trade(atomic::AuthUser user, atomic::User target, atomic::Offer offer);
-	void counter_trade(atomic::AuthUser user, atomic::User target, atomic::Offer newOffer);
+	void counter_trade(atomic::AuthUser user, const atomic::Trade& trade, const atomic::Offer& newOffer);
+	void cancel_trade(atomic::AuthUser user, const atomic::Trade& trade);
 	// Whether or not you can send a trade with that user
 	bool can_trade(atomic::AuthUser user, atomic::User target);
 	// Gets a trade by tradeId
