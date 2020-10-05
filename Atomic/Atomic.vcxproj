@@ -147,7 +147,7 @@
     <ClCompile Include="Atomic\Bot.cpp" />
     <ClCompile Include="Atomic\configparser\Parser.cpp" />
     <ClCompile Include="Atomic\Conversion.cpp" />
-    <ClCompile Include="Atomic\Roblox\Wrapper.cpp" />
+    <ClCompile Include="Atomic\API\Wrapper.cpp" />
     <ClCompile Include="Atomic\Trade.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
@@ -197,7 +197,7 @@
     <ClInclude Include="Atomic\rapidjson\stream.h" />
     <ClInclude Include="Atomic\rapidjson\stringbuffer.h" />
     <ClInclude Include="Atomic\rapidjson\writer.h" />
-    <ClInclude Include="Atomic\Roblox\Wrapper.h" />
+    <ClInclude Include="Atomic\API\Wrapper.h" />
     <ClInclude Include="Atomic\Trade.h" />
     <ClInclude Include="Atomic\User.h" />
   </ItemGroup>
