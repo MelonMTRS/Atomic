@@ -200,6 +200,10 @@
     <ClInclude Include="Atomic\API\Wrapper.h" />
     <ClInclude Include="Atomic\Trade.h" />
     <ClInclude Include="Atomic\User.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Atomic.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
