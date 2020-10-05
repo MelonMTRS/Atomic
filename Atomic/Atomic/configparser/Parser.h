@@ -1,0 +1,4 @@
+#ifndef __ATOMIC__CONFIGPARSER__PARSER__H
+#define __ATOMIC__CONFIGPARSER__PARSER__H
+
+#endif
