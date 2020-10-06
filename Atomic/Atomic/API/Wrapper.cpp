@@ -11,7 +11,7 @@
 * cpr's syntax isn't exactly the most beautiful thing in the world
 */
 
-std::string roblox::getToken(const std::string& cookie) {
+[[nodiscard]] std::string roblox::getToken(const std::string& cookie) {
 	cpr::Url logout = { "https://auth.roblox.com/v2/logout" };
 	cpr::Cookies authorization = { {".ROBLOSECURITY", atomic::formatCookie(cookie)} };
 	cpr::Body empty{""};
@@ -22,7 +22,7 @@ std::string roblox::getToken(const std::string& cookie) {
 		return r.header["X-CSRF-TOKEN"];
 }
 
-atomic::AuthUser roblox::getUserFromCookie(std::string cookie) {
+[[nodiscard]] atomic::AuthUser roblox::getUserFromCookie(std::string cookie) {
 	cookie = atomic::formatCookie(cookie);
 	std::string name;
 	int id;
@@ -40,7 +40,7 @@ atomic::AuthUser roblox::getUserFromCookie(std::string cookie) {
 	return atomic::AuthUser{name, cookie, id};
 }
 
-atomic::Inventory roblox::getInventory(atomic::User user) {
+[[nodiscard]] atomic::Inventory roblox::getInventory(atomic::User user) {
 	cpr::Url url = {"https://inventory.roblox.com/v1/users/" + std::to_string(user.getId()) + "/assets/collectibles?limit=100"};
 	cpr::Response r = cpr::Get(url);
 	switch (r.status_code) {
@@ -65,7 +65,7 @@ atomic::Inventory roblox::getInventory(atomic::User user) {
 	return atomic::Inventory{container};
 }
 
-bool roblox::can_trade(atomic::AuthUser user, atomic::User target) {
+[[nodiscard]] bool roblox::can_trade(atomic::AuthUser user, atomic::User target) {
 	cpr::Url url = {"https://trades.roblox.com/v1/users/" + std::to_string(target.getId()) + "/can-trade-with"};
 	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
 	cpr::Response r = cpr::Get(url, cookies);
@@ -80,7 +80,7 @@ bool roblox::can_trade(atomic::AuthUser user, atomic::User target) {
 	return d["canTrade"].GetBool();
 }
 
-atomic::Trade roblox::get_trade(atomic::AuthUser user, int tradeId) {
+[[nodiscard]] atomic::Trade roblox::get_trade(atomic::AuthUser user, int tradeId) {
 	// Http
 	cpr::Url url = {"https://trades.roblox.com/v1/trades/" + std::to_string(tradeId)};
 	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };

@@ -71,7 +71,7 @@ BEGIN
             VALUE "FileDescription", "Roblox Trade Bot"
             VALUE "FileVersion", "1.0.0.0"
             VALUE "InternalName", "Atomic.exe"
-            VALUE "LegalCopyright", "Copyright (C) 2020"
+            VALUE "LegalCopyright", "Copyright (C) 2020 vi#0049"
             VALUE "OriginalFilename", "Atomic.exe"
             VALUE "ProductName", "Atomic"
             VALUE "ProductVersion", "1.0.0.0"

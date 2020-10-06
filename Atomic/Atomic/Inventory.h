@@ -16,8 +16,8 @@ namespace atomic {
 		{
 		}
 
-		inline void addItem(const atomic::Item item) { this->m_inventory.push_back(item); }
-		inline ItemContainer& getInventory() { return this->m_inventory; }
+		inline const void addItem(const atomic::Item item) { this->m_inventory.push_back(item); }
+		[[nodiscard]] inline const ItemContainer& getInventory() const noexcept { return this->m_inventory; }
 	};
 }
 

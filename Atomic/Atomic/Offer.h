@@ -24,11 +24,11 @@ namespace atomic {
 		{
 		}
 
-		inline OfferHolder getOffering() noexcept { return this->m_offering; }
-		inline OfferHolder getRequesting() noexcept { return this->m_requesting; }
+		[[nodiscard]] inline OfferHolder getOffering() const noexcept { return this->m_offering; }
+		[[nodiscard]] inline OfferHolder getRequesting() const noexcept { return this->m_requesting; }
 
-		inline const int& getRobuxOffered() noexcept { return this->m_robuxOffering; }
-		inline const int& getRobuxRequested() noexcept { return this->m_robuxRequesting; }
+		[[nodiscard]] inline const int& getRobuxOffered() const noexcept { return this->m_robuxOffering; }
+		[[nodiscard]] inline const int& getRobuxRequested() const noexcept { return this->m_robuxRequesting; }
 	};
 }
 

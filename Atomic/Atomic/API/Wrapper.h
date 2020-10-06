@@ -15,19 +15,19 @@
 
 namespace roblox {
 	// Gets the X-CSRF token
-	std::string getToken(const std::string& cookie);
+	[[nodiscard]] std::string getToken(const std::string& cookie);
 	// Returns an atomic::AuthUser object from the roblosecurity cookie
-	atomic::AuthUser getUserFromCookie(std::string cookie);
+	[[nodiscard]] atomic::AuthUser getUserFromCookie(std::string cookie);
 	// Gets a users inventory
-	atomic::Inventory getInventory(atomic::User user);
+	[[nodiscard]] atomic::Inventory getInventory(atomic::User user);
 	// Counters/Sends a trade to a user
 	void send_trade(atomic::AuthUser user, atomic::User target, atomic::Offer offer);
 	void counter_trade(atomic::AuthUser user, const atomic::Trade& trade, const atomic::Offer& newOffer);
 	void cancel_trade(atomic::AuthUser user, const atomic::Trade& trade);
 	// Whether or not you can send a trade with that user
-	bool can_trade(atomic::AuthUser user, atomic::User target);
+	[[nodiscard]] bool can_trade(atomic::AuthUser user, atomic::User target);
 	// Gets a trade by tradeId
-	atomic::Trade get_trade(atomic::AuthUser user, int tradeId);
+	[[nodiscard]] atomic::Trade get_trade(atomic::AuthUser user, int tradeId);
 }
 
 #endif

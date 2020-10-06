@@ -7,7 +7,7 @@
 */
 
 namespace atomic {
-	std::string formatCookie(std::string cookie);
+	[[nodiscard]] std::string formatCookie(std::string cookie);
 }
 
 #endif

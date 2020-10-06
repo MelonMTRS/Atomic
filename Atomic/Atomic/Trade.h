@@ -17,10 +17,10 @@ namespace atomic {
 		Represents a trade object  
 		*/
 	private:
-		int m_tradeId;
-		atomic::User m_trader;
-		atomic::Offer m_offer;
-		atomic::TradeType m_TradeType;
+		const int m_tradeId;
+		const atomic::User m_trader;
+		const atomic::Offer m_offer;
+		const atomic::TradeType m_TradeType;
 	public:
 		Trade(int tradeId, atomic::User trader, atomic::Offer offer, atomic::TradeType tradeType) : 
 			m_tradeId{ tradeId }, m_trader{ trader },
@@ -31,19 +31,19 @@ namespace atomic {
 
 		// Cancels the trade
 		// Trade must be either Inbound or Outbound
-		void cancel();
+		const void cancel();
 
 		// Counters the trade
 		// Trade must be Inbound
-		void counter(atomic::Offer newOffer);
+		const void counter(atomic::Offer newOffer);
 
 		// Returns the offer
-		atomic::Offer& getOffer() noexcept { return this->m_offer; }
+		[[nodiscard]] const atomic::Offer getOffer() noexcept { return this->m_offer; }
 
 		// Returns the TradeType of the trade
-		atomic::TradeType& getTradeType() noexcept { return this->m_TradeType; }
+		[[nodiscard]] const atomic::TradeType getTradeType() const noexcept { return this->m_TradeType; }
 
-		atomic::User& getTrader() noexcept { return this->m_trader; }
+		[[nodiscard]] const atomic::User getTrader() const noexcept { return this->m_trader; }
 	};
 }
 
