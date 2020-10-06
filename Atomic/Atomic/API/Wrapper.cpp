@@ -26,17 +26,14 @@
 	cookie = atomic::formatCookie(cookie);
 	std::string name;
 	int id;
-	cpr::Response idRequest = cpr::Get(cpr::Url{ "https://www.roblox.com/game/GetCurrentUser.ashx" },
+	cpr::Response info = cpr::Get(cpr::Url{ "https://users.roblox.com/v1/users/authenticated" },
 		cpr::Cookies{ {".ROBLOSECURITY", cookie} });
-	if (idRequest.status_code != 200)
-		throw exceptions::HttpError{"Cookie Authorization Failed", idRequest.status_code, exceptions::ErrorTypes::AuthorizationError};
-	id = std::stoi(idRequest.text);
-	cpr::Response nameRequest = cpr::Get(cpr::Url{"https://api.roblox.com/users/" + std::to_string(id)});
-	if (nameRequest.status_code != 200)
-		throw exceptions::HttpError{"User does not exist", nameRequest.status_code};
+	if (info.status_code != 200)
+		throw exceptions::HttpError{"Cookie Authorization Failed", info.status_code, exceptions::ErrorTypes::AuthorizationError};
 	rapidjson::Document doc;
-	doc.Parse(nameRequest.text.c_str());
-	name = doc["Username"].GetString();
+	doc.Parse(info.text.c_str());
+	id = doc["id"].GetInt();
+	name = doc["name"].GetString();
 	return atomic::AuthUser{name, cookie, id};
 }
 

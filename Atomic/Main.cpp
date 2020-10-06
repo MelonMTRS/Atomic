@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Atomic/API/Wrapper.h"
-#include "Atomic/atomic.h"
 
 int main()
 {
