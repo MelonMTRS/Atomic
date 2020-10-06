@@ -24,17 +24,13 @@
 
 [[nodiscard]] atomic::AuthUser roblox::getUserFromCookie(std::string cookie) {
 	cookie = atomic::formatCookie(cookie);
-	std::string name;
-	int id;
 	cpr::Response info = cpr::Get(cpr::Url{ "https://users.roblox.com/v1/users/authenticated" },
 		cpr::Cookies{ {".ROBLOSECURITY", cookie} });
 	if (info.status_code != 200)
 		throw exceptions::HttpError{"Cookie Authorization Failed", info.status_code, exceptions::ErrorTypes::AuthorizationError};
 	rapidjson::Document doc;
 	doc.Parse(info.text.c_str());
-	id = doc["id"].GetInt();
-	name = doc["name"].GetString();
-	return atomic::AuthUser{name, cookie, id};
+	return atomic::AuthUser{ doc["name"].GetString(), cookie, doc["id"].GetInt() };
 }
 
 [[nodiscard]] atomic::Inventory roblox::getInventory(atomic::User user) {
