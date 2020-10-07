@@ -26,7 +26,6 @@ namespace atomic {
 			m_tradeId{ tradeId }, m_trader{ trader },
 			m_offer{ offer }, m_TradeType{ tradeType }
 		{
-			
 		}
 
 		// Cancels the trade

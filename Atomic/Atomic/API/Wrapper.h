@@ -25,7 +25,7 @@ namespace roblox {
 	// Whether or not you can send a trade with that user
 	[[nodiscard]] bool can_trade(atomic::AuthUser user, atomic::User target);
 	// Gets a trade by tradeId
-	[[nodiscard]] atomic::Trade get_trade(atomic::AuthUser user, int tradeId);
+	[[nodiscard]] atomic::Trade get_trade(atomic::AuthUser& user, int tradeId);
 	// Returns an array of inbound/outbound/inactive/completed trades
 	// NOTE: This function uses std::async to pool the trades faster
 	[[nodiscard]] std::vector<atomic::Trade> get_trades(atomic::TradeType tradeType, atomic::AuthUser user, int limit);

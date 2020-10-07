@@ -73,7 +73,7 @@
 	return d["canTrade"].GetBool();
 }
 
-[[nodiscard]] atomic::Trade roblox::get_trade(atomic::AuthUser user, int tradeId) {
+[[nodiscard]] atomic::Trade roblox::get_trade(atomic::AuthUser& user, int tradeId) {
 	// Http
 	cpr::Url url = {"https://trades.roblox.com/v1/trades/" + std::to_string(tradeId)};
 	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
@@ -108,7 +108,7 @@
 	for (auto& v : d["offers"][0]["userAssets"].GetArray()) {
 		offering.push_back(atomic::Item{
 			v["name"].GetString(),
-			v["assetId"].GetInt(),
+			v["assetId"].GetInt64(),
 			v["id"].GetInt64(),
 			v["recentAveragePrice"].GetInt()
 		});
@@ -116,7 +116,7 @@
 	for (auto& v : d["offers"][1]["userAssets"].GetArray()) {
 		requesting.push_back(atomic::Item{
 			v["name"].GetString(),
-			v["assetId"].GetInt(),
+			v["assetId"].GetInt64(),
 			v["id"].GetInt64(),
 			v["recentAveragePrice"].GetInt()
 		});
