@@ -7,7 +7,6 @@ namespace atomic {
 	class User {
 	private:
 		const int m_id;
-		std::string m_username = "__NOTSET";
 	public:
 		User(int id, bool confirmExistence=false)
 			: m_id{ id }
@@ -18,7 +17,6 @@ namespace atomic {
 		}
 
 		[[nodiscard]] const int getId() const noexcept { return this->m_id; }
-		[[nodiscard]] const std::string getUsername() const noexcept { return this->m_username; }
 		[[nodiscard]] atomic::Inventory getInventory();
 		void send_trade();
 	};

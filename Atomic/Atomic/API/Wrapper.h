@@ -9,8 +9,6 @@
 
 /*
 * Wrapper for the Roblox API
-* All functionality here uses Atomic's classes
-* Non-async
 */
 
 namespace roblox {
@@ -28,6 +26,9 @@ namespace roblox {
 	[[nodiscard]] bool can_trade(atomic::AuthUser user, atomic::User target);
 	// Gets a trade by tradeId
 	[[nodiscard]] atomic::Trade get_trade(atomic::AuthUser user, int tradeId);
+	// Returns an array of inbound/outbound/inactive/completed trades
+	// NOTE: This function uses std::async to pool the trades faster
+	[[nodiscard]] std::vector<atomic::Trade> get_trades(atomic::TradeType tradeType, atomic::AuthUser user, int limit);
 }
 
 #endif

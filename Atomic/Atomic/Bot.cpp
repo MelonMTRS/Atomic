@@ -5,5 +5,5 @@ atomic::TradeAction atomic::evaluateTrade(atomic::Trade& trade) {
 	if (trade.getTradeType() == atomic::TradeType::Inbound) {
 		// TODO: Evaluation here
 	}
-	return atomic::TradeAction::Ignore; // Temporarily
+	return atomic::TradeAction::Ignore; // Temporarily to avoid errors
 }
