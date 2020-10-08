@@ -28,7 +28,7 @@ namespace roblox {
 	[[nodiscard]] atomic::Trade get_trade(atomic::AuthUser& user, int tradeId);
 	// Returns an array of inbound/outbound/inactive/completed trades
 	// NOTE: This function uses std::async to pool the trades faster
-	[[nodiscard]] std::vector<atomic::Trade> get_trades(atomic::TradeType tradeType, atomic::AuthUser user, int limit);
+	[[nodiscard]] std::vector<atomic::Trade> get_trades(atomic::TradeType tradeType, atomic::AuthUser user, int limit=25);
 }
 
 #endif
