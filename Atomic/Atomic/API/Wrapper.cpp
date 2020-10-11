@@ -134,5 +134,5 @@
 	cpr::Response r = cpr::Get(url, cookies);
 	if (r.status_code != 200)
 		throw exceptions::HttpError{"HttpError", r.status_code};
-	return r.text == "true" ? true : false;
+	return r.text == "true";
 }
