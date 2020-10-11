@@ -27,10 +27,10 @@
     <ClCompile Include="Atomic\Bot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Atomic\configparser\Parser.cpp">
+    <ClCompile Include="Atomic\API\Wrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Atomic\API\Wrapper.cpp">
+    <ClCompile Include="Atomic\Config\Parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -173,13 +173,13 @@
     <ClInclude Include="Atomic\Exceptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Atomic\configparser\Parser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Atomic\API\Wrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Atomic\Config\Parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

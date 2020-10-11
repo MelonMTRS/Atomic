@@ -127,3 +127,12 @@
 	atomic::User trader = { d["offers"][1]["user"]["id"].GetInt() };
 	return atomic::Trade{ tradeId, trader, offer, tradeType };
 }
+
+[[nodiscard]] bool roblox::isPremium(atomic::AuthUser authuser, atomic::User user) {
+	cpr::Url url = { "https://premiumfeatures.roblox.com/v1/users/" + std::to_string(user.getId()) + "/validate-membership" };
+	cpr::Cookies cookies = { {".ROBLOSECURITY", authuser.getCookie()} };
+	cpr::Response r = cpr::Get(url, cookies);
+	if (r.status_code != 200)
+		throw exceptions::HttpError{"HttpError", r.status_code};
+	return r.text == "true" ? true : false;
+}

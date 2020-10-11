@@ -148,7 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Atomic\Bot.cpp" />
-    <ClCompile Include="Atomic\configparser\Parser.cpp" />
+    <ClCompile Include="Atomic\Config\Parser.cpp" />
     <ClCompile Include="Atomic\Conversion.cpp" />
     <ClCompile Include="Atomic\API\Wrapper.cpp" />
     <ClCompile Include="Atomic\Trade.cpp" />
@@ -158,7 +158,7 @@
     <ClInclude Include="Atomic\atomic.h" />
     <ClInclude Include="Atomic\AuthUser.h" />
     <ClInclude Include="Atomic\Bot.h" />
-    <ClInclude Include="Atomic\configparser\Parser.h" />
+    <ClInclude Include="Atomic\Config\Parser.h" />
     <ClInclude Include="Atomic\Exceptions.h" />
     <ClInclude Include="Atomic\Inventory.h" />
     <ClInclude Include="Atomic\Item.h" />

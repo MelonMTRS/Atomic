@@ -16,6 +16,8 @@ namespace roblox {
 	[[nodiscard]] std::string getToken(const std::string& cookie);
 	// Returns an atomic::AuthUser object from the roblosecurity cookie
 	[[nodiscard]] atomic::AuthUser getUserFromCookie(std::string cookie);
+	// Whether or not the user has premium or not.
+	[[nodiscard]] bool isPremium(atomic::AuthUser authuser, atomic::User user);
 	// Gets a users inventory
 	[[nodiscard]] atomic::Inventory getInventory(atomic::User user);
 	// Counters/Sends a trade to a user
