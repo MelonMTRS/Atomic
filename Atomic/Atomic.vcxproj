@@ -155,7 +155,6 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Atomic\atomic.h" />
     <ClInclude Include="Atomic\AuthUser.h" />
     <ClInclude Include="Atomic\Bot.h" />
     <ClInclude Include="Atomic\Config\Parser.h" />

@@ -50,9 +50,6 @@
     <ClInclude Include="Atomic\Offer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Atomic\atomic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Atomic\Bot.h">
       <Filter>Header Files</Filter>
     </ClInclude>

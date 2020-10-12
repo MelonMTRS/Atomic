@@ -1,4 +1,3 @@
-#include "./atomic.h"
 #include "./Conversion.h"
 #include <string>
 #include <iostream>
