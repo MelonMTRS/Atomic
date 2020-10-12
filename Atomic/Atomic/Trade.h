@@ -14,7 +14,9 @@ namespace atomic {
 
 	class Trade {
 		/*
-		Represents a trade object  
+		Represents a trade object
+
+		The AuthUser is not included here
 		*/
 	private:
 		const int m_tradeId;
@@ -42,6 +44,7 @@ namespace atomic {
 		// Returns the TradeType of the trade
 		[[nodiscard]] const atomic::TradeType getTradeType() const noexcept { return this->m_TradeType; }
 
+		// Returns the trader
 		[[nodiscard]] const atomic::User getTrader() const noexcept { return this->m_trader; }
 	};
 }

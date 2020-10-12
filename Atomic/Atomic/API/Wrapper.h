@@ -12,16 +12,21 @@
 */
 
 namespace roblox {
+	enum class Membership { // Roblox memberships
+		Normal,
+		Premium
+	};
+
 	// Gets the X-CSRF token
 	[[nodiscard]] std::string getToken(const std::string& cookie);
 	// Returns an atomic::AuthUser object from the roblosecurity cookie
 	[[nodiscard]] atomic::AuthUser getUserFromCookie(std::string cookie);
 	// Whether or not the user has premium or not.
-	[[nodiscard]] bool isPremium(atomic::AuthUser authuser, atomic::User user);
+	[[nodiscard]] roblox::Membership isPremium(atomic::AuthUser authuser, atomic::User user);
 	// Gets a users inventory
 	[[nodiscard]] atomic::Inventory getInventory(atomic::User user);
 	// Counters/Sends a trade to a user
-	void send_trade(atomic::AuthUser user, atomic::User target, atomic::Offer offer);
+	void send_trade(atomic::AuthUser user, atomic::Trade trade);
 	void counter_trade(atomic::AuthUser user, const atomic::Trade& trade, const atomic::Offer& newOffer);
 	void cancel_trade(atomic::AuthUser user, const atomic::Trade& trade);
 	// Whether or not you can send a trade with that user
