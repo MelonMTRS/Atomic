@@ -13,7 +13,7 @@ namespace atomic {
 	// Formats the .roblosecurity cookie (removes the warning message)
 	[[nodiscard]] std::string formatCookie(std::string cookie);
 	// Converts an atomic::Trade object to JSON
-	[[nodiscard]] std::string tradeToJSON(atomic::AuthUser& user, atomic::Trade trade);
+	[[nodiscard]] std::string tradeToJSON(atomic::AuthUser user, atomic::Trade trade);
 }
 
 #endif

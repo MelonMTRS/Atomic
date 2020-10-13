@@ -2,13 +2,15 @@
 #include <regex>
 #include "./Conversion.h"
 #include "./rapidjson/document.h"
+#include "./rapidjson/stringbuffer.h"
+#include "./rapidjson/writer.h"
 
 [[nodiscard]] std::string atomic::formatCookie(std::string cookie) {
 	std::regex pattern{R"(_\|[\D\d]+\|_)"};
 	return std::regex_replace(cookie, pattern, "");
 }
 
-[[nodiscard]] std::string atomic::tradeToJSON(atomic::AuthUser& user, atomic::Trade trade) {
+[[nodiscard]] std::string atomic::tradeToJSON(atomic::AuthUser user, atomic::Trade trade) {
 	std::string structure = R"(
 {
    "offers":[
@@ -29,13 +31,18 @@
     d.Parse(structure.c_str());
     d["offers"][0]["userId"].SetInt64(trade.getTrader().getId());
     d["offers"][1]["userId"].SetInt64(user.getId());
+    d["offers"][0]["robux"].SetInt(trade.getOffer().getRobuxRequested());
+    d["offers"][1]["robux"].SetInt(trade.getOffer().getRobuxOffered());
     auto offering = trade.getOffer().getOffering();
     auto requesting = trade.getOffer().getRequesting();
-    for (auto item = offering.begin(); item != offering.end(); ++item) {
-        // TODO: Push back to d["offers"][0]["userAssetIds"]
-    }
-    for (auto item = requesting.begin(); item != requesting.end(); ++item) {
-        // TODO: Push back to d["offers"][1]["userAssetIds"]
-    }
-    return ""; // Temporary
+    for (auto item = offering.begin(); item != offering.end(); ++item)
+        d["offers"][1]["userAssetIds"].PushBack(item->userAssetId, d.GetAllocator());
+    for (auto item = requesting.begin(); item != requesting.end(); ++item)
+        d["offers"][0]["userAssetIds"].PushBack(item->userAssetId, d.GetAllocator());
+
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    d.Accept(writer);
+
+    return buffer.GetString();
 }

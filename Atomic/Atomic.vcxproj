@@ -152,6 +152,7 @@
     <ClCompile Include="Atomic\Conversion.cpp" />
     <ClCompile Include="Atomic\API\Wrapper.cpp" />
     <ClCompile Include="Atomic\Trade.cpp" />
+    <ClCompile Include="Atomic\User.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
