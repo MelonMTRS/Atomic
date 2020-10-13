@@ -10,8 +10,7 @@ namespace atomic {
 		ItemContainer m_inventory;
 	public:
 		Inventory() = default;
-		template <typename _Array>
-		Inventory(_Array inventory)
+		Inventory(std::vector<atomic::Item> inventory)
 			: m_inventory{inventory}
 		{
 		}
