@@ -1,11 +1,11 @@
+#ifndef __ATOMIC__ROBLOX__WRAPPER__H
+#define __ATOMIC__ROBLOX__WRAPPER__H
 #include <string>
 #include "../User.h"
 #include "../Inventory.h"
 #include "../Offer.h"
 #include "../AuthUser.h"
 #include "../Trade.h"
-#ifndef __ATOMIC__ROBLOX__WRAPPER__H
-#define __ATOMIC__ROBLOX__WRAPPER__H
 
 /*
 * Wrapper for the Roblox API
@@ -22,7 +22,7 @@ namespace roblox {
 	// Returns an atomic::AuthUser object from the roblosecurity cookie
 	[[nodiscard]] atomic::AuthUser getUserFromCookie(std::string cookie);
 	// Whether or not the user has premium or not.
-	[[nodiscard]] roblox::Membership isPremium(atomic::AuthUser authuser, atomic::User user);
+	[[nodiscard]] roblox::Membership getMembership(atomic::AuthUser authuser, atomic::User user);
 	// Gets a users inventory
 	[[nodiscard]] atomic::Inventory getInventory(atomic::User user);
 	// Counters/Sends a trade to a user
