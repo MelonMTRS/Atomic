@@ -6,7 +6,7 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        // Primary code here
+        
 #ifndef VS_DEBUG
     }
     catch (...) {

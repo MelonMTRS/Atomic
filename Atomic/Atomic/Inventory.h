@@ -1,7 +1,7 @@
-#include <vector>
-#include "./Item.h"
 #ifndef __ATOMIC__INVENTORY__H
 #define __ATOMIC__INVENTORY__H
+#include <vector>
+#include "./Item.h"
 
 namespace atomic {
 	using ItemContainer = std::vector<atomic::Item>;

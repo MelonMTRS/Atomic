@@ -1,8 +1,8 @@
-#include "./Conversion.h"
-#include <string>
-#include <iostream>
 #ifndef __ATOMIC__AUTHUSER__H
 #define __ATOMIC__AUTHUSER__H
+#include <string>
+#include <iostream>
+#include "./Conversion.h"
 
 namespace atomic {
 	class AuthUser {

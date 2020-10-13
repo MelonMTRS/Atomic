@@ -1,6 +1,6 @@
-#include <iostream>
 #ifndef __ATOMIC__EXCEPTIONS__H
 #define __ATOMIC__EXCEPTIONS__H
+#include <iostream>
 
 namespace exceptions {
 	enum class ErrorTypes {

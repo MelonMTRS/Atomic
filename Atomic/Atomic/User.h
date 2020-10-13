@@ -1,7 +1,7 @@
-#include <string>
-#include "./Inventory.h"
 #ifndef __ATOMIC__USER__H
 #define __ATOMIC__USER__H
+#include <string>
+#include "./Inventory.h"
 
 namespace atomic {
 	class User {

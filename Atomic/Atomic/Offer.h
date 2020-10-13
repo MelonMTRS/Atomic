@@ -1,7 +1,7 @@
-#include <vector>
-#include "Item.h"
 #ifndef __ATOMIC__OFFER__H
 #define __ATOMIC__OFFER__H
+#include <vector>
+#include "Item.h"
 
 /*
 	`Offer` is an object that represents a roblox trade,

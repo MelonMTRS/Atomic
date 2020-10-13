@@ -1,6 +1,6 @@
-#include <string>
 #ifndef __ATOMIC__ITEM__H
 #define __ATOMIC__ITEM__H
+#include <string>
 
 namespace atomic {
 	struct Item {

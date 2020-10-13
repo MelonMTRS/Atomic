@@ -1,8 +1,8 @@
+#ifndef __ATOMIC__BOT__H
+#define __ATOMIC__BOT__H
 #include "./Offer.h"
 #include "./Inventory.h"
 #include "./Trade.h"
-#ifndef __ATOMIC__BOT__H
-#define __ATOMIC__BOT__H
 
 /*
 * Algorithmic functions
