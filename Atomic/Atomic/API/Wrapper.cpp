@@ -7,10 +7,6 @@
 // JSON
 #include "../rapidjson/document.h"
 
-/*
-* cpr's syntax isn't exactly the most beautiful thing in the world
-*/
-
 [[nodiscard]] std::string roblox::getToken(const std::string& cookie) {
 	cpr::Url logout = { "https://auth.roblox.com/v2/logout" };
 	cpr::Cookies authorization = { {".ROBLOSECURITY", atomic::formatCookie(cookie)} };

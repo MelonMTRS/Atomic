@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Atomic/Config/Parser.h"
 #include "Atomic/API/Wrapper.h"
 #include "Atomic/Conversion.h"
 #include "Atomic/User.h"
