@@ -7,7 +7,7 @@ namespace atomic {
 		const std::string name;
 		const std::int64_t id;
 		const std::int64_t userAssetId; // Unique Identifier Id
-		const int rap;
+		const std::int64_t rap;
 	};
 }
 

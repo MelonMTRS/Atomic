@@ -34,7 +34,7 @@
 }
 
 [[nodiscard]] atomic::Inventory roblox::getInventory(atomic::User user) {
-	cpr::Url url = {"https://inventory.roblox.com/v1/users/" + std::to_string(user.getId()) + "/assets/collectibles?limit=100"};
+	cpr::Url url = {"https://inventory.roblox.com/v1/users/" + std::to_string(user.getId()) + "/assets/collectibles?limit=100"}; // TODO: cursoring
 	cpr::Response r = cpr::Get(url);
 	switch (r.status_code) {
 	case 403:
@@ -48,12 +48,14 @@
 	inventory.Parse(r.text.c_str());
 	atomic::ItemContainer container;
 	for (auto& v : inventory["data"].GetArray()) {
-		container.push_back(atomic::Item{
-			v["name"].GetString(),
-			v["assetId"].GetInt(),
-			v["userAssetId"].GetInt64(),
-			v["recentAveragePrice"].GetInt()
-		});
+		if (v["name"].IsString() && v["assetId"].IsInt64() && v["userAssetId"].IsInt64() && v["recentAveragePrice"].IsInt64()) {
+			container.push_back(atomic::Item{
+				v["name"].GetString(),
+				v["assetId"].GetInt64(),
+				v["userAssetId"].GetInt64(),
+				v["recentAveragePrice"].GetInt64()
+			});
+		}
 	}
 	return atomic::Inventory{container};
 }
@@ -106,20 +108,24 @@
 	else
 		tradeType = atomic::TradeType::Unknown;
 	for (auto& v : d["offers"][0]["userAssets"].GetArray()) {
-		offering.push_back(atomic::Item{
-			v["name"].GetString(),
-			v["assetId"].GetInt64(),
-			v["id"].GetInt64(),
-			v["recentAveragePrice"].GetInt()
-		});
+		if (v["name"].IsString() && v["assetId"].IsInt64() && v["userAssetId"].IsInt64() && v["recentAveragePrice"].IsInt64()) {
+			offering.push_back(atomic::Item{
+				v["name"].GetString(),
+				v["assetId"].GetInt64(),
+				v["id"].GetInt64(),
+				v["recentAveragePrice"].GetInt64()
+			});
+		}
 	}
 	for (auto& v : d["offers"][1]["userAssets"].GetArray()) {
-		requesting.push_back(atomic::Item{
-			v["name"].GetString(),
-			v["assetId"].GetInt64(),
-			v["id"].GetInt64(),
-			v["recentAveragePrice"].GetInt()
-		});
+		if (v["name"].IsString() && v["assetId"].IsInt64() && v["userAssetId"].IsInt64() && v["recentAveragePrice"].IsInt64()) {
+			requesting.push_back(atomic::Item{
+				v["name"].GetString(),
+				v["assetId"].GetInt64(),
+				v["id"].GetInt64(),
+				v["recentAveragePrice"].GetInt64()
+				});
+		}
 	}
 	robuxOffering = d["offers"][0]["robux"].GetInt(); // lets be real, no ones gonna offer you more than 2147483647 robux
 	robuxRequesting = d["offers"][1]["robux"].GetInt();

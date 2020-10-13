@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Atomic/API/Wrapper.h"
 #include "Atomic/Conversion.h"
+#include "Atomic/User.h"
 
 int main()
 {
