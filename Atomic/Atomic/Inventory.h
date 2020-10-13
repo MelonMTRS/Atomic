@@ -10,7 +10,7 @@ namespace atomic {
 		ItemContainer m_inventory;
 	public:
 		Inventory() = default;
-		Inventory(std::vector<atomic::Item> inventory)
+		Inventory(ItemContainer inventory)
 			: m_inventory{inventory}
 		{
 		}
