@@ -13,7 +13,7 @@
 	cpr::Body empty{""};
 	cpr::Response r = cpr::Post(logout, authorization, empty); // Request should fail and return an X-CSRF token along with it
 	if (r.status_code != 403)
-		throw exceptions::HttpError{"Http Error", r.status_code};
+		throw atomic::HttpError{"Http Error", r.status_code};
 	else
 		return r.header["X-CSRF-TOKEN"];
 }
@@ -23,7 +23,7 @@
 	cpr::Response info = cpr::Get(cpr::Url{ "https://users.roblox.com/v1/users/authenticated" },
 		cpr::Cookies{ {".ROBLOSECURITY", cookie} });
 	if (info.status_code != 200)
-		throw exceptions::HttpError{"Cookie Authorization Failed", info.status_code, exceptions::ErrorTypes::AuthorizationError};
+		throw atomic::HttpError{"Cookie Authorization Failed", info.status_code, atomic::ErrorTypes::AuthorizationError};
 	rapidjson::Document doc;
 	doc.Parse(info.text.c_str());
 	return atomic::AuthUser{ doc["name"].GetString(), cookie, doc["id"].GetInt() };
@@ -34,12 +34,12 @@
 	cpr::Response r = cpr::Get(url);
 	switch (r.status_code) {
 	case 403:
-		throw exceptions::HttpError{ "Permission Failure", 403, exceptions::ErrorTypes::PermissionError };
+		throw atomic::HttpError{ "Permission Failure", 403, atomic::ErrorTypes::PermissionError };
 	case 400:
-		throw exceptions::HttpError{ "UserDoesNotExist", 400 };
+		throw atomic::HttpError{ "UserDoesNotExist", 400 };
 	}
 	if (r.status_code != 200)
-		throw exceptions::HttpError{"Inventory fetch failure", r.status_code};
+		throw atomic::HttpError{"Inventory fetch failure", r.status_code};
 	rapidjson::Document inventory;
 	inventory.Parse(r.text.c_str());
 	atomic::ItemContainer container;
@@ -62,9 +62,9 @@
 	cpr::Response r = cpr::Get(url, cookies);
 	switch (r.status_code) {
 	case 403:
-		throw exceptions::HttpError{"Permission Error", 403, exceptions::ErrorTypes::PermissionError};
+		throw atomic::HttpError{"Permission Error", 403, atomic::ErrorTypes::PermissionError};
 	case 400:
-		throw exceptions::HttpError{ "InvalidUser", 400 };
+		throw atomic::HttpError{ "InvalidUser", 400 };
 	}
 	rapidjson::Document d;
 	d.Parse(r.text.c_str());
@@ -85,9 +85,9 @@
 	// Exception handling
 	switch (r.status_code) {
 	case 400:
-		throw exceptions::HttpError{ "Not found or not authorized", 400, exceptions::ErrorTypes::NotFoundError };
+		throw atomic::HttpError{ "Not found or not authorized", 400, atomic::ErrorTypes::NotFoundError };
 	case 401:
-		throw exceptions::HttpError{ "Permission denied", 401, exceptions::ErrorTypes::AuthorizationError };
+		throw atomic::HttpError{ "Permission denied", 401, atomic::ErrorTypes::AuthorizationError };
 	}
 	// General
 	rapidjson::Document d;
@@ -135,6 +135,6 @@
 	cpr::Cookies cookies = { {".ROBLOSECURITY", authuser.getCookie()} };
 	cpr::Response r = cpr::Get(url, cookies);
 	if (r.status_code != 200)
-		throw exceptions::HttpError{"HttpError", r.status_code};
+		throw atomic::HttpError{"HttpError", r.status_code};
 	return r.text == "true" ? roblox::Membership::Premium : roblox::Membership::Normal;
 }

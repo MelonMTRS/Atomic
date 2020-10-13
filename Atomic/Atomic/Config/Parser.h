@@ -3,12 +3,6 @@
 #include <string>
 #include <map>
 
-namespace atomic {
-	struct KeyNotFound {
-		std::string error_message;
-	};
-}
-
 namespace config {
 	class Config {
 	private:
