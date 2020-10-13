@@ -30,9 +30,9 @@ namespace atomic {
 		{
 		}
 
-		// Cancels the trade
+		// Declines the trade
 		// Trade must be either Inbound or Outbound
-		const void cancel();
+		const void decline();
 
 		// Counters the trade
 		// Trade must be Inbound

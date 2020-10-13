@@ -124,7 +124,7 @@
 				v["assetId"].GetInt64(),
 				v["id"].GetInt64(),
 				v["recentAveragePrice"].GetInt64()
-				});
+			});
 		}
 	}
 	robuxOffering = d["offers"][0]["robux"].GetInt(); // lets be real, no ones gonna offer you more than 2147483647 robux

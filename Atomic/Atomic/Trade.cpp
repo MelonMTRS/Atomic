@@ -1,6 +1,6 @@
 #include "./Trade.h"
 
-const void atomic::Trade::cancel() {
+const void atomic::Trade::decline() {
 	if (this->m_TradeType == atomic::TradeType::Inbound || this->m_TradeType == atomic::TradeType::Outbound) {
 		// TODO: Canceling here
 	}

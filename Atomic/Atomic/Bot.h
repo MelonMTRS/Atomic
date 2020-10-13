@@ -11,7 +11,7 @@
 namespace atomic {
 	enum class TradeAction {
 		Accept,
-		Cancel,
+		Decline,
 		Ignore
 	};
 	// Takes the authenticated users inventory and the victims inventory, then returns an offer.

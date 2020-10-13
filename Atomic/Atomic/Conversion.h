@@ -11,8 +11,9 @@
 
 namespace atomic {
 	// Formats the .roblosecurity cookie (removes the warning message)
+	// All cookies should be formatted before used
 	[[nodiscard]] std::string formatCookie(std::string cookie);
-	// Converts an atomic::Trade object to JSON
+	// Converts an atomic::Trade object to roblox sendable JSON
 	[[nodiscard]] std::string tradeToJSON(atomic::AuthUser user, atomic::Trade trade);
 }
 
