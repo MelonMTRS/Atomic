@@ -151,6 +151,7 @@
     <ClCompile Include="Atomic\Config\Parser.cpp" />
     <ClCompile Include="Atomic\Conversion.cpp" />
     <ClCompile Include="Atomic\API\Wrapper.cpp" />
+    <ClCompile Include="Atomic\Inventory.cpp" />
     <ClCompile Include="Atomic\Trade.cpp" />
     <ClCompile Include="Atomic\User.cpp" />
     <ClCompile Include="Main.cpp" />

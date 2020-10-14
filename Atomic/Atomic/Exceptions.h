@@ -22,6 +22,10 @@ namespace atomic {
 		std::string message;
 	};
 
+	struct ItemNotFound {
+		std::string message;
+	};
+
 	// Raised when roblox prompts a captcha
 	struct CaptchaFailure {
 		const std::string message;
