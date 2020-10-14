@@ -24,7 +24,7 @@ atomic::Item& atomic::Inventory::findItemById(int assetId) {
 	throw atomic::ItemNotFound{ "The item " + std::to_string(assetId) + " could not be found" };
 }
 
-atomic::ItemContainer atomic::Inventory::itemMatch(std::function<bool(const atomic::Item&)> function) { // TODO: test by const reference
+atomic::ItemContainer atomic::Inventory::itemMatch(const std::function<bool(const atomic::Item&)>& function) {
 	atomic::ItemContainer itemsFound;
 	for (auto item = this->begin(); item != this->end(); ++item) {
 		if (function(*item))

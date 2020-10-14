@@ -26,7 +26,7 @@ namespace atomic {
 		atomic::Item& operator[](int index) { return this->m_inventory[index]; }
 		atomic::Item& findItemByName(const std::string& name);
 		atomic::Item& findItemById(int assetId);
-		ItemContainer itemMatch(std::function<bool(const atomic::Item&)> function);
+		ItemContainer itemMatch(const std::function<bool(const atomic::Item&)>& function);
 	};
 }
 
