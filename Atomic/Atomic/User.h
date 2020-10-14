@@ -6,9 +6,9 @@
 namespace atomic {
 	class User {
 	private:
-		const int m_id;
+		const std::int64_t m_id;
 	public:
-		User(int id, bool confirmExistence=false)
+		User(std::int64_t id, bool confirmExistence=false)
 			: m_id{ id }
 		{
 			if (confirmExistence) {

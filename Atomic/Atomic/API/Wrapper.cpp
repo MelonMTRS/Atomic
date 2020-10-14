@@ -7,6 +7,10 @@
 // JSON
 #include "../rapidjson/document.h"
 
+/*
+	For information on what each function does, see Wrapper.h
+*/
+
 [[nodiscard]] std::string roblox::getToken(const std::string& cookie) {
 	cpr::Url logout = { "https://auth.roblox.com/v2/logout" };
 	cpr::Cookies authorization = { {".ROBLOSECURITY", atomic::formatCookie(cookie)} };

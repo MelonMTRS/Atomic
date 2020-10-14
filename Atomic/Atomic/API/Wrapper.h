@@ -25,9 +25,11 @@ namespace roblox {
 	[[nodiscard]] roblox::Membership getMembership(atomic::AuthUser authuser, atomic::User user);
 	// Gets a users inventory
 	[[nodiscard]] atomic::Inventory getInventory(atomic::User user);
-	// Counters/Sends a trade to a user
+	// Sends a trade to a user
 	void send_trade(atomic::AuthUser user, atomic::Trade trade);
+	// Counters an already existing trade, a new offer object must be passed
 	void counter_trade(atomic::AuthUser user, const atomic::Trade& trade, const atomic::Offer& newOffer);
+	// Declines an already existing trade
 	void decline_trade(atomic::AuthUser user, const atomic::Trade& trade);
 	// Whether or not you can send a trade with that user
 	[[nodiscard]] bool can_trade(atomic::AuthUser user, atomic::User target);
@@ -35,7 +37,7 @@ namespace roblox {
 	[[nodiscard]] atomic::Trade get_trade(atomic::AuthUser& user, int tradeId);
 	// Returns an array of inbound/outbound/inactive/completed trades
 	// NOTE: This function uses std::async to pool the trades faster
-	[[nodiscard]] std::vector<atomic::Trade> get_trades(atomic::TradeType tradeType, atomic::AuthUser user, int limit=25);
+	[[nodiscard]] std::vector<atomic::Trade> get_trades(atomic::AuthUser user, atomic::TradeType tradeType, int limit=25);
 }
 
 #endif
