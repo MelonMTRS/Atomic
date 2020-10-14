@@ -4,12 +4,6 @@
 #include "Atomic/Conversion.h"
 #include "Atomic/User.h"
 
-bool rapLowerThan500(const atomic::Item& item) {
-    if (item.rap < 1000)
-        return true;
-    return false;
-}
-
 int main()
 {
 #ifndef VS_DEBUG
