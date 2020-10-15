@@ -32,20 +32,20 @@ namespace roblox {
 	[[nodiscard]] atomic::Inventory getInventory(atomic::User user);
 	// Sends a trade to a user
 	// Returns a TradeResult::Success if the trade was successfully sent
-	roblox::TradeResult send_trade(atomic::AuthUser user, atomic::Trade trade);
+	roblox::TradeResult sendTrade(atomic::AuthUser user, atomic::Trade trade);
 	// Counters an already existing trade, a new offer object must be passed
 	// Returns a TradeResult::Success if the trade was successfully countered
-	roblox::TradeResult counter_trade(atomic::AuthUser user, const atomic::Trade& trade, const atomic::Offer& newOffer);
+	roblox::TradeResult counterTrade(atomic::AuthUser user, const atomic::Trade& trade, const atomic::Offer& newOffer);
 	// Declines an already existing trade
 	// Returns a TradeResult::Success if the trade was successfully declined
-	roblox::TradeResult decline_trade(atomic::AuthUser user, const atomic::Trade& trade);
+	roblox::TradeResult declineTrade(atomic::AuthUser user, const atomic::Trade& trade);
 	// Whether or not you can send a trade with that user
 	[[nodiscard]] bool can_trade(atomic::AuthUser user, atomic::User target);
 	// Gets a trade by tradeId
-	[[nodiscard]] atomic::Trade get_trade(atomic::AuthUser& user, int tradeId);
+	[[nodiscard]] atomic::Trade getTrade(atomic::AuthUser& user, int tradeId);
 	// Returns an array of inbound/outbound/inactive/completed trades
 	// NOTE: This function uses std::async to pool the trades faster
-	[[nodiscard]] std::vector<atomic::Trade> get_trades(atomic::AuthUser user, atomic::TradeType tradeType, int limit=25);
+	[[nodiscard]] std::vector<atomic::Trade> getTrades(atomic::AuthUser user, atomic::TradeType tradeType, int limit=25);
 }
 
 #endif
