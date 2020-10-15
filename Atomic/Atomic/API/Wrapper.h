@@ -17,6 +17,11 @@ namespace roblox {
 		Premium
 	};
 
+	enum class TradeResult {
+		Success,
+		Failure
+	};
+
 	// Gets the X-CSRF token
 	[[nodiscard]] std::string getToken(const std::string& cookie);
 	// Returns an atomic::AuthUser object from the roblosecurity cookie
@@ -26,11 +31,14 @@ namespace roblox {
 	// Gets a users inventory
 	[[nodiscard]] atomic::Inventory getInventory(atomic::User user);
 	// Sends a trade to a user
-	void send_trade(atomic::AuthUser user, atomic::Trade trade);
+	// Returns a TradeResult::Success if the trade was successfully sent
+	roblox::TradeResult send_trade(atomic::AuthUser user, atomic::Trade trade);
 	// Counters an already existing trade, a new offer object must be passed
-	void counter_trade(atomic::AuthUser user, const atomic::Trade& trade, const atomic::Offer& newOffer);
+	// Returns a TradeResult::Success if the trade was successfully countered
+	roblox::TradeResult counter_trade(atomic::AuthUser user, const atomic::Trade& trade, const atomic::Offer& newOffer);
 	// Declines an already existing trade
-	void decline_trade(atomic::AuthUser user, const atomic::Trade& trade);
+	// Returns a TradeResult::Success if the trade was successfully declined
+	roblox::TradeResult decline_trade(atomic::AuthUser user, const atomic::Trade& trade);
 	// Whether or not you can send a trade with that user
 	[[nodiscard]] bool can_trade(atomic::AuthUser user, atomic::User target);
 	// Gets a trade by tradeId
