@@ -30,7 +30,7 @@
 		throw atomic::HttpError{"Cookie Authorization Failed", info.status_code, atomic::ErrorTypes::AuthorizationError};
 	rapidjson::Document doc;
 	doc.Parse(info.text.c_str());
-	return atomic::AuthUser{ doc["name"].GetString(), cookie, doc["id"].GetInt() };
+	return atomic::AuthUser{ doc["name"].GetString(), roblox::getToken(cookie), cookie, doc["id"].GetInt() };
 }
 
 [[nodiscard]] atomic::Inventory roblox::getInventory(atomic::User user) {

@@ -12,16 +12,18 @@ namespace atomic {
 	private:
 		std::string m_name;
 		std::string m_cookie;
+		std::string m_xcsrf;
 		int m_id;
 	public:
-		AuthUser(std::string name, std::string cookie, int id)
-			: m_name{ name }, m_cookie{ cookie }, m_id{ id }
+		AuthUser(std::string name, std::string xcsrf, std::string cookie, int id)
+			: m_name{ name }, m_xcsrf{ xcsrf }, m_cookie{ cookie }, m_id{ id }
 		{
 		}
 
 		inline void setCookie(std::string newCookie) { this->m_cookie = newCookie; }
 		[[nodiscard]] inline const std::string getName() const noexcept { return this->m_name; }
 		[[nodiscard]] inline const std::string getCookie() const noexcept { return this->m_cookie; }
+		[[nodiscard]] inline const std::string getXcsrf() const noexcept { return this->m_xcsrf; }
 		[[nodiscard]] inline const int getId() const noexcept { return this->m_id; }
 		atomic::Inventory getInventory();
 	};

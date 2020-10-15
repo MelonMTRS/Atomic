@@ -20,21 +20,25 @@ namespace atomic {
 	// Raised when a config key cannot be found
 	struct KeyNotFound {
 		std::string message;
+		atomic::ErrorTypes errorType = ErrorTypes::DefaultError;
 	};
 
 	struct ItemNotFound {
 		std::string message;
+		atomic::ErrorTypes errorType = ErrorTypes::DefaultError;
 	};
 
 	// Raised when roblox prompts a captcha
 	struct CaptchaFailure {
 		const std::string message;
+		atomic::ErrorTypes errorType = ErrorTypes::DefaultError;
 	};
 
 	// Raised when a trade couldn't be formed with the user
 	// This may get raised often, it's expected to be handled
 	struct TradeFormFailure {
 		const std::string message;
+		atomic::ErrorTypes errorType = ErrorTypes::DefaultError;
 	};
 }
 
