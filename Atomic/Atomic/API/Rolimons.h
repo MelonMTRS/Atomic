@@ -7,11 +7,11 @@
 namespace rolimons {
 	using ItemDB = rapidjson::Document;
 
-	ItemDB getRolimonItems();
-	bool isProjected(ItemDB& items, std::int64_t assetId);
-	atomic::RolimonsItem getItem(ItemDB& items, std::int64_t assetId);
-	atomic::Item getSpecificItem(ItemDB& items, std::int64_t assetId, std::int64_t userAssetId);
-	std::int64_t getItemValue(ItemDB& items, std::int64_t assetId);
+	[[nodiscard]] ItemDB getRolimonItems();
+	[[nodiscard]] bool isProjected(ItemDB& items, std::int64_t assetId);
+	[[nodiscard]] atomic::RolimonsItem getItem(ItemDB& items, std::int64_t assetId);
+	[[nodiscard]] atomic::Item getSpecificItem(ItemDB& items, std::int64_t assetId, std::int64_t userAssetId);
+	[[nodiscard]] std::int64_t getItemValue(ItemDB& items, std::int64_t assetId);
 }
 
 #endif
