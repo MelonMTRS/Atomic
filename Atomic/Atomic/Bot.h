@@ -4,6 +4,9 @@
 #include "./Inventory.h"
 #include "./Trade.h"
 
+// Trades above this rap will return atomic::TradeAction::Ignore
+#define TOTAL_ACCEPTED_RAP 4500
+
 /*
 * Algorithmic functions
 */

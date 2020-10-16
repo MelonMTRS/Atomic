@@ -202,6 +202,7 @@
     <ClInclude Include="Atomic\rapidjson\stringbuffer.h" />
     <ClInclude Include="Atomic\rapidjson\writer.h" />
     <ClInclude Include="Atomic\API\Wrapper.h" />
+    <ClInclude Include="Atomic\Rolimons.h" />
     <ClInclude Include="Atomic\Trade.h" />
     <ClInclude Include="Atomic\User.h" />
     <ClInclude Include="resource.h" />

@@ -13,8 +13,12 @@ int main()
 #ifndef VS_DEBUG
     }
     catch (...) {
-        // If any errors go unhandled, handle them here
+        /*
+        All errors are expected to be handled,
+        this is just a precaution in case one falls through to prevent the program from closing.
+        */
+        std::cerr << "Unhandled exception occured, ignoring...\n";
     }
 #endif
-    return 0;
+    return EXIT_SUCCESS;
 }

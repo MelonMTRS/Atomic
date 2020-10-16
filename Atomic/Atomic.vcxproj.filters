@@ -185,6 +185,9 @@
     <ClInclude Include="Atomic\Config\Parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Atomic\Rolimons.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Atomic.rc">
