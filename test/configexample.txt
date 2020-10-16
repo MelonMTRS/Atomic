@@ -35,3 +35,7 @@ check_inbound_trades = 120
 # Does not evaluate trades above this value
 # You're welcome to increase it to however you please
 ignore_trades_above = 7500
+
+# If the inbound trade is bad, then it counters with a trade the bot prefers instead.
+# If set to false then the trade just gets declined
+counter_bad_trades = false
