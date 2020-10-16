@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Atomic\AuthUser.cpp" />
     <ClCompile Include="Atomic\Bot.cpp" />
     <ClCompile Include="Atomic\Config\Parser.cpp" />
     <ClCompile Include="Atomic\Conversion.cpp" />

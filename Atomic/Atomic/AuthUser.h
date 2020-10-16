@@ -6,9 +6,6 @@
 
 namespace atomic {
 	class AuthUser {
-		/*
-		Represents the authenticated user
-		*/
 	private:
 		std::string m_name;
 		std::string m_cookie;

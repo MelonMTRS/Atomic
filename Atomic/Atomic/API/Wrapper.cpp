@@ -1,21 +1,16 @@
 #include <future> // for std::future
+#include "cpr/cpr.h"
+#include "./Wrapper.h"
 #include "../Exceptions.h"
 #include "../Conversion.h"
 #include "../Trade.h"
-#include "./Wrapper.h"
-#include "cpr/cpr.h"
-// JSON
 #include "../rapidjson/document.h"
-
-/*
-	For information on what each function does, see Wrapper.h
-*/
 
 [[nodiscard]] std::string roblox::getToken(const std::string& cookie) {
 	cpr::Url logout = { "https://auth.roblox.com/v2/logout" };
 	cpr::Cookies authorization = { {".ROBLOSECURITY", atomic::formatCookie(cookie)} };
 	cpr::Body empty{""};
-	cpr::Response r = cpr::Post(logout, authorization, empty); // Request should fail and return an X-CSRF token along with it
+	cpr::Response r = cpr::Post(logout, authorization, empty);
 	if (r.status_code != 403)
 		throw atomic::HttpError{"Http Error", r.status_code};
 	else

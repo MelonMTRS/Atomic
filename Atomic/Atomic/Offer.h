@@ -3,18 +3,13 @@
 #include <vector>
 #include "Item.h"
 
-/*
-	`Offer` is an object that represents a roblox trade,
-	can represent TradeType::Inbound, TradeType::Outbound, TradeType::Completed, TradeType::Inactive
-*/
-
 namespace atomic {
 	using OfferHolder = std::vector<atomic::Item>;
 
 	class Offer {
 	private:
-		const OfferHolder m_offering; // Items the authenticated user is offering
-		const OfferHolder m_requesting; // Items the authenticated user is requesting
+		const OfferHolder m_offering;
+		const OfferHolder m_requesting;
 		const int m_robuxOffering;
 		const int m_robuxRequesting;
 	public:

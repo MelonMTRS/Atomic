@@ -13,11 +13,6 @@ namespace atomic {
 	};
 
 	class Trade {
-		/*
-		Represents a trade object
-
-		The AuthUser is not included here
-		*/
 	private:
 		const int m_tradeId;
 		const atomic::User m_trader;
@@ -30,21 +25,14 @@ namespace atomic {
 		{
 		}
 
-		// Declines the trade
-		// Trade must be either Inbound or Outbound
 		void decline() const;
 
-		// Counters the trade
-		// Trade must be Inbound
 		void counter(atomic::Offer newOffer) const;
 
-		// Returns the offer
 		[[nodiscard]] const atomic::Offer getOffer() const noexcept { return this->m_offer; }
 
-		// Returns the TradeType of the trade
 		[[nodiscard]] const atomic::TradeType getTradeType() const noexcept { return this->m_TradeType; }
 
-		// Returns the trader
 		[[nodiscard]] const atomic::User getTrader() const noexcept { return this->m_trader; }
 	};
 }

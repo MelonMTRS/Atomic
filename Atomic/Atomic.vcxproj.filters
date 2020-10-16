@@ -42,6 +42,9 @@
     <ClCompile Include="Atomic\API\Rolimons.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Atomic\AuthUser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Atomic\Item.h">

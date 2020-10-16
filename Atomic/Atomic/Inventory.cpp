@@ -31,5 +31,5 @@ atomic::ItemContainer atomic::Inventory::itemMatch(const std::function<bool(cons
 		if (function(*item))
 			itemsFound.push_back(*item);
 	}
-	return itemsFound; // Returns the items found, if no matches, then returns an empty ItemContainer
+	return itemsFound;
 }
