@@ -32,14 +32,14 @@ namespace atomic {
 
 		// Declines the trade
 		// Trade must be either Inbound or Outbound
-		const void decline();
+		void decline() const;
 
 		// Counters the trade
 		// Trade must be Inbound
-		const void counter(atomic::Offer newOffer);
+		void counter(atomic::Offer newOffer) const;
 
 		// Returns the offer
-		[[nodiscard]] const atomic::Offer getOffer() noexcept { return this->m_offer; }
+		[[nodiscard]] const atomic::Offer getOffer() const noexcept { return this->m_offer; }
 
 		// Returns the TradeType of the trade
 		[[nodiscard]] const atomic::TradeType getTradeType() const noexcept { return this->m_TradeType; }

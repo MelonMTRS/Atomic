@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "./Inventory.h"
 #include "./Exceptions.h"
 

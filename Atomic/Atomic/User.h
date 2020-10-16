@@ -17,8 +17,8 @@ namespace atomic {
 		}
 
 		[[nodiscard]] const int getId() const noexcept { return this->m_id; }
-		[[nodiscard]] atomic::Inventory getInventory();
-		void send_trade();
+		[[nodiscard]] atomic::Inventory getInventory() const noexcept;
+		void send_trade() const;
 	};
 }
 

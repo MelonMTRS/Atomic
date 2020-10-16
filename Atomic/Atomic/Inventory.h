@@ -19,8 +19,8 @@ namespace atomic {
 		inline const void addItem(const atomic::Item item) { this->m_inventory.push_back(item); }
 		[[nodiscard]] inline const ItemContainer& getInventory() const noexcept { return this->m_inventory; }
 
-		ItemContainer::iterator begin() { return this->m_inventory.begin(); }
-		ItemContainer::iterator end() { return this->m_inventory.end(); }
+		ItemContainer::iterator begin() noexcept { return this->m_inventory.begin(); }
+		ItemContainer::iterator end() noexcept { return this->m_inventory.end(); }
 
 		// Searching / Indexing
 		atomic::Item& operator[](int index) { return this->m_inventory[index]; }

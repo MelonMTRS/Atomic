@@ -1,12 +1,12 @@
 #include "./Trade.h"
 
-const void atomic::Trade::decline() {
+void atomic::Trade::decline() const {
 	if (this->m_TradeType == atomic::TradeType::Inbound || this->m_TradeType == atomic::TradeType::Outbound) {
 		// TODO: Canceling here
 	}
 }
 
-const void atomic::Trade::counter(atomic::Offer newOffer) {
+void atomic::Trade::counter(atomic::Offer newOffer) const {
 	if (this->m_TradeType == atomic::TradeType::Inbound) {
 		// TODO: Countering here
 	}

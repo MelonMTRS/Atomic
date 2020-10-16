@@ -9,7 +9,7 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        // Primary code
+        
 #ifndef VS_DEBUG
     }
     catch (...) {
