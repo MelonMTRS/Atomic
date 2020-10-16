@@ -8,6 +8,7 @@ namespace atomic {
 		const std::int64_t id;
 		const std::int64_t userAssetId; // Unique Identifier Id
 		const std::int64_t rap;
+		std::int64_t value = -1; // Only fetchable through rolimons::getItem()
 	};
 }
 
