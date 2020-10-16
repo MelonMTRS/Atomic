@@ -14,6 +14,13 @@ rolimons::ItemDB rolimons::getRolimonItems() {
 	return d;
 }
 
+bool rolimons::isProjected(rolimons::ItemDB& items, std::int64_t assetId) {
+	if (items["items"][std::to_string(assetId).c_str()].IsArray()) {
+		rapidjson::Value Item = items["items"][std::to_string(assetId).c_str()].GetArray();
+		return Item[7].GetInt() == 1;
+	}
+}
+
 atomic::RolimonsItem rolimons::getItem(rolimons::ItemDB& items, std::int64_t assetId) {
 	std::string stringassetId = std::to_string(assetId);
 	if (items["items"][stringassetId.c_str()].IsArray()) {
