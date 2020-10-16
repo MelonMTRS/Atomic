@@ -15,9 +15,13 @@ rolimons::ItemDB rolimons::getRolimonItems() {
 }
 
 bool rolimons::isProjected(rolimons::ItemDB& items, std::int64_t assetId) {
-	if (items["items"][std::to_string(assetId).c_str()].IsArray()) {
-		rapidjson::Value Item = items["items"][std::to_string(assetId).c_str()].GetArray();
+	std::string asset = std::to_string(assetId);
+	if (items["items"][asset.c_str()].IsArray()) {
+		rapidjson::Value Item = items["items"][asset.c_str()].GetArray();
 		return Item[7].GetInt() == 1;
+	}
+	else {
+		throw atomic::ItemNotFound{ "Item could not be found" };
 	}
 }
 
@@ -48,8 +52,9 @@ atomic::Item rolimons::getSpecificItem(rolimons::ItemDB& items, std::int64_t ass
 
 // rolimons::getSpecificItem && rolimons::getItem is recommended instead
 std::int64_t rolimons::getItemValue(rolimons::ItemDB& items, std::int64_t assetId) {
-	if (items["items"][std::to_string(assetId).c_str()].IsArray())
-		return items["items"][std::to_string(assetId).c_str()].GetArray()[3].GetInt64();
+	std::string asset = std::to_string(assetId);
+	if (items["items"][asset.c_str()].IsArray())
+		return items["items"][asset.c_str()].GetArray()[3].GetInt64();
 	else
 		throw atomic::ItemNotFound{ "Item could not be found" };
 }
