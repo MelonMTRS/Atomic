@@ -152,6 +152,7 @@
     <ClCompile Include="Atomic\Conversion.cpp" />
     <ClCompile Include="Atomic\API\Wrapper.cpp" />
     <ClCompile Include="Atomic\Inventory.cpp" />
+    <ClCompile Include="Atomic\API\Rolimons.cpp" />
     <ClCompile Include="Atomic\Trade.cpp" />
     <ClCompile Include="Atomic\User.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -202,7 +203,7 @@
     <ClInclude Include="Atomic\rapidjson\stringbuffer.h" />
     <ClInclude Include="Atomic\rapidjson\writer.h" />
     <ClInclude Include="Atomic\API\Wrapper.h" />
-    <ClInclude Include="Atomic\Rolimons.h" />
+    <ClInclude Include="Atomic\API\Rolimons.h" />
     <ClInclude Include="Atomic\Trade.h" />
     <ClInclude Include="Atomic\User.h" />
     <ClInclude Include="resource.h" />

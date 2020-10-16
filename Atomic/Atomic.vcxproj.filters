@@ -39,6 +39,9 @@
     <ClCompile Include="Atomic\Inventory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Atomic\API\Rolimons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Atomic\Item.h">
@@ -185,7 +188,7 @@
     <ClInclude Include="Atomic\Config\Parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Atomic\Rolimons.h">
+    <ClInclude Include="Atomic\API\Rolimons.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

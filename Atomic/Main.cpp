@@ -1,4 +1,7 @@
 #include <iostream>
+#include <thread>
+#include <chrono>
+#include "Atomic/API/Rolimons.h"
 #include "Atomic/Config/Parser.h"
 #include "Atomic/API/Wrapper.h"
 #include "Atomic/Conversion.h"
@@ -9,7 +12,9 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        
+        rolimons::ItemDB items = rolimons::getRolimonItems();
+        atomic::RolimonsItem i = rolimons::getItem(items, 527365852);
+        std::cout << i.value;
 #ifndef VS_DEBUG
     }
     catch (...) {

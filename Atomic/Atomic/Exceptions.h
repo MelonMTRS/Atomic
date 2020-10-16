@@ -28,6 +28,11 @@ namespace atomic {
 		atomic::ErrorTypes errorType = ErrorTypes::DefaultError;
 	};
 
+	struct ItemFetchFailure {
+		std::string message;
+		atomic::ErrorTypes errorType = ErrorTypes::DefaultError;
+	};
+
 	// Raised when roblox prompts a captcha
 	struct CaptchaFailure {
 		const std::string message;
