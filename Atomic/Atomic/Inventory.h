@@ -16,8 +16,10 @@ namespace atomic {
 		{
 		}
 
-		inline const void addItem(const atomic::Item item) { this->m_inventory.push_back(item); }
+		void randomizeInventory();
+		inline void addItem(const atomic::Item& item) { this->m_inventory.push_back(item); }
 		[[nodiscard]] inline const ItemContainer& getInventory() const noexcept { return this->m_inventory; }
+		size_t item_count() const noexcept { return this->m_inventory.size(); }
 
 		ItemContainer::iterator begin() noexcept { return this->m_inventory.begin(); }
 		ItemContainer::iterator end() noexcept { return this->m_inventory.end(); }

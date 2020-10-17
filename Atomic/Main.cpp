@@ -11,7 +11,11 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        
+        rolimons::ItemDB items = rolimons::getRolimonItems();
+        atomic::User r = { 1480997 };
+        atomic::Inventory userInv = r.getInventory(items);
+        //userInv.randomizeInventory();
+        std::cout << userInv[0].name;
 #ifndef VS_DEBUG
     }
     catch (...) {

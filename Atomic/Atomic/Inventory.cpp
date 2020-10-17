@@ -1,6 +1,13 @@
+#include <iostream>
 #include <algorithm>
+#include <random>
 #include "./Inventory.h"
 #include "./Exceptions.h"
+
+// A necessary function in order to form new trades with the same user
+void atomic::Inventory::randomizeInventory() {
+	// TODO
+}
 
 atomic::Item& atomic::Inventory::findItemByName(const std::string& name) {
 	auto lower = [&](const std::string& stringToLower) {
