@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "./Inventory.h"
+#include "./API/Rolimons.h"
 
 namespace atomic {
 	class AuthUser {
@@ -22,7 +23,7 @@ namespace atomic {
 		[[nodiscard]] inline const std::string getCookie() const noexcept { return this->m_cookie; }
 		[[nodiscard]] inline const std::string getXcsrf() const noexcept { return this->m_xcsrf; }
 		[[nodiscard]] inline const int getId() const noexcept { return this->m_id; }
-		atomic::Inventory getInventory();
+		atomic::Inventory getInventory(rolimons::ItemDB& items);
 	};
 }
 

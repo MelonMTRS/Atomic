@@ -1,6 +1,7 @@
 #ifndef __ATOMIC__USER__H
 #define __ATOMIC__USER__H
 #include <string>
+#include "./API/Rolimons.h"
 #include "./Inventory.h"
 
 namespace atomic {
@@ -17,7 +18,7 @@ namespace atomic {
 		}
 
 		[[nodiscard]] const int getId() const noexcept { return this->m_id; }
-		[[nodiscard]] atomic::Inventory getInventory() const noexcept;
+		[[nodiscard]] atomic::Inventory getInventory(rolimons::ItemDB& items) const noexcept;
 		void send_trade() const;
 	};
 }

@@ -1,6 +1,7 @@
 #ifndef __ATOMIC__ROBLOX__WRAPPER__H
 #define __ATOMIC__ROBLOX__WRAPPER__H
 #include <string>
+#include "./Rolimons.h"
 #include "../User.h"
 #include "../Inventory.h"
 #include "../Offer.h"
@@ -25,7 +26,7 @@ namespace roblox {
 	[[nodiscard]] std::string getToken(const std::string& cookie);
 	[[nodiscard]] atomic::AuthUser getUserFromCookie(std::string cookie);
 	[[nodiscard]] roblox::Membership getMembership(atomic::AuthUser authuser, atomic::User user);
-	[[nodiscard]] atomic::Inventory getInventory(atomic::User user);
+	[[nodiscard]] atomic::Inventory getInventory(atomic::User user, rolimons::ItemDB& items);
 	roblox::TradeResult sendTrade(atomic::AuthUser user, atomic::Trade trade);
 	roblox::TradeResult counterTrade(atomic::AuthUser user, const atomic::Trade& trade, const atomic::Offer& newOffer);
 	roblox::TradeResult declineTrade(atomic::AuthUser user, const atomic::Trade& trade);

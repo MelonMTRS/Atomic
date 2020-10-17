@@ -17,8 +17,7 @@
 [[nodiscard]] bool rolimons::isProjected(rolimons::ItemDB& items, std::int64_t assetId) {
 	std::string asset = std::to_string(assetId);
 	if (items["items"][asset.c_str()].IsArray()) {
-		rapidjson::Value Item = items["items"][asset.c_str()].GetArray();
-		return Item[7].GetInt() == 1;
+		return (items["items"][asset.c_str()][7].GetInt()) == 1;
 	}
 	else {
 		throw atomic::ItemNotFound{ "Item could not be found" };
@@ -28,13 +27,16 @@
 [[nodiscard]] atomic::RolimonsItem rolimons::getItem(rolimons::ItemDB& items, std::int64_t assetId) {
 	std::string stringassetId = std::to_string(assetId);
 	if (items["items"][stringassetId.c_str()].IsArray()) {
-		rapidjson::Value value = items["items"][stringassetId.c_str()].GetArray();
-		if (value[0].IsString() && value[2].IsInt64() && value[3].IsInt64()) {
+		//rapidjson::Value value = items["items"][stringassetId.c_str()].GetArray();
+		if (items["items"][stringassetId.c_str()][0].IsString() && items["items"][stringassetId.c_str()][2].IsInt64() && items["items"][stringassetId.c_str()][3].IsInt64()) {
+			int itemValue = items["items"][stringassetId.c_str()][3].GetInt64();
+			if (itemValue == -1)
+				itemValue = items["items"][stringassetId.c_str()][2].GetInt64();
 			return atomic::RolimonsItem{
-				value[0].GetString(),
+				items["items"][stringassetId.c_str()][0].GetString(),
 				assetId,
-				value[2].GetInt64(),
-				value[3].GetInt64()
+				items["items"][stringassetId.c_str()][2].GetInt64(),
+				itemValue
 			};
 		}
 		else

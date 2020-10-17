@@ -1,6 +1,7 @@
 #include <future> // for std::future
 #include "cpr/cpr.h"
 #include "./Wrapper.h"
+#include "./Rolimons.h"
 #include "../Exceptions.h"
 #include "../Conversion.h"
 #include "../Trade.h"
@@ -28,7 +29,7 @@
 	return atomic::AuthUser{ doc["name"].GetString(), roblox::getToken(cookie), cookie, doc["id"].GetInt() };
 }
 
-[[nodiscard]] atomic::Inventory roblox::getInventory(atomic::User user) {
+[[nodiscard]] atomic::Inventory roblox::getInventory(atomic::User user, rolimons::ItemDB& items) {
 	cpr::Url url = {"https://inventory.roblox.com/v1/users/" + std::to_string(user.getId()) + "/assets/collectibles?limit=100"}; // TODO: cursoring
 	cpr::Response r = cpr::Get(url);
 	switch (r.status_code) {
@@ -44,12 +45,7 @@
 	atomic::ItemContainer container;
 	for (auto& v : inventory["data"].GetArray()) {
 		if (v["name"].IsString() && v["assetId"].IsInt64() && v["userAssetId"].IsInt64() && v["recentAveragePrice"].IsInt64()) {
-			container.push_back(atomic::Item{
-				v["name"].GetString(),
-				v["assetId"].GetInt64(),
-				v["userAssetId"].GetInt64(),
-				v["recentAveragePrice"].GetInt64()
-			});
+			container.push_back(rolimons::getSpecificItem(items, v["assetId"].GetInt64(), v["userAssetId"].GetInt64()));
 		}
 	}
 	return atomic::Inventory{container};
