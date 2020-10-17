@@ -66,7 +66,7 @@
 	return d["canTrade"].GetBool();
 }
 
-[[nodiscard]] atomic::Trade roblox::getTrade(atomic::AuthUser& user, int tradeId) {
+[[nodiscard]] atomic::Trade roblox::getTrade(atomic::AuthUser& user, rolimons::ItemDB& items, int tradeId) {
 	// Http
 	cpr::Url url = {"https://trades.roblox.com/v1/trades/" + std::to_string(tradeId)};
 	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
@@ -100,22 +100,12 @@
 		tradeType = atomic::TradeType::Unknown;
 	for (auto& v : d["offers"][0]["userAssets"].GetArray()) {
 		if (v["name"].IsString() && v["assetId"].IsInt64() && v["userAssetId"].IsInt64() && v["recentAveragePrice"].IsInt64()) {
-			offering.push_back(atomic::Item{
-				v["name"].GetString(),
-				v["assetId"].GetInt64(),
-				v["id"].GetInt64(),
-				v["recentAveragePrice"].GetInt64()
-			});
+			offering.push_back(rolimons::getSpecificItem(items, v["assetId"].GetInt64(), v["userAssetId"].GetInt64()));
 		}
 	}
 	for (auto& v : d["offers"][1]["userAssets"].GetArray()) {
 		if (v["name"].IsString() && v["assetId"].IsInt64() && v["userAssetId"].IsInt64() && v["recentAveragePrice"].IsInt64()) {
-			requesting.push_back(atomic::Item{
-				v["name"].GetString(),
-				v["assetId"].GetInt64(),
-				v["id"].GetInt64(),
-				v["recentAveragePrice"].GetInt64()
-			});
+			requesting.push_back(rolimons::getSpecificItem(items, v["assetId"].GetInt64(), v["userAssetId"].GetInt64()));
 		}
 	}
 	robuxOffering = d["offers"][0]["robux"].GetInt(); // lets be real, no ones gonna offer you more than 2147483647 robux
