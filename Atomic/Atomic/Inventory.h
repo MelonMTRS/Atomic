@@ -16,19 +16,19 @@ namespace atomic {
 		{
 		}
 
-		void randomizeInventory();
 		inline void addItem(const atomic::Item& item) { this->m_inventory.push_back(item); }
+		[[nodiscard]] atomic::Item& getRandomItem();
 		[[nodiscard]] inline const ItemContainer& getInventory() const noexcept { return this->m_inventory; }
-		size_t item_count() const noexcept { return this->m_inventory.size(); }
+		[[nodiscard]] size_t item_count() const noexcept { return this->m_inventory.size(); }
 
-		ItemContainer::iterator begin() noexcept { return this->m_inventory.begin(); }
-		ItemContainer::iterator end() noexcept { return this->m_inventory.end(); }
+		[[nodiscard]] ItemContainer::iterator begin() noexcept { return this->m_inventory.begin(); }
+		[[nodiscard]] ItemContainer::iterator end() noexcept { return this->m_inventory.end(); }
 
 		// Searching / Indexing
-		atomic::Item& operator[](int index) { return this->m_inventory[index]; }
-		atomic::Item& findItemByName(const std::string& name);
-		atomic::Item& findItemById(int assetId);
-		ItemContainer itemMatch(const std::function<bool(const atomic::Item&)>& function);
+		[[nodiscard]] atomic::Item& operator[](int index) { return this->m_inventory[index]; }
+		[[nodiscard]] atomic::Item& findItemByName(const std::string& name);
+		[[nodiscard]] atomic::Item& findItemById(int assetId);
+		[[nodiscard]] ItemContainer itemMatch(const std::function<bool(const atomic::Item&)>& function);
 	};
 }
 

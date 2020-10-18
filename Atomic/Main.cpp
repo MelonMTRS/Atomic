@@ -15,7 +15,7 @@ int main()
         atomic::User r = { 1480997 };
         atomic::Inventory userInv = r.getInventory(items);
         //userInv.randomizeInventory();
-        std::cout << userInv[0].name;
+        std::cout << userInv.getRandomItem().name;
 #ifndef VS_DEBUG
     }
     catch (...) {

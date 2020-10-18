@@ -1,15 +1,12 @@
-#include <iostream>
-#include <algorithm>
-#include <random>
 #include "./Inventory.h"
 #include "./Exceptions.h"
+#include "./Functions.h"
 
-// A necessary function in order to form new trades with the same user
-void atomic::Inventory::randomizeInventory() {
-	// TODO
+[[nodiscard]] atomic::Item& atomic::Inventory::getRandomItem() {
+	return this->m_inventory[atomic::random(0, this->item_count()-1)];
 }
 
-atomic::Item& atomic::Inventory::findItemByName(const std::string& name) {
+[[nodiscard]] atomic::Item& atomic::Inventory::findItemByName(const std::string& name) {
 	auto lower = [&](const std::string& stringToLower) {
 		std::string newString = "";
 		for (auto c = stringToLower.begin(); c != stringToLower.end(); ++c) {
@@ -24,7 +21,7 @@ atomic::Item& atomic::Inventory::findItemByName(const std::string& name) {
 	throw atomic::ItemNotFound{"The item " + name + " could not be found"};
 }
 
-atomic::Item& atomic::Inventory::findItemById(int assetId) {
+[[nodiscard]] atomic::Item& atomic::Inventory::findItemById(int assetId) {
 	for (auto item = this->begin(); item != this->end(); ++item) {
 		if (item->id == assetId)
 			return *item;
@@ -32,7 +29,7 @@ atomic::Item& atomic::Inventory::findItemById(int assetId) {
 	throw atomic::ItemNotFound{ "The item " + std::to_string(assetId) + " could not be found" };
 }
 
-atomic::ItemContainer atomic::Inventory::itemMatch(const std::function<bool(const atomic::Item&)>& function) {
+[[nodiscard]] atomic::ItemContainer atomic::Inventory::itemMatch(const std::function<bool(const atomic::Item&)>& function) {
 	atomic::ItemContainer itemsFound;
 	for (auto item = this->begin(); item != this->end(); ++item) {
 		if (function(*item))

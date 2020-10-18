@@ -2,8 +2,8 @@
 #include "./Functions.h"
 
 int atomic::random(int min, int max) {
-	std::random_device rd;
-	std::mt19937 mt(rd());
-	std::uniform_int_distribution<int> distr(min, max);
-	return distr(mt);
+	std::random_device device;
+	std::mt19937 mt(device());
+	std::uniform_int_distribution<int> db(min, max);
+	return db(mt);
 }
