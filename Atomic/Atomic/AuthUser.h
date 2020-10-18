@@ -23,7 +23,7 @@ namespace atomic {
 		[[nodiscard]] inline const std::string getCookie() const noexcept { return this->m_cookie; }
 		[[nodiscard]] inline const std::string getXcsrf() const noexcept { return this->m_xcsrf; }
 		[[nodiscard]] inline const int getId() const noexcept { return this->m_id; }
-		atomic::Inventory getInventory(rolimons::ItemDB& items);
+		[[nodiscard]] atomic::Inventory getInventory(rolimons::ItemDB& items);
 	};
 }
 

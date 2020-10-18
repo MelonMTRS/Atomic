@@ -9,7 +9,7 @@
 	cpr::Response r = cpr::Get(url);
 	if (r.status_code != 200)
 		throw atomic::HttpError{"RolimonsFetchError", r.status_code};
-	rapidjson::Document d;
+	rolimons::ItemDB d;
 	d.Parse(r.text.c_str());
 	return d;
 }
