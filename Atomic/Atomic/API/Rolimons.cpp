@@ -4,6 +4,21 @@
 #include "../rapidjson/document.h"
 #include "../Exceptions.h"
 
+atomic::Demand getItemDemand(int level) {
+	switch (level) {
+	case -1:
+		return atomic::Demand::NotAssigned;
+	case 1:
+		return atomic::Demand::Low;
+	case 2:
+		return atomic::Demand::Normal;
+	case 3:
+		return atomic::Demand::High;
+	case 4:
+		return atomic::Demand::Amazing;
+	}
+}
+
 [[nodiscard]] rolimons::ItemDB rolimons::getRolimonItems() {
 	cpr::Url url = {"https://www.rolimons.com/itemapi/itemdetails"};
 	cpr::Response r = cpr::Get(url);
@@ -36,7 +51,8 @@
 				items["items"][stringassetId.c_str()][0].GetString(),
 				assetId,
 				items["items"][stringassetId.c_str()][2].GetInt64(),
-				itemValue
+				itemValue,
+				getItemDemand(items["items"][stringassetId.c_str()][5].GetInt())
 			};
 		}
 		else
@@ -49,7 +65,7 @@
 
 [[nodiscard]] atomic::Item rolimons::getSpecificItem(rolimons::ItemDB& items, std::int64_t assetId, std::int64_t userAssetId) {
 	atomic::RolimonsItem item = rolimons::getItem(items, assetId);
-	return atomic::Item{item.name, item.id, userAssetId, item.rap, item.value};
+	return atomic::Item{item.name, item.id, userAssetId, item.rap, item.value, item.demand};
 }
 
 // rolimons::getSpecificItem && rolimons::getItem is recommended instead
