@@ -24,6 +24,11 @@ namespace atomic {
 
 		[[nodiscard]] inline const int& getRobuxOffered() const noexcept { return this->m_robuxOffering; }
 		[[nodiscard]] inline const int& getRobuxRequested() const noexcept { return this->m_robuxRequesting; }
+
+		[[nodiscard]] const int getTotalOfferedRap(); // Use std::accumulate
+		[[nodiscard]] const int getTotalRequestedRap(); // Use std::accumulate
+		[[nodiscard]] const int getTotalOfferedValue(); // Use std::accumulate
+		[[nodiscard]] const int getTotalRequestedValue(); // Use std::accumulate
 	};
 }
 
