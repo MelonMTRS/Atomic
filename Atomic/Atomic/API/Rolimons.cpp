@@ -8,6 +8,8 @@ atomic::Demand getItemDemand(int level) {
 	switch (level) {
 	case -1:
 		return atomic::Demand::NotAssigned;
+	case 0:
+		return atomic::Demand::Terrible;
 	case 1:
 		return atomic::Demand::Low;
 	case 2:

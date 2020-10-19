@@ -4,21 +4,7 @@
 #include "Atomic/Config/Parser.h"
 #include "Atomic/Conversion.h"
 #include "Atomic/User.h"
-
-std::string getItemStringDemand(atomic::Demand demand) {
-	switch (demand) {
-	case atomic::Demand::NotAssigned:
-		return "Not Assigned";
-	case atomic::Demand::Low:
-		return "Low";
-	case atomic::Demand::Normal:
-		return "Normal";
-	case atomic::Demand::High:
-		return "High";
-	case atomic::Demand::Amazing:
-		return "Amazing";
-	}
-}
+#include "Atomic/Functions.h"
 
 int main()
 {
@@ -30,7 +16,7 @@ int main()
         atomic::User r = { 1480997 };
         atomic::Inventory userInv = r.getInventory(*items);
 		atomic::Item r2 = userInv.getRandomItem();
-		std::cout << r2.name << " | " << getItemStringDemand(r2.demand);
+		std::cout << r2.name << " | " << atomic::getItemStringDemand(r2.demand);
 #ifndef VS_DEBUG
     }
     catch (...) {

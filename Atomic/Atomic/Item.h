@@ -6,6 +6,7 @@ namespace atomic {
 	enum class Demand {
 		NotSet,
 		NotAssigned,
+		Terrible,
 		Low,
 		Normal,
 		High,
