@@ -1,24 +1,15 @@
 #ifndef __ATOMIC__CONFIGPARSER__PARSER__H
 #define __ATOMIC__CONFIGPARSER__PARSER__H
-#include <string>
+#include <iostream>
+#include <vector>
 #include <map>
+#include <variant> // C++17
 
 namespace config {
-	class Config {
-	private:
-		std::string m_fileName;
-	public:
-		Config(std::string fileName) :
-			m_fileName{ fileName }
-		{
-			// TODO: Parsing here
-		}
-
-		// Returns the value indexed, throws an atomic::KeyNotFound if key does not exist
-		std::string operator[](std::string index) {
-			// TODO: basically everything
-		}
-	};
+	using Parser = std::map<std::string, std::string>;
+	using ParseValue = std::variant<int, bool, std::string>;
+	config::Parser parse(std::string filename);
+	ParseValue get(config::Parser ParseObject, std::string key);
 }
 
 #endif

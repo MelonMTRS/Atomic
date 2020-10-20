@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Atomic/Config/Parser.h"
 #include "Atomic/API/Rolimons.h"
 #include "Atomic/API/Wrapper.h"
 #include "Atomic/Config/Parser.h"
@@ -11,12 +12,11 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        std::cout << std::boolalpha;
-        rolimons::ItemDB* items = new rolimons::ItemDB(rolimons::getRolimonItems());
-        atomic::User r = { 1480997 };
-        atomic::Inventory userInv = r.getInventory(*items);
-		atomic::Item r2 = userInv.getRandomItem();
-		std::cout << r2.name << " | " << atomic::getItemStringDemand(r2.demand);
+        config::Parser p = config::parse("config.cfg");
+        config::ParseValue val = config::get(p, "test");
+        config::ParseValue another_value = config::get(p, "another_value");
+        std::cout << "test: " << std::get<std::string>(val) << '\n';
+        std::cout << "another_value: " << std::get<int>(another_value) << '\n';
 #ifndef VS_DEBUG
     }
     catch (...) {

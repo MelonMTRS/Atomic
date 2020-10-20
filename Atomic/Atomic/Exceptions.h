@@ -1,5 +1,6 @@
 #ifndef __ATOMIC__EXCEPTIONS__H
 #define __ATOMIC__EXCEPTIONS__H
+#include <string>
 
 namespace atomic {
 	enum class ErrorTypes {
@@ -39,6 +40,12 @@ namespace atomic {
 	struct TradeFormFailure {
 		const std::string message;
 		atomic::ErrorTypes errorType = ErrorTypes::DefaultError;
+	};
+
+	// Config Errors
+
+	struct ConfigLoadFailure {
+		const std::string message;
 	};
 }
 
