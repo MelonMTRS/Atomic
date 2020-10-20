@@ -26,13 +26,9 @@ namespace atomic {
 		}
 
 		void decline() const;
-
 		void counter(atomic::Offer newOffer) const;
-
 		[[nodiscard]] const atomic::Offer getOffer() const noexcept { return this->m_offer; }
-
 		[[nodiscard]] const atomic::TradeType getTradeType() const noexcept { return this->m_TradeType; }
-
 		[[nodiscard]] const atomic::User getTrader() const noexcept { return this->m_trader; }
 	};
 }

@@ -1,4 +1,5 @@
 #include <iostream> // for test
+#include <string.h>
 #include "cpr/cpr.h"
 #include "./Rolimons.h"
 #include "../rapidjson/document.h"
@@ -24,8 +25,8 @@ atomic::Demand getItemDemand(int level) {
 }
 
 [[nodiscard]] rolimons::ItemDB rolimons::getRolimonItems() {
-	cpr::Url url = {"https://www.rolimons.com/itemapi/itemdetails"};
-	cpr::Response r = cpr::Get(url);
+	const cpr::Url url = {"https://www.rolimons.com/itemapi/itemdetails"};
+	const cpr::Response r = cpr::Get(url);
 	if (r.status_code != 200)
 		throw atomic::HttpError{"RolimonsFetchError", r.status_code};
 	rolimons::ItemDB d;
@@ -44,19 +45,19 @@ atomic::Demand getItemDemand(int level) {
 }
 
 [[nodiscard]] atomic::RolimonsItem rolimons::getItem(rolimons::ItemDB& items, std::int64_t assetId) {
-	std::string stringassetId = std::to_string(assetId);
-	if (items["items"][stringassetId.c_str()].IsArray()) {
+	const char* StringAssetId = _strdup(std::to_string(assetId).c_str());
+	if (items["items"][StringAssetId].IsArray()) {
 		//rapidjson::Value value = items["items"][stringassetId.c_str()].GetArray();
-		if (items["items"][stringassetId.c_str()][0].IsString() && items["items"][stringassetId.c_str()][2].IsInt64() && items["items"][stringassetId.c_str()][3].IsInt64()) {
-			int itemValue = items["items"][stringassetId.c_str()][3].GetInt64();
+		if (items["items"][StringAssetId][0].IsString() && items["items"][StringAssetId][2].IsInt64() && items["items"][StringAssetId][3].IsInt64()) {
+			std::int64_t itemValue = items["items"][StringAssetId][3].GetInt64();
 			if (itemValue == -1)
-				itemValue = items["items"][stringassetId.c_str()][2].GetInt64();
+				itemValue = items["items"][StringAssetId][2].GetInt64();
 			return atomic::RolimonsItem{
-				items["items"][stringassetId.c_str()][0].GetString(),
+				items["items"][StringAssetId][0].GetString(),
 				assetId,
-				items["items"][stringassetId.c_str()][2].GetInt64(),
+				items["items"][StringAssetId][2].GetInt64(),
 				itemValue,
-				getItemDemand(items["items"][stringassetId.c_str()][5].GetInt())
+				getItemDemand(items["items"][StringAssetId][5].GetInt())
 			};
 		}
 		else
