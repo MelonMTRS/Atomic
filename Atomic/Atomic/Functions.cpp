@@ -25,3 +25,19 @@ std::string atomic::getItemStringDemand(atomic::Demand demand) {
 		return "Amazing";
 	}
 }
+
+std::vector<std::string> atomic::split(std::string str, char separator) {
+	std::vector<std::string> sp = {};
+	std::string buffer = "";
+	for (int i = 0; i < str.size(); ++i) {
+		if (str[i] == separator) {
+			sp.push_back(buffer);
+			buffer = "";
+			continue;
+		}
+		buffer += str[i];
+	}
+	if (buffer != "")
+		sp.push_back(buffer);
+	return sp;
+}

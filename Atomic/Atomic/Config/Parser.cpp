@@ -1,26 +1,11 @@
 #include "../Exceptions.h"
+#include "../Functions.h"
 #include "./Parser.h"
 #include <fstream>
 #include <string>
 #include <vector>
 #include <map>
 #include <cctype>
-
-std::vector<std::string> split(std::string str, char separator) {
-    std::vector<std::string> sp = {};
-    std::string buffer = "";
-    for (int i = 0; i < str.size(); ++i) {
-        if (str[i] == separator) {
-            sp.push_back(buffer);
-            buffer = "";
-            continue;
-        }
-        buffer += str[i];
-    }
-    if (buffer != "")
-        sp.push_back(buffer);
-    return sp;
-}
 
 std::string strip(std::string s) {
     while (s.front() == ' ' || s.back() == ' ') {
@@ -51,11 +36,9 @@ config::Parser config::parse(std::string filename) {
         std::getline(config, line);
         if (line[0] == '#' || line[0] == '[')
             continue;
-        std::vector<std::string> s = split(line, '=');
+        std::vector<std::string> s = atomic::split(line, '=');
         if (s.size() == 2)
             f[strip(s[0])] = strip(s[1]);
-        else
-            continue;
     }
     return f;
 }
