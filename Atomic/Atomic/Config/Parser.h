@@ -5,6 +5,8 @@
 #include <map>
 #include <variant> // C++17
 
+// TODO: Improve this entire system
+
 namespace config {
 	using Parser = std::map<std::string, std::string>;
 	using ParseValue = std::variant<int, bool, std::string>;
