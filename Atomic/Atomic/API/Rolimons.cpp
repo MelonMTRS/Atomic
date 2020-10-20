@@ -1,5 +1,4 @@
 #include <iostream> // for test
-#include <string.h>
 #include "cpr/cpr.h"
 #include "./Rolimons.h"
 #include "../rapidjson/document.h"

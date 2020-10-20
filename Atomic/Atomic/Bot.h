@@ -1,6 +1,7 @@
 #ifndef __ATOMIC__BOT__H
 #define __ATOMIC__BOT__H
 #include "./Offer.h"
+#include "./AuthUser.h"
 #include "./Inventory.h"
 #include "./Trade.h"
 
@@ -17,8 +18,9 @@ namespace atomic {
 		Decline,
 		Ignore
 	};
-	[[nodiscard]] atomic::Offer makeOffer(const atomic::Inventory& AuthInventory, const atomic::Inventory& VictimInventory);
+	[[nodiscard]] atomic::Offer makeOffer(atomic::Inventory& AuthInventory, atomic::Inventory& VictimInventory);
 	[[nodiscard]] atomic::TradeAction evaluateTrade(atomic::Trade& trade);
+	[[nodiscard]] atomic::User findUser(atomic::AuthUser user); // Returns a random user to trade with
 }
 
 #endif
