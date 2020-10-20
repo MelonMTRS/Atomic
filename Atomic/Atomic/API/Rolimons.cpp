@@ -18,6 +18,8 @@ atomic::Demand getItemDemand(int level) {
 		return atomic::Demand::High;
 	case 4:
 		return atomic::Demand::Amazing;
+	default:
+		return atomic::Demand::Unknown;
 	}
 }
 

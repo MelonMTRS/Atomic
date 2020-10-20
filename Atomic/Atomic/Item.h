@@ -10,7 +10,8 @@ namespace atomic {
 		Low,
 		Normal,
 		High,
-		Amazing
+		Amazing,
+		Unknown
 	};
 
 	struct RolimonsItem {

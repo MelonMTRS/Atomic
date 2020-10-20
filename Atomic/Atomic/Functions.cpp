@@ -23,6 +23,8 @@ std::string atomic::getItemStringDemand(atomic::Demand demand) {
 		return "High";
 	case atomic::Demand::Amazing:
 		return "Amazing";
+	default:
+		return "Unknown";
 	}
 }
 
