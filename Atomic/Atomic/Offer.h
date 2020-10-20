@@ -1,6 +1,7 @@
 #ifndef __ATOMIC__OFFER__H
 #define __ATOMIC__OFFER__H
 #include <vector>
+#include <numeric>
 #include "Item.h"
 
 namespace atomic {
@@ -25,10 +26,26 @@ namespace atomic {
 		[[nodiscard]] inline const int& getRobuxOffered() const noexcept { return this->m_robuxOffering; }
 		[[nodiscard]] inline const int& getRobuxRequested() const noexcept { return this->m_robuxRequesting; }
 
-		[[nodiscard]] const int getTotalOfferedRap(); // Use std::accumulate
-		[[nodiscard]] const int getTotalRequestedRap(); // Use std::accumulate
-		[[nodiscard]] const int getTotalOfferedValue(); // Use std::accumulate
-		[[nodiscard]] const int getTotalRequestedValue(); // Use std::accumulate
+		[[nodiscard]] inline const int getTotalOfferedRap() const {
+			return std::accumulate(this->m_offering.begin(), this->m_offering.end(), 0, [](int accumulator, const atomic::Item& item) {
+				return accumulator + item.rap;
+			});
+		}
+		[[nodiscard]] inline const int getTotalRequestedRap() const {
+			return std::accumulate(this->m_requesting.begin(), this->m_requesting.end(), 0, [](int accumulator, const atomic::Item& item) {
+				return accumulator + item.rap;
+			});
+		}
+		[[nodiscard]] inline const int getTotalOfferedValue() const {
+			return std::accumulate(this->m_offering.begin(), this->m_offering.end(), 0, [](int accumulator, const atomic::Item& item) {
+				return accumulator + item.value;
+			});
+		}
+		[[nodiscard]] inline const int getTotalRequestedValue() const {
+			return std::accumulate(this->m_requesting.begin(), this->m_requesting.end(), 0, [](int accumulator, const atomic::Item& item) {
+				return accumulator + item.value;
+			});
+		}
 	};
 }
 
