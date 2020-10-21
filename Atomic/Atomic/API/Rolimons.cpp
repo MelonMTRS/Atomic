@@ -1,6 +1,6 @@
-#include <iostream> // for test
 #include "cpr/cpr.h"
 #include "./Rolimons.h"
+#include "../Functions.h"
 #include "../rapidjson/document.h"
 #include "../Exceptions.h"
 
@@ -64,6 +64,24 @@ atomic::Demand getItemDemand(int level) {
 	}
 	else
 		throw atomic::ItemNotFound{ "Item could not be found" };
+}
+
+[[nodiscard]] atomic::RolimonsItem rolimons::getRandomItem(ItemDB& items) {
+	std::vector<std::string> itemIds;
+	for (rapidjson::Value::MemberIterator assetId = items["items"].MemberBegin(); assetId != items["items"].MemberEnd(); ++assetId) {
+		itemIds.push_back(assetId->name.GetString());
+	}
+	std::string randomItemId = itemIds[atomic::random(0, itemIds.size()-1)];
+	std::int64_t itemValue = items["items"][randomItemId.c_str()][3].GetInt64();
+	if (itemValue == -1)
+		itemValue = items["items"][randomItemId.c_str()][2].GetInt64();
+	return atomic::RolimonsItem{
+		items["items"][randomItemId.c_str()][0].GetString(),
+		std::stoll(randomItemId),
+		items["items"][randomItemId.c_str()][2].GetInt64(),
+		itemValue,
+		getItemDemand(items["items"][randomItemId.c_str()][5].GetInt())
+	};
 }
 
 

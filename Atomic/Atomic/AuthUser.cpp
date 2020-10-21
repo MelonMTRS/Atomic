@@ -5,3 +5,7 @@
 [[nodiscard]] atomic::Inventory atomic::AuthUser::getInventory(rolimons::ItemDB& items) {
 	return roblox::getInventory(atomic::User{ this->m_id }, items);
 }
+
+[[nodiscard]] const bool atomic::AuthUser::canTradeWith(const atomic::User& user) const {
+	return roblox::can_trade(*this, user);
+}

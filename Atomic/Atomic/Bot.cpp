@@ -7,3 +7,7 @@ atomic::TradeAction atomic::evaluateTrade(atomic::Trade& trade) {
 	}
 	return atomic::TradeAction::Ignore; // Temporarily to avoid errors
 }
+
+atomic::User atomic::findUser(atomic::AuthUser user, rolimons::ItemDB& items) {
+	return atomic::User{0};
+}

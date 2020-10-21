@@ -14,10 +14,9 @@ int main()
 #endif
         std::cout << std::boolalpha;
         rolimons::ItemDB items = rolimons::getRolimonItems();
-        atomic::User r = { 1480997 };
-        atomic::Inventory userInv = r.getInventory(items);
-        atomic::RolimonsItem item = rolimons::getItem(items, userInv.getRandomItem().id);
-        std::cout << rolimons::isProjected(items, item.id);
+        while (true) {
+            std::cout << rolimons::getRandomItem(items).name << '\n';
+        }
 #ifndef VS_DEBUG
     }
     catch (...) {

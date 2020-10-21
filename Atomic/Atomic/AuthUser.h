@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "./Inventory.h"
+#include "./User.h"
 #include "./API/Rolimons.h"
 
 namespace atomic {
@@ -24,6 +25,7 @@ namespace atomic {
 		[[nodiscard]] inline const std::string getXcsrf() const noexcept { return this->m_xcsrf; }
 		[[nodiscard]] inline const int getId() const noexcept { return this->m_id; }
 		[[nodiscard]] atomic::Inventory getInventory(rolimons::ItemDB& items);
+		[[nodiscard]] const bool canTradeWith(const atomic::User& user) const;
 	};
 }
 
