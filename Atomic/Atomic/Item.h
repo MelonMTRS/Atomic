@@ -3,6 +3,10 @@
 #include <string>
 
 namespace atomic {
+	/*
+	some kids may ask why there is both NotSet and NotAssigned
+	and to those kids i say ur a dumb idiot cum poop
+	*/
 	enum class Demand {
 		NotSet,
 		NotAssigned,
