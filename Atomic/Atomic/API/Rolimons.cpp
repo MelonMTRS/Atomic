@@ -43,7 +43,7 @@ atomic::Demand getItemDemand(int level) {
 	}
 }
 
-[[nodiscard]] atomic::RolimonsItem rolimons::getItem(rolimons::ItemDB& items, std::int64_t assetId) {
+[[nodiscard]] atomic::Item rolimons::getItem(rolimons::ItemDB& items, std::int64_t assetId) {
 	const char* StringAssetId = _strdup(std::to_string(assetId).c_str());
 	if (items["items"][StringAssetId].IsArray()) {
 		//rapidjson::Value value = items["items"][stringassetId.c_str()].GetArray();
@@ -51,7 +51,7 @@ atomic::Demand getItemDemand(int level) {
 			std::int64_t itemValue = items["items"][StringAssetId][3].GetInt64();
 			if (itemValue == -1)
 				itemValue = items["items"][StringAssetId][2].GetInt64();
-			return atomic::RolimonsItem{
+			return atomic::Item{
 				items["items"][StringAssetId][0].GetString(),
 				assetId,
 				items["items"][StringAssetId][2].GetInt64(),
@@ -66,7 +66,8 @@ atomic::Demand getItemDemand(int level) {
 		throw atomic::ItemNotFound{ "Item could not be found" };
 }
 
-[[nodiscard]] atomic::RolimonsItem rolimons::getRandomItem(ItemDB& items) {
+
+[[nodiscard]] atomic::Item rolimons::getRandomItem(rolimons::ItemDB& items) {
 	std::vector<std::string> itemIds;
 	for (rapidjson::Value::MemberIterator assetId = items["items"].MemberBegin(); assetId != items["items"].MemberEnd(); ++assetId) {
 		itemIds.push_back(assetId->name.GetString());
@@ -75,7 +76,7 @@ atomic::Demand getItemDemand(int level) {
 	std::int64_t itemValue = items["items"][randomItemId.c_str()][3].GetInt64();
 	if (itemValue == -1)
 		itemValue = items["items"][randomItemId.c_str()][2].GetInt64();
-	return atomic::RolimonsItem{
+	return atomic::Item{
 		items["items"][randomItemId.c_str()][0].GetString(),
 		std::stoll(randomItemId),
 		items["items"][randomItemId.c_str()][2].GetInt64(),
@@ -85,9 +86,9 @@ atomic::Demand getItemDemand(int level) {
 }
 
 
-[[nodiscard]] atomic::Item rolimons::getSpecificItem(rolimons::ItemDB& items, std::int64_t assetId, std::int64_t userAssetId) {
-	atomic::RolimonsItem item = rolimons::getItem(items, assetId);
-	return atomic::Item{item.name, item.id, userAssetId, item.rap, item.value, item.demand};
+[[nodiscard]] atomic::UniqueItem rolimons::getSpecificItem(rolimons::ItemDB& items, std::int64_t assetId, std::int64_t userAssetId) {
+	atomic::Item item = rolimons::getItem(items, assetId);
+	return atomic::UniqueItem{item.name, item.id, userAssetId, item.rap, item.value, item.demand};
 }
 
 // rolimons::getSpecificItem && rolimons::getItem is recommended instead

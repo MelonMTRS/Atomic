@@ -9,9 +9,9 @@ namespace rolimons {
 
 	[[nodiscard]] ItemDB getRolimonItems();
 	[[nodiscard]] bool isProjected(ItemDB& items, std::int64_t assetId);
-	[[nodiscard]] atomic::RolimonsItem getItem(ItemDB& items, std::int64_t assetId);
-	[[nodiscard]] atomic::RolimonsItem getRandomItem(ItemDB& items);
-	[[nodiscard]] atomic::Item getSpecificItem(ItemDB& items, std::int64_t assetId, std::int64_t userAssetId);
+	[[nodiscard]] atomic::Item getItem(ItemDB& items, std::int64_t assetId);
+	[[nodiscard]] atomic::Item getRandomItem(ItemDB& items);
+	[[nodiscard]] atomic::UniqueItem getSpecificItem(ItemDB& items, std::int64_t assetId, std::int64_t userAssetId);
 	[[nodiscard]] std::int64_t getItemValue(ItemDB& items, std::int64_t assetId);
 }
 

@@ -73,8 +73,8 @@
 	cpr::Response r = cpr::Get(url, cookies);
 	// Data
 	atomic::TradeType tradeType;
-	std::vector<atomic::Item> offering = {};
-	std::vector<atomic::Item> requesting = {};
+	std::vector<atomic::UniqueItem> offering = {};
+	std::vector<atomic::UniqueItem> requesting = {};
 	int robuxOffering;
 	int robuxRequesting;
 	// Exception handling
