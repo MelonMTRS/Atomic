@@ -33,6 +33,10 @@ namespace atomic {
 		const std::int64_t rap;
 		std::int64_t value = -1;
 		atomic::Demand demand = atomic::Demand::NotSet;
+
+		Item getRegularItem() {
+			return Item{ name, id, rap, value, demand };
+		}
 	};
 }
 

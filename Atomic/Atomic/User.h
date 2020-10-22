@@ -8,9 +8,10 @@ namespace atomic {
 	class User {
 	private:
 		const std::int64_t m_id;
+		const std::string m_name;
 	public:
-		User(std::int64_t id, bool confirmExistence=false)
-			: m_id{ id }
+		User(std::int64_t id, std::string name="None", bool confirmExistence=false)
+			: m_id{ id }, m_name{ name }
 		{
 			if (confirmExistence) {
 				// TODO: Confirm if User does exist
@@ -18,6 +19,7 @@ namespace atomic {
 		}
 
 		[[nodiscard]] const int getId() const noexcept { return this->m_id; }
+		[[nodiscard]] const std::string name() const noexcept { return this->m_name; }
 		[[nodiscard]] atomic::Inventory getInventory(rolimons::ItemDB& items) const noexcept;
 		void send_trade() const;
 	};

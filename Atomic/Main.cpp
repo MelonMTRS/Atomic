@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Atomic/Exceptions.h"
 #include "Atomic/Config/Parser.h"
 #include "Atomic/API/Rolimons.h"
 #include "Atomic/API/Wrapper.h"
@@ -12,11 +13,7 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        std::cout << std::boolalpha;
-        rolimons::ItemDB items = rolimons::getRolimonItems();
-        while (true) {
-            std::cout << rolimons::getRandomItem(items).name << '\n';
-        }
+        
 #ifndef VS_DEBUG
     }
     catch (...) {

@@ -115,6 +115,31 @@
 	return atomic::Trade{ tradeId, trader, offer, tradeType };
 }
 
+[[nodiscard]] std::vector<atomic::User> roblox::getResellers(atomic::AuthUser user, atomic::Item item) {
+	std::vector<atomic::User> users;
+	cpr::Url url = {"https://economy.roblox.com/v1/assets/" + std::to_string(item.id) + "/resellers?limit=100"};
+	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
+	cpr::Response r = cpr::Get(url, cookies);
+	switch (r.status_code) {
+	case 401:
+		throw atomic::HttpError{"Authorization Denied", 401, atomic::ErrorTypes::AuthorizationError};
+	default:
+		if (r.status_code != 200)
+			throw atomic::HttpError{ r.text, r.status_code };
+	}
+	rapidjson::Document d;
+	d.Parse(r.text.c_str());
+	for (auto user = d["data"].Begin(); user != d["data"].End(); ++user) {
+		if ((*user)["seller"]["id"].IsInt64() && (*user)["seller"]["name"].IsString()) {
+			users.push_back(atomic::User{
+				(*user)["seller"]["id"].GetInt64(),
+				(*user)["seller"]["name"].GetString(),
+			});
+		}
+	}
+	return users;
+}
+
 [[nodiscard]] roblox::Membership roblox::getMembership(atomic::AuthUser authuser, atomic::User user) {
 	cpr::Url url = { "https://premiumfeatures.roblox.com/v1/users/" + std::to_string(user.getId()) + "/validate-membership" };
 	cpr::Cookies cookies = { {".ROBLOSECURITY", authuser.getCookie()} };
