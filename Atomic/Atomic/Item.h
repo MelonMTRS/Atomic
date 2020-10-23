@@ -19,11 +19,19 @@ namespace atomic {
 	};
 
 	struct Item {
-		const std::string name;
-		const std::int64_t id;
-		const std::int64_t rap;
+		std::string name;
+		std::int64_t id;
+		std::int64_t rap;
 		std::int64_t value = -1;
 		atomic::Demand demand = atomic::Demand::NotSet;
+
+		void operator=(const Item& newItem) {
+			this->name = newItem.name;
+			this->id = newItem.id;
+			this->rap = newItem.rap;
+			this->value = newItem.value;
+			this->demand = newItem.demand;
+		}
 	};
 
 	struct UniqueItem {

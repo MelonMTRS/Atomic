@@ -7,6 +7,7 @@
 #include "Atomic/Conversion.h"
 #include "Atomic/User.h"
 #include "Atomic/Functions.h"
+#include "Atomic/Bot.h"
 
 int main()
 {
