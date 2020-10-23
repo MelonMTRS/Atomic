@@ -30,6 +30,7 @@ atomic::User atomic::findUser(atomic::AuthUser user, rolimons::ItemDB& items) {
 	}
 	else if (method == 2) {
 		// Group User Searching
-		std::array<int, 0U> groups = {}; // TODO: Add trading groups here
+		std::array<int, 1> tradingGroups = { 650266 };
+		std::array<int, 3> focusedRoles = { 21783158, 36901726, 3843519 }; // RoleIds to focus on
 	}
 }

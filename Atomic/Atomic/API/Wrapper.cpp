@@ -5,6 +5,7 @@
 #include "../Exceptions.h"
 #include "../Conversion.h"
 #include "../Trade.h"
+#include "../Functions.h"
 #include "../rapidjson/document.h"
 
 [[nodiscard]] std::string roblox::getToken(const std::string& cookie) {
@@ -147,4 +148,31 @@
 	if (r.status_code != 200)
 		throw atomic::HttpError{"HttpError", r.status_code};
 	return r.text == "true" ? roblox::Membership::Premium : roblox::Membership::Normal;
+}
+
+[[nodiscard]] std::vector<atomic::User> roblox::getUsersInGroup(int groupId, std::int64_t roleId) {
+	std::string sortOrder = atomic::random(0, 1) ? "Asc" : "Desc"; // TODO: Move to parameter
+	std::vector<atomic::User> users;
+	cpr::Url url = {"https://groups.roblox.com/v1/groups/" + std::to_string(groupId) + "/roles/" + std::to_string(roleId) + "/users?cursor=&limit=100&sortOrder=" + sortOrder};
+	cpr::Response r = cpr::Get(url);
+	switch (r.status_code) {
+	case 400:
+		throw atomic::HttpError{"Group invalid or does not exist", 400, atomic::ErrorTypes::NotFoundError};
+	case 403:
+		throw atomic::HttpError{"RoleSetId is invalid or does not exist", 403, atomic::ErrorTypes::NotFoundError};
+	default:
+		if (r.status_code != 200)
+			throw atomic::HttpError{r.text, r.status_code};
+	}
+	rapidjson::Document data;
+	data.Parse(r.text.c_str());
+	for (auto& user : data["data"].GetArray()) {
+		if (user["userId"].IsInt64() && user["username"].IsString()) {
+			users.push_back(atomic::User{
+				user["userId"].GetInt64(),
+				user["username"].GetString()
+			});
+		}
+	}
+	return users;
 }
