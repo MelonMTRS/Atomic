@@ -9,3 +9,7 @@
 [[nodiscard]] const bool atomic::AuthUser::canTradeWith(const atomic::User& user) const {
 	return roblox::can_trade(*this, user);
 }
+
+[[nodiscard]] const bool atomic::AuthUser::isPremium() const {
+	return roblox::getMembership(*this, atomic::User{ this->m_id }) == roblox::Membership::Premium;
+}
