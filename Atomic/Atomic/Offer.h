@@ -26,23 +26,23 @@ namespace atomic {
 		[[nodiscard]] inline const int& getRobuxOffered() const noexcept { return this->m_robuxOffering; }
 		[[nodiscard]] inline const int& getRobuxRequested() const noexcept { return this->m_robuxRequesting; }
 
-		[[nodiscard]] inline const int getTotalOfferedRap() const {
+		[[nodiscard]] inline const std::int64_t getTotalOfferedRap() const {
 			return std::accumulate(this->m_offering.begin(), this->m_offering.end(), 0, [](int accumulator, const atomic::UniqueItem& item) {
 				return accumulator + item.rap;
 			});
 		}
-		[[nodiscard]] inline const int getTotalRequestedRap() const {
-			return std::accumulate(this->m_requesting.begin(), this->m_requesting.end(), 0, [](int accumulator, const atomic::UniqueItem& item) {
+		[[nodiscard]] inline const std::int64_t getTotalRequestedRap() const {
+			return std::accumulate(this->m_requesting.begin(), this->m_requesting.end(), 0, [](std::int64_t accumulator, const atomic::UniqueItem& item) {
 				return accumulator + item.rap;
 			});
 		}
-		[[nodiscard]] inline const int getTotalOfferedValue() const {
-			return std::accumulate(this->m_offering.begin(), this->m_offering.end(), 0, [](int accumulator, const atomic::UniqueItem& item) {
+		[[nodiscard]] inline const std::int64_t getTotalOfferedValue() const {
+			return std::accumulate(this->m_offering.begin(), this->m_offering.end(), 0, [](std::int64_t accumulator, const atomic::UniqueItem& item) {
 				return accumulator + item.value;
 			});
 		}
-		[[nodiscard]] inline const int getTotalRequestedValue() const {
-			return std::accumulate(this->m_requesting.begin(), this->m_requesting.end(), 0, [](int accumulator, const atomic::UniqueItem& item) {
+		[[nodiscard]] inline const std::int64_t getTotalRequestedValue() const {
+			return std::accumulate(this->m_requesting.begin(), this->m_requesting.end(), 0, [](std::int64_t accumulator, const atomic::UniqueItem& item) {
 				return accumulator + item.value;
 			});
 		}

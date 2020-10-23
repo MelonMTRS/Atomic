@@ -13,8 +13,8 @@ atomic::TradeAction atomic::evaluateTrade(atomic::Trade& trade) {
 	return atomic::TradeAction::Ignore; // Temporarily to avoid errors
 }
 
-atomic::User atomic::findUser(atomic::AuthUser user, rolimons::ItemDB& items) {
-	int method = atomic::random(1, 2);
+atomic::User atomic::findUser(atomic::AuthUser user, rolimons::ItemDB& items, int maxRange) {
+	int method = atomic::random(1, maxRange);
 	if (method == 1) {
 		// Limited Item Resellers
 		atomic::Item randomItem = rolimons::getRandomItem(items);
@@ -34,7 +34,7 @@ atomic::User atomic::findUser(atomic::AuthUser user, rolimons::ItemDB& items) {
 		int tradingGroup = { 650266 };
 		std::array<int, 3> focusedRoles = { 21783158, 36901726, 3843519 }; // RoleIds to focus on
 		int& randomRole = focusedRoles[atomic::random(0, focusedRoles.size()-1)];
-		std::vector<atomic::User>& users = roblox::getUsersInGroup(tradingGroup, randomRole);
+		std::vector<atomic::User> users = roblox::getUsersInGroup(tradingGroup, randomRole);
 		while (true) {
 			atomic::User& randomUser = users[atomic::random(0, users.size() - 1)];
 			if (roblox::can_trade(user, randomUser))
@@ -42,4 +42,5 @@ atomic::User atomic::findUser(atomic::AuthUser user, rolimons::ItemDB& items) {
 		}
 		return atomic::findUser(user, items); // If it couldn't find anything, then try again until it does.
 	}
+	return atomic::findUser(user, items, 2);
 }

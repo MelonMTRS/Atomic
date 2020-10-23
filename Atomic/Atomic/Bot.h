@@ -20,7 +20,7 @@ namespace atomic {
 	};
 	[[nodiscard]] atomic::Offer makeOffer(atomic::Inventory& AuthInventory, atomic::Inventory& VictimInventory);
 	[[nodiscard]] atomic::TradeAction evaluateTrade(atomic::Trade& trade);
-	[[nodiscard]] atomic::User findUser(atomic::AuthUser user, rolimons::ItemDB& items); // Returns a random user to trade with
+	[[nodiscard]] atomic::User findUser(atomic::AuthUser user, rolimons::ItemDB& items, int maxRange=2); // Returns a random user to trade with
 }
 
 #endif
