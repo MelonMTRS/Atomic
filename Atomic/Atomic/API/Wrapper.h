@@ -33,7 +33,7 @@ namespace roblox {
 	[[nodiscard]] bool can_trade(atomic::AuthUser user, atomic::User target);
 	[[nodiscard]] atomic::Trade getTrade(atomic::AuthUser& user, rolimons::ItemDB& items, int tradeId);
 	[[nodiscard]] std::vector<atomic::User> getResellers(atomic::AuthUser user, atomic::Item item);
-	[[nodiscard]] std::vector<atomic::User> getUsersInGroup(int groupId, std::int64_t roleId);
+	[[nodiscard]] std::vector<atomic::User>& getUsersInGroup(int groupId, std::int64_t roleId);
 	[[nodiscard]] std::vector<atomic::Trade> getTrades(atomic::AuthUser user, atomic::TradeType tradeType, int limit=25);
 }
 

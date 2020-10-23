@@ -150,7 +150,7 @@
 	return r.text == "true" ? roblox::Membership::Premium : roblox::Membership::Normal;
 }
 
-[[nodiscard]] std::vector<atomic::User> roblox::getUsersInGroup(int groupId, std::int64_t roleId) {
+[[nodiscard]] std::vector<atomic::User>& roblox::getUsersInGroup(int groupId, std::int64_t roleId) {
 	std::string sortOrder = atomic::random(0, 1) ? "Asc" : "Desc"; // TODO: Move to parameter
 	std::vector<atomic::User> users;
 	cpr::Url url = {"https://groups.roblox.com/v1/groups/" + std::to_string(groupId) + "/roles/" + std::to_string(roleId) + "/users?cursor=&limit=100&sortOrder=" + sortOrder};
