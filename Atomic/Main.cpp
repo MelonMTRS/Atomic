@@ -16,9 +16,7 @@ int main()
     try {
 #endif
         rolimons::ItemDB items = rolimons::getRolimonItems();
-        atomic::Item i = rolimons::getItem(items, 425119181);
-        atomic::Demand itemDemand = atomic::getItemDemand(i);
-        std::cout << atomic::getItemStringDemand(itemDemand);
+        std::map<std::int64_t, atomic::Item> demandItems = atomic::getAllDemand(items);
 #ifndef VS_DEBUG
     }
     catch (...) {
