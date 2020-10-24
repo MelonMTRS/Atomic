@@ -6,7 +6,7 @@
 
 namespace atomic {
 	std::vector<atomic::Item> getAllDemand(rolimons::ItemDB& items); // Asynchronously gets the demand of all items with an unassigned tag
-	atomic::Demand getDemand(int assetId);
+	atomic::Demand getItemDemand(atomic::Item item);
 }
 
 #endif
