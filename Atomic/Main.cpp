@@ -14,14 +14,9 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        try {
-            std::vector<atomic::User> r = roblox::getUsersInGroup(650266, 36901726);
-            for (auto user = r.begin(); user != r.end(); ++user) {
-                std::cout << user->name() << '\n';
-            }
-        }
-        catch (atomic::HttpError error) {
-            std::cout << error.message;
+        rolimons::ItemDB items = rolimons::getRolimonItems();
+        while (true) {
+            std::cout << rolimons::getRandomItem(items).name << '\n';
         }
 #ifndef VS_DEBUG
     }
