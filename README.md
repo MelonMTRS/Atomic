@@ -1,6 +1,7 @@
 # Atomic
 
-Atomic is a free and open source roblox trading bot
+Atomic is a free and open source roblox trading bot  
+Atomic uses values from rolimons.com to create and review trades.
 
 # Download
 
