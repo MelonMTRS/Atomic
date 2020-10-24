@@ -113,7 +113,7 @@
 	robuxRequesting = d["offers"][1]["robux"].GetInt();
 	atomic::Offer offer = {offering, requesting, robuxOffering, robuxRequesting};
 	atomic::User trader = { d["offers"][1]["user"]["id"].GetInt() };
-	return atomic::Trade{ tradeId, trader, offer, tradeType };
+	return atomic::Trade{ tradeId, user, trader, offer, tradeType };
 }
 
 [[nodiscard]] std::vector<atomic::User> roblox::getResellers(atomic::AuthUser user, atomic::Item item) {

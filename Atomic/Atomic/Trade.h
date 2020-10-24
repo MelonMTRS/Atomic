@@ -1,5 +1,6 @@
 #ifndef __ATOMIC__TRADE__H
 #define __ATOMIC__TRADE__H
+#include "./AuthUser.h"
 #include "./User.h"
 #include "./Offer.h"
 
@@ -15,12 +16,14 @@ namespace atomic {
 	class Trade {
 	private:
 		const int m_tradeId;
+		const atomic::AuthUser m_authUser;
 		const atomic::User m_trader;
 		const atomic::Offer m_offer;
 		const atomic::TradeType m_TradeType;
 	public:
-		Trade(int tradeId, atomic::User trader, atomic::Offer offer, atomic::TradeType tradeType) : 
-			m_tradeId{ tradeId }, m_trader{ trader },
+		Trade(int tradeId, atomic::AuthUser authUser, atomic::User trader, atomic::Offer offer, atomic::TradeType tradeType) : 
+			m_tradeId{ tradeId },
+			m_trader{ trader }, m_authUser{ authUser },
 			m_offer{ offer }, m_TradeType{ tradeType }
 		{
 		}

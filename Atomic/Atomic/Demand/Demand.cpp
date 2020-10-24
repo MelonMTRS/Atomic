@@ -9,9 +9,8 @@
 
 size_t getDocumentSize(const rapidjson::Value& val) {
 	size_t size = 0;
-	for (auto data = val.Begin(); data != val.End(); ++data) {
+	for (auto data = val.Begin(); data != val.End(); ++data)
 		size++;
-	}
 	return size;
 }
 

@@ -15,8 +15,7 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        rolimons::ItemDB items = rolimons::getRolimonItems();
-        std::map<std::int64_t, atomic::Item> demandItems = atomic::getAllDemand(items);
+        
 #ifndef VS_DEBUG
     }
     catch (...) {
