@@ -69,7 +69,7 @@ atomic::Demand getItemDemand(int level) {
 [[nodiscard]] atomic::Item rolimons::getRandomItem(rolimons::ItemDB& items) {
 	int itemsSize = items["item_count"].GetInt();
 	int randomItem = atomic::random(0, itemsSize-1);
-	rapidjson::SizeType cursor = 0;
+	size_t cursor = 0;
 	for (auto item = items["items"].MemberBegin(); item != items["items"].MemberEnd(); ++item) {
 		if (cursor != randomItem) {
 			cursor++;
