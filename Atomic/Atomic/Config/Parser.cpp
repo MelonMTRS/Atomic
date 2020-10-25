@@ -7,6 +7,13 @@
 #include <map>
 #include <cctype>
 
+/*
+    just a note here:
+    this entire code was made a while ago and hasn't been updated much since
+    i'm planning to revamp when I finish most of the important stuff in atomic
+    but for now, it does the job
+*/
+
 std::string strip(std::string s) {
     while (s.front() == ' ' || s.back() == ' ') {
         if (s.front() == ' ')

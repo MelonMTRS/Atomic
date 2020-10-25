@@ -1,4 +1,5 @@
 #include "./AuthUser.h"
+#include "./Exceptions.h"
 #include "./API/Wrapper.h"
 #include "./API/Rolimons.h"
 
@@ -12,4 +13,15 @@
 
 [[nodiscard]] const bool atomic::AuthUser::isPremium() const {
 	return roblox::getMembership(*this, atomic::User{ this->m_id }) == roblox::Membership::Premium;
+}
+
+[[nodiscard]] const bool atomic::AuthUser::isCookieValid() const {
+	atomic::AuthUser user;
+	try {
+		user = roblox::getUserFromCookie(this->m_cookie);
+	}
+	catch (atomic::HttpError error) {
+		return false;
+	}
+	return true;
 }

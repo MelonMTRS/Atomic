@@ -14,6 +14,7 @@ namespace atomic {
 		std::string m_xcsrf;
 		int m_id;
 	public:
+		AuthUser() = default;
 		AuthUser(std::string name, std::string xcsrf, std::string cookie, int id)
 			: m_name{ name }, m_xcsrf{ xcsrf }, m_cookie{ cookie }, m_id{ id }
 		{
@@ -28,6 +29,7 @@ namespace atomic {
 		[[nodiscard]] atomic::Inventory getInventory(rolimons::ItemDB& items);
 		[[nodiscard]] const bool canTradeWith(const atomic::User& user) const;
 		[[nodiscard]] const bool isPremium() const;
+		[[nodiscard]] const bool isCookieValid() const; // whether or not the .roblosecurity is valid
 	};
 }
 
