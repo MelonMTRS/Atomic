@@ -6,9 +6,9 @@
 // Useful functions
 
 namespace atomic {
-	int random(int min, int max);
+	int random(const int& min, const int& max);
 	std::string getItemStringDemand(atomic::Demand demand);
-	std::vector<std::string> split(std::string str, char separator);
+	std::vector<std::string> split(const std::string& str, const char& separator);
 }
 
 #endif

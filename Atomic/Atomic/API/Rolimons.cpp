@@ -33,7 +33,7 @@ atomic::Demand getItemDemand(int level) {
 	return d;
 }
 
-[[nodiscard]] bool rolimons::isProjected(rolimons::ItemDB& items, std::int64_t assetId) {
+[[nodiscard]] bool rolimons::isProjected(rolimons::ItemDB& items, const std::int64_t& assetId) {
 	std::string asset = std::to_string(assetId);
 	if (items["items"][asset.c_str()].IsArray()) {
 		return items["items"][asset.c_str()][7].GetInt() == 1;
@@ -43,7 +43,7 @@ atomic::Demand getItemDemand(int level) {
 	}
 }
 
-[[nodiscard]] atomic::Item rolimons::getItem(rolimons::ItemDB& items, std::int64_t assetId) {
+[[nodiscard]] atomic::Item rolimons::getItem(rolimons::ItemDB& items, const std::int64_t& assetId) {
 	const char* StringAssetId = _strdup(std::to_string(assetId).c_str());
 	if (items["items"][StringAssetId].IsArray()) {
 		//rapidjson::Value value = items["items"][stringassetId.c_str()].GetArray();
@@ -91,13 +91,13 @@ atomic::Demand getItemDemand(int level) {
 	}
 }
 
-[[nodiscard]] atomic::UniqueItem rolimons::getSpecificItem(rolimons::ItemDB& items, std::int64_t assetId, std::int64_t userAssetId) {
+[[nodiscard]] atomic::UniqueItem rolimons::getSpecificItem(rolimons::ItemDB& items, const std::int64_t& assetId, const std::int64_t& userAssetId) {
 	atomic::Item item = rolimons::getItem(items, assetId);
 	return atomic::UniqueItem{item.name, item.id, userAssetId, item.rap, item.value, item.demand};
 }
 
 // rolimons::getSpecificItem && rolimons::getItem is recommended instead
-[[nodiscard]] std::int64_t rolimons::getItemValue(rolimons::ItemDB& items, std::int64_t assetId) {
+[[nodiscard]] std::int64_t rolimons::getItemValue(rolimons::ItemDB& items, const std::int64_t& assetId) {
 	std::string asset = std::to_string(assetId);
 	if (items["items"][asset.c_str()].IsArray())
 		return items["items"][asset.c_str()].GetArray()[3].GetInt64();

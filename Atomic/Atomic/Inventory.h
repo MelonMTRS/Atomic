@@ -11,7 +11,7 @@ namespace atomic {
 		ItemContainer m_inventory;
 	public:
 		Inventory() = default;
-		Inventory(ItemContainer inventory)
+		Inventory(const ItemContainer& inventory)
 			: m_inventory{inventory}
 		{
 		}
@@ -27,7 +27,7 @@ namespace atomic {
 		// Searching / Indexing
 		[[nodiscard]] atomic::UniqueItem& operator[](int index) { return this->m_inventory[index]; }
 		[[nodiscard]] atomic::UniqueItem& findItemByName(const std::string& name);
-		[[nodiscard]] atomic::UniqueItem& findItemById(int assetId);
+		[[nodiscard]] atomic::UniqueItem& findItemById(const int& assetId);
 		[[nodiscard]] ItemContainer itemMatch(const std::function<bool(const atomic::UniqueItem&)>& function);
 	};
 }

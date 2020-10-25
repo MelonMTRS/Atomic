@@ -10,7 +10,7 @@ namespace atomic {
 		const std::int64_t m_id;
 		const std::string m_name;
 	public:
-		User(std::int64_t id, std::string name="None", bool confirmExistence=false)
+		User(const std::int64_t& id, const std::string& name="None", const bool& confirmExistence=false)
 			: m_id{ id }, m_name{ name }
 		{
 			if (confirmExistence) {

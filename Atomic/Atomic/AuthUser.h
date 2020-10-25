@@ -15,12 +15,12 @@ namespace atomic {
 		int m_id;
 	public:
 		AuthUser() = default;
-		AuthUser(std::string name, std::string xcsrf, std::string cookie, int id)
+		AuthUser(const std::string& name, const std::string& xcsrf, const std::string& cookie, const int& id)
 			: m_name{ name }, m_xcsrf{ xcsrf }, m_cookie{ cookie }, m_id{ id }
 		{
 		}
 
-		inline void setCookie(std::string newCookie) noexcept { this->m_cookie = newCookie; }
+		inline void setCookie(const std::string& newCookie) noexcept { this->m_cookie = newCookie; }
 		[[nodiscard]] inline const atomic::User getUser() const noexcept { return atomic::User{ this->m_id }; };
 		[[nodiscard]] inline const std::string getName() const noexcept { return this->m_name; }
 		[[nodiscard]] inline const std::string getCookie() const noexcept { return this->m_cookie; }

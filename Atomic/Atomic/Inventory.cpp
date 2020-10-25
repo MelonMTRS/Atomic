@@ -21,7 +21,7 @@
 	throw atomic::ItemNotFound{"The item " + name + " could not be found"};
 }
 
-[[nodiscard]] atomic::UniqueItem& atomic::Inventory::findItemById(int assetId) {
+[[nodiscard]] atomic::UniqueItem& atomic::Inventory::findItemById(const int& assetId) {
 	for (auto item = this->begin(); item != this->end(); ++item) {
 		if (item->id == assetId)
 			return *item;

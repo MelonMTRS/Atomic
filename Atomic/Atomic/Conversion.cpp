@@ -5,7 +5,7 @@
 #include "./rapidjson/stringbuffer.h"
 #include "./rapidjson/writer.h"
 
-[[nodiscard]] std::string atomic::formatCookie(std::string cookie) {
+[[nodiscard]] std::string atomic::formatCookie(const std::string& cookie) {
 	std::regex pattern{R"(_\|[\D\d]+\|_)"};
 	return std::regex_replace(cookie, pattern, "");
 }
