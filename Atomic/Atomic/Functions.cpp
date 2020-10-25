@@ -9,7 +9,7 @@ int atomic::random(const int& min, const int& max) {
 	return db(mt);
 }
 
-std::string atomic::getItemStringDemand(atomic::Demand demand) {
+std::string atomic::getItemStringDemand(const atomic::Demand& demand) {
 	switch (demand) {
 	case atomic::Demand::NotAssigned:
 		return "Not Assigned";

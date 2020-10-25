@@ -34,7 +34,7 @@ atomic::Demand getItemDemand(int level) {
 }
 
 [[nodiscard]] bool rolimons::isProjected(rolimons::ItemDB& items, const std::int64_t& assetId) {
-	std::string asset = std::to_string(assetId);
+	const std::string asset = std::to_string(assetId);
 	if (items["items"][asset.c_str()].IsArray()) {
 		return items["items"][asset.c_str()][7].GetInt() == 1;
 	}
@@ -67,8 +67,8 @@ atomic::Demand getItemDemand(int level) {
 }
 
 [[nodiscard]] atomic::Item rolimons::getRandomItem(rolimons::ItemDB& items) {
-	int itemsSize = items["item_count"].GetInt();
-	int randomItem = atomic::random(0, itemsSize-1);
+	const int itemsSize = items["item_count"].GetInt();
+	const int randomItem = atomic::random(0, itemsSize-1);
 	size_t cursor = 0;
 	for (auto item = items["items"].MemberBegin(); item != items["items"].MemberEnd(); ++item) {
 		if (cursor != randomItem) {
@@ -92,13 +92,13 @@ atomic::Demand getItemDemand(int level) {
 }
 
 [[nodiscard]] atomic::UniqueItem rolimons::getSpecificItem(rolimons::ItemDB& items, const std::int64_t& assetId, const std::int64_t& userAssetId) {
-	atomic::Item item = rolimons::getItem(items, assetId);
+	const atomic::Item item = rolimons::getItem(items, assetId);
 	return atomic::UniqueItem{item.name, item.id, userAssetId, item.rap, item.value, item.demand};
 }
 
 // rolimons::getSpecificItem && rolimons::getItem is recommended instead
 [[nodiscard]] std::int64_t rolimons::getItemValue(rolimons::ItemDB& items, const std::int64_t& assetId) {
-	std::string asset = std::to_string(assetId);
+	const std::string asset = std::to_string(assetId);
 	if (items["items"][asset.c_str()].IsArray())
 		return items["items"][asset.c_str()].GetArray()[3].GetInt64();
 	else

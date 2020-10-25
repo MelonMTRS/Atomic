@@ -7,7 +7,7 @@
 
 namespace atomic {
 	int random(const int& min, const int& max);
-	std::string getItemStringDemand(atomic::Demand demand);
+	std::string getItemStringDemand(const atomic::Demand& demand);
 	std::vector<std::string> split(const std::string& str, const char& separator);
 }
 

@@ -9,9 +9,9 @@
 #include "../rapidjson/document.h"
 
 [[nodiscard]] std::string roblox::getToken(const std::string& cookie) {
-	cpr::Url logout = { "https://auth.roblox.com/v2/logout" };
-	cpr::Cookies authorization = { {".ROBLOSECURITY", atomic::formatCookie(cookie)} };
-	cpr::Body empty{""};
+	const cpr::Url logout = { "https://auth.roblox.com/v2/logout" };
+	const cpr::Cookies authorization = { {".ROBLOSECURITY", atomic::formatCookie(cookie)} };
+	const cpr::Body empty{""};
 	cpr::Response r = cpr::Post(logout, authorization, empty);
 	if (r.status_code != 403)
 		throw atomic::HttpError{"Http Error", r.status_code};
@@ -31,7 +31,7 @@
 }
 
 [[nodiscard]] atomic::Inventory roblox::getInventory(const atomic::User& user, rolimons::ItemDB& items) {
-	cpr::Url url = {"https://inventory.roblox.com/v1/users/" + std::to_string(user.getId()) + "/assets/collectibles?limit=100"}; // TODO: cursoring
+	const cpr::Url url = {"https://inventory.roblox.com/v1/users/" + std::to_string(user.getId()) + "/assets/collectibles?limit=100"}; // TODO: cursoring
 	cpr::Response r = cpr::Get(url);
 	switch (r.status_code) {
 	case 403:
@@ -53,8 +53,8 @@
 }
 
 [[nodiscard]] bool roblox::can_trade(const atomic::AuthUser& user, const atomic::User& target) {
-	cpr::Url url = {"https://trades.roblox.com/v1/users/" + std::to_string(target.getId()) + "/can-trade-with"};
-	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
+	const cpr::Url url = {"https://trades.roblox.com/v1/users/" + std::to_string(target.getId()) + "/can-trade-with"};
+	const cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
 	cpr::Response r = cpr::Get(url, cookies);
 	switch (r.status_code) {
 	case 403:
@@ -69,8 +69,8 @@
 
 [[nodiscard]] atomic::Trade roblox::getTrade(const atomic::AuthUser& user, rolimons::ItemDB& items, const int& tradeId) {
 	// Http
-	cpr::Url url = {"https://trades.roblox.com/v1/trades/" + std::to_string(tradeId)};
-	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
+	const cpr::Url url = {"https://trades.roblox.com/v1/trades/" + std::to_string(tradeId)};
+	const cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
 	cpr::Response r = cpr::Get(url, cookies);
 	// Data
 	atomic::TradeType tradeType;
@@ -118,8 +118,8 @@
 
 [[nodiscard]] std::vector<atomic::User> roblox::getResellers(const atomic::AuthUser& user, const atomic::Item& item) {
 	std::vector<atomic::User> users;
-	cpr::Url url = {"https://economy.roblox.com/v1/assets/" + std::to_string(item.id) + "/resellers?limit=100"};
-	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
+	const cpr::Url url = {"https://economy.roblox.com/v1/assets/" + std::to_string(item.id) + "/resellers?limit=100"};
+	const cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
 	cpr::Response r = cpr::Get(url, cookies);
 	switch (r.status_code) {
 	case 401:
@@ -142,8 +142,8 @@
 }
 
 [[nodiscard]] roblox::Membership roblox::getMembership(const atomic::AuthUser& authuser, const atomic::User& user) {
-	cpr::Url url = { "https://premiumfeatures.roblox.com/v1/users/" + std::to_string(user.getId()) + "/validate-membership" };
-	cpr::Cookies cookies = { {".ROBLOSECURITY", authuser.getCookie()} };
+	const cpr::Url url = { "https://premiumfeatures.roblox.com/v1/users/" + std::to_string(user.getId()) + "/validate-membership" };
+	const cpr::Cookies cookies = { {".ROBLOSECURITY", authuser.getCookie()} };
 	cpr::Response r = cpr::Get(url, cookies);
 	if (r.status_code != 200)
 		throw atomic::HttpError{"HttpError", r.status_code};
@@ -151,9 +151,9 @@
 }
 
 [[nodiscard]] std::vector<atomic::User> roblox::getUsersInGroup(const int& groupId, const std::int64_t& roleId) {
-	std::string sortOrder = atomic::random(0, 1) ? "Asc" : "Desc"; // TODO: Move to parameter
+	const std::string sortOrder = atomic::random(0, 1) ? "Asc" : "Desc"; // TODO: Move to parameter
+	const cpr::Url url = {"https://groups.roblox.com/v1/groups/" + std::to_string(groupId) + "/roles/" + std::to_string(roleId) + "/users?cursor=&limit=100&sortOrder=" + sortOrder};
 	std::vector<atomic::User> users;
-	cpr::Url url = {"https://groups.roblox.com/v1/groups/" + std::to_string(groupId) + "/roles/" + std::to_string(roleId) + "/users?cursor=&limit=100&sortOrder=" + sortOrder};
 	cpr::Response r = cpr::Get(url);
 	switch (r.status_code) {
 	case 400:

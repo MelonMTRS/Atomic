@@ -38,7 +38,7 @@ std::map<std::int64_t, atomic::Item> atomic::getAllDemand(rolimons::ItemDB& roli
 }
 
 atomic::Demand atomic::getItemDemand(const atomic::Item& item) {
-	cpr::Url url = {"https://economy.roblox.com/v1/assets/" + std::to_string(item.id) + "/resale-data"};
+	const cpr::Url url = {"https://economy.roblox.com/v1/assets/" + std::to_string(item.id) + "/resale-data"};
 	std::future<cpr::Response> future = cpr::GetAsync(url);
 	cpr::Response r = future.get();
 	switch (r.status_code) {
@@ -50,7 +50,7 @@ atomic::Demand atomic::getItemDemand(const atomic::Item& item) {
 	}
 	rapidjson::Document d;
 	d.Parse(r.text.c_str());
-	size_t salesPointSize = getDocumentSize(d["priceDataPoints"]);
+	const size_t salesPointSize = getDocumentSize(d["priceDataPoints"]);
 	if (salesPointSize > 175)
 		return atomic::Demand::Amazing;
 	else if (salesPointSize > 160)
