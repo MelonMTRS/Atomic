@@ -37,7 +37,7 @@ std::map<std::int64_t, atomic::Item> atomic::getAllDemand(rolimons::ItemDB& roli
 	return allItems;
 }
 
-atomic::Demand atomic::getItemDemand(atomic::Item item) {
+atomic::Demand atomic::getItemDemand(const atomic::Item& item) {
 	cpr::Url url = {"https://economy.roblox.com/v1/assets/" + std::to_string(item.id) + "/resale-data"};
 	std::future<cpr::Response> future = cpr::GetAsync(url);
 	cpr::Response r = future.get();

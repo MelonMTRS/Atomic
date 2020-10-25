@@ -7,7 +7,7 @@
 
 namespace atomic {
 	std::map<std::int64_t, atomic::Item> getAllDemand(rolimons::ItemDB& items); // Asynchronously gets the demand of all items with an unassigned tag
-	atomic::Demand getItemDemand(atomic::Item item);
+	atomic::Demand getItemDemand(const atomic::Item& item);
 }
 
 #endif

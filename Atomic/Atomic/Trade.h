@@ -21,7 +21,7 @@ namespace atomic {
 		const atomic::Offer m_offer;
 		const atomic::TradeType m_TradeType;
 	public:
-		Trade(const int& tradeId, atomic::AuthUser authUser, atomic::User trader, atomic::Offer offer, atomic::TradeType tradeType) : 
+		Trade(const int& tradeId, const atomic::AuthUser& authUser, const atomic::User& trader, const atomic::Offer& offer, const atomic::TradeType& tradeType) : 
 			m_tradeId{ tradeId },
 			m_trader{ trader }, m_authUser{ authUser },
 			m_offer{ offer }, m_TradeType{ tradeType }

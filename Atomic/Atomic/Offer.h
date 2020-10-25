@@ -14,7 +14,7 @@ namespace atomic {
 		const int m_robuxOffering;
 		const int m_robuxRequesting;
 	public:
-		Offer(OfferHolder offering, OfferHolder requesting, int robuxOffering = 0, int robuxRequesting = 0): 
+		Offer(const OfferHolder& offering, const OfferHolder& requesting, const int& robuxOffering = 0, const int& robuxRequesting = 0): 
 			m_offering{ offering }, m_requesting{ requesting },
 			m_robuxOffering{ robuxOffering }, m_robuxRequesting{robuxRequesting}
 		{

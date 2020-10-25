@@ -30,7 +30,7 @@
 	return atomic::AuthUser{ doc["name"].GetString(), roblox::getToken(cookie), cookie, doc["id"].GetInt() };
 }
 
-[[nodiscard]] atomic::Inventory roblox::getInventory(atomic::User user, rolimons::ItemDB& items) {
+[[nodiscard]] atomic::Inventory roblox::getInventory(const atomic::User& user, rolimons::ItemDB& items) {
 	cpr::Url url = {"https://inventory.roblox.com/v1/users/" + std::to_string(user.getId()) + "/assets/collectibles?limit=100"}; // TODO: cursoring
 	cpr::Response r = cpr::Get(url);
 	switch (r.status_code) {
@@ -52,7 +52,7 @@
 	return atomic::Inventory{container};
 }
 
-[[nodiscard]] bool roblox::can_trade(atomic::AuthUser user, atomic::User target) {
+[[nodiscard]] bool roblox::can_trade(const atomic::AuthUser& user, const atomic::User& target) {
 	cpr::Url url = {"https://trades.roblox.com/v1/users/" + std::to_string(target.getId()) + "/can-trade-with"};
 	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
 	cpr::Response r = cpr::Get(url, cookies);
@@ -67,7 +67,7 @@
 	return d["canTrade"].GetBool();
 }
 
-[[nodiscard]] atomic::Trade roblox::getTrade(atomic::AuthUser& user, rolimons::ItemDB& items, int tradeId) {
+[[nodiscard]] atomic::Trade roblox::getTrade(const atomic::AuthUser& user, rolimons::ItemDB& items, const int& tradeId) {
 	// Http
 	cpr::Url url = {"https://trades.roblox.com/v1/trades/" + std::to_string(tradeId)};
 	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
@@ -116,7 +116,7 @@
 	return atomic::Trade{ tradeId, user, trader, offer, tradeType };
 }
 
-[[nodiscard]] std::vector<atomic::User> roblox::getResellers(atomic::AuthUser user, atomic::Item item) {
+[[nodiscard]] std::vector<atomic::User> roblox::getResellers(const atomic::AuthUser& user, const atomic::Item& item) {
 	std::vector<atomic::User> users;
 	cpr::Url url = {"https://economy.roblox.com/v1/assets/" + std::to_string(item.id) + "/resellers?limit=100"};
 	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
@@ -141,7 +141,7 @@
 	return users;
 }
 
-[[nodiscard]] roblox::Membership roblox::getMembership(atomic::AuthUser authuser, atomic::User user) {
+[[nodiscard]] roblox::Membership roblox::getMembership(const atomic::AuthUser& authuser, const atomic::User& user) {
 	cpr::Url url = { "https://premiumfeatures.roblox.com/v1/users/" + std::to_string(user.getId()) + "/validate-membership" };
 	cpr::Cookies cookies = { {".ROBLOSECURITY", authuser.getCookie()} };
 	cpr::Response r = cpr::Get(url, cookies);
@@ -150,7 +150,7 @@
 	return r.text == "true" ? roblox::Membership::Premium : roblox::Membership::Normal;
 }
 
-[[nodiscard]] std::vector<atomic::User> roblox::getUsersInGroup(int groupId, std::int64_t roleId) {
+[[nodiscard]] std::vector<atomic::User> roblox::getUsersInGroup(const int& groupId, const std::int64_t& roleId) {
 	std::string sortOrder = atomic::random(0, 1) ? "Asc" : "Desc"; // TODO: Move to parameter
 	std::vector<atomic::User> users;
 	cpr::Url url = {"https://groups.roblox.com/v1/groups/" + std::to_string(groupId) + "/roles/" + std::to_string(roleId) + "/users?cursor=&limit=100&sortOrder=" + sortOrder};
