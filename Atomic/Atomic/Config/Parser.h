@@ -1,5 +1,5 @@
-#ifndef __ATOMIC__CONFIGPARSER__PARSER__H
-#define __ATOMIC__CONFIGPARSER__PARSER__H
+#ifndef ATOMIC_CONFIGPARSER_PARSER_H
+#define ATOMIC_CONFIGPARSER_PARSER_H
 #include <iostream>
 #include <vector>
 #include <map>

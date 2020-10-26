@@ -1,5 +1,5 @@
-#ifndef __ATOMIC__DEMAND__DEMAND__H
-#define __ATOMIC__DEMAND__DEMAND__H
+#ifndef ATOMIC_DEMAND_DEMAND_H
+#define ATOMIC_DEMAND_DEMAND_H
 #include <vector>
 #include <map>
 #include "../API/Rolimons.h"

@@ -1,5 +1,5 @@
-#ifndef __ATOMIC__USER__H
-#define __ATOMIC__USER__H
+#ifndef ATOMIC_USER_H
+#define ATOMIC_USER_H
 #include <string>
 #include "./API/Rolimons.h"
 #include "./Inventory.h"

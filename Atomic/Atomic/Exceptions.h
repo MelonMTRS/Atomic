@@ -1,5 +1,5 @@
-#ifndef __ATOMIC__EXCEPTIONS__H
-#define __ATOMIC__EXCEPTIONS__H
+#ifndef ATOMIC_EXCEPTIONS_H
+#define ATOMIC_EXCEPTIONS_H
 #include <string>
 
 namespace atomic {

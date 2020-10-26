@@ -1,5 +1,5 @@
-#ifndef __ATOMIC__BOT__H
-#define __ATOMIC__BOT__H
+#ifndef ATOMIC_BOT_H
+#define ATOMIC_BOT_H
 #include "./Offer.h"
 #include "./AuthUser.h"
 #include "./Inventory.h"

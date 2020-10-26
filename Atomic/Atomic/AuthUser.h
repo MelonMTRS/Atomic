@@ -1,5 +1,5 @@
-#ifndef __ATOMIC__AUTHUSER__H
-#define __ATOMIC__AUTHUSER__H
+#ifndef ATOMIC_AUTHUSER_H
+#define ATOMIC_AUTHUSER_H
 #include <string>
 #include <iostream>
 #include "./Inventory.h"

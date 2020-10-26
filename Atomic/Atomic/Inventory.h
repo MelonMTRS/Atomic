@@ -1,5 +1,5 @@
-#ifndef __ATOMIC__INVENTORY__H
-#define __ATOMIC__INVENTORY__H
+#ifndef ATOMIC_INVENTORY_H
+#define ATOMIC_INVENTORY_H
 #include <vector>
 #include <functional>
 #include "./Item.h"

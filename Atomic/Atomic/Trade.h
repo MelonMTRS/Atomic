@@ -1,5 +1,5 @@
-#ifndef __ATOMIC__TRADE__H
-#define __ATOMIC__TRADE__H
+#ifndef ATOMIC_TRADE_H
+#define ATOMIC_TRADE_H
 #include "./AuthUser.h"
 #include "./User.h"
 #include "./Offer.h"

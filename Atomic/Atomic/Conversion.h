@@ -1,5 +1,5 @@
-#ifndef __ATOMIC__CONVERSION__H
-#define __ATOMIC__CONVERSION__H
+#ifndef ATOMIC_CONVERSION_H
+#define ATOMIC_CONVERSION_H
 #include <string>
 #include "./User.h"
 #include "./Trade.h"

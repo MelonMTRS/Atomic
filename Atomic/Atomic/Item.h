@@ -1,5 +1,5 @@
-#ifndef __ATOMIC__ITEM__H
-#define __ATOMIC__ITEM__H
+#ifndef ATOMIC_ITEM_H
+#define ATOMIC_ITEM_H
 #include <string>
 
 namespace atomic {

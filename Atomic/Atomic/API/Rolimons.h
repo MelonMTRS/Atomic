@@ -1,5 +1,5 @@
-#ifndef __ATOMIC__ROLIMONS__H
-#define __ATOMIC__ROLIMONS__H
+#ifndef ATOMIC_API_ROLIMONS_H
+#define ATOMIC_API_ROLIMONS_H
 #include <cstdint>
 #include "../rapidjson/document.h"
 #include "../Item.h"

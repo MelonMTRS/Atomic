@@ -1,5 +1,5 @@
-#ifndef __ATOMIC__ROBLOX__WRAPPER__H
-#define __ATOMIC__ROBLOX__WRAPPER__H
+#ifndef ATOMIC_API_WRAPPER_H
+#define ATOMIC_API_WRAPPER_H
 #include <string>
 #include "./Rolimons.h"
 #include "../User.h"
@@ -19,8 +19,8 @@ namespace roblox {
 	};
 
 	enum class TradeResult {
-		Success,
-		Failure
+		OK,
+		FAIL
 	};
 
 	[[nodiscard]] std::string getToken(const std::string& cookie);

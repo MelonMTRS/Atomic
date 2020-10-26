@@ -1,5 +1,5 @@
-#ifndef __ATOMIC__OFFER__H
-#define __ATOMIC__OFFER__H
+#ifndef ATOMIC_OFFER_H
+#define ATOMIC_OFFER_H
 #include <vector>
 #include <numeric>
 #include "Item.h"
