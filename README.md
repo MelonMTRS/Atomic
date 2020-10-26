@@ -16,4 +16,5 @@ There should be a "Release" folder that has been created, open that and you'll f
 
 # Contribution
 
-You're more than welcome to
+You're more than welcome to  
+You can contribute to the [Default Config](https://github.com/viown/Atomic/blob/master/Data/DefaultConfig.cfg) or to the [Source Code](https://github.com/viown/Atomic/tree/master/Atomic/Atomic)
