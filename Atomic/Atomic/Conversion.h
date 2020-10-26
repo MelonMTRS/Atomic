@@ -11,7 +11,7 @@
 
 namespace atomic {
 	[[nodiscard]] std::string formatCookie(const std::string& cookie);
-	[[nodiscard]] std::string tradeToJSON(atomic::AuthUser user, atomic::Trade trade);
+	[[nodiscard]] std::string tradeToJSON(const atomic::AuthUser& user, const atomic::Trade& trade);
 }
 
 #endif

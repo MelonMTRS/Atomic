@@ -10,7 +10,7 @@
 	return std::regex_replace(cookie, pattern, "");
 }
 
-[[nodiscard]] std::string atomic::tradeToJSON(atomic::AuthUser user, atomic::Trade trade) {
+[[nodiscard]] std::string atomic::tradeToJSON(const atomic::AuthUser& user, const atomic::Trade& trade) {
 	const char* tradeStructure = R"(
     {
        "offers":[

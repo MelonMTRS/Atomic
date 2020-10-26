@@ -6,7 +6,7 @@ void atomic::Trade::decline() const {
 	}
 }
 
-void atomic::Trade::counter(atomic::Offer newOffer) const {
+void atomic::Trade::counter(const atomic::Offer& newOffer) const {
 	if (this->m_TradeType == atomic::TradeType::Inbound) {
 		// TODO: Countering here
 	}
