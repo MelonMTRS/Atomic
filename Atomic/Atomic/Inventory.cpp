@@ -2,7 +2,7 @@
 #include "./Exceptions.h"
 #include "./Functions.h"
 
-[[nodiscard]] atomic::UniqueItem& atomic::Inventory::getRandomItem() {
+[[nodiscard]] const atomic::UniqueItem atomic::Inventory::getRandomItem() const {
 	return this->m_inventory[atomic::random(0, this->item_count()-1)];
 }
 
