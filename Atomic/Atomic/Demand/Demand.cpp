@@ -14,29 +14,6 @@ size_t getDocumentSize(const rapidjson::Value& val) {
 	return size;
 }
 
-// expensive function btw
-std::map<std::int64_t, atomic::Item> atomic::getAllDemand(rolimons::ItemDB& rolimonsItems) {
-	std::vector<std::future<atomic::Demand>> futures = {};
-	std::vector<atomic::Item> items;
-	std::map<std::int64_t, atomic::Item> allItems;
-	for (auto item = rolimonsItems["items"].MemberBegin(); item != rolimonsItems["items"].MemberEnd(); ++item) {
-		atomic::Item currentItem = rolimons::getItem(rolimonsItems, std::stoll(item->name.GetString()));
-		if (currentItem.demand == atomic::Demand::NotAssigned) {
-			futures.push_back(std::async(std::launch::async, atomic::getItemDemand, currentItem));
-			items.push_back(currentItem);
-			std::this_thread::sleep_for(std::chrono::milliseconds(435));
-		}
-	}
-	for (size_t i = 0; i < items.size(); ++i) {
-		try {
-			items[i].demand = futures[i].get();
-			allItems[items[i].id] = items[i];
-		}
-		catch (atomic::HttpError error){};
-	}
-	return allItems;
-}
-
 atomic::Demand atomic::getItemDemand(const atomic::Item& item) {
 	const cpr::Url url = {"https://economy.roblox.com/v1/assets/" + std::to_string(item.id) + "/resale-data"};
 	std::future<cpr::Response> future = cpr::GetAsync(url);
