@@ -15,6 +15,7 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
+        rolimons::ItemDB items = rolimons::getRolimonItems();
         
 #ifndef VS_DEBUG
     }

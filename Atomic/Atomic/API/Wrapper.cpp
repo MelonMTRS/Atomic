@@ -1,4 +1,3 @@
-#include <future> // for std::future
 #include "cpr/cpr.h"
 #include "./Wrapper.h"
 #include "./Rolimons.h"
@@ -22,7 +21,7 @@
 [[nodiscard]] atomic::AuthUser roblox::getUserFromCookie(std::string cookie) {
 	cookie = atomic::formatCookie(cookie);
 	cpr::Response info = cpr::Get(cpr::Url{ "https://users.roblox.com/v1/users/authenticated" },
-		cpr::Cookies{ {".ROBLOSECURITY", cookie} });
+								  cpr::Cookies{ {".ROBLOSECURITY", cookie} });
 	if (info.status_code != 200)
 		throw atomic::HttpError{"Cookie Authorization Failed", info.status_code, atomic::ErrorTypes::AuthorizationError};
 	rapidjson::Document doc;
@@ -68,24 +67,20 @@
 }
 
 [[nodiscard]] atomic::Trade roblox::getTrade(const atomic::AuthUser& user, rolimons::ItemDB& items, const int& tradeId) {
-	// Http
 	const cpr::Url url = {"https://trades.roblox.com/v1/trades/" + std::to_string(tradeId)};
 	const cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
 	cpr::Response r = cpr::Get(url, cookies);
-	// Data
 	atomic::TradeType tradeType;
 	std::vector<atomic::UniqueItem> offering = {};
 	std::vector<atomic::UniqueItem> requesting = {};
 	int robuxOffering;
 	int robuxRequesting;
-	// Exception handling
 	switch (r.status_code) {
 	case 400:
 		throw atomic::HttpError{ "Not found or not authorized", 400, atomic::ErrorTypes::NotFoundError };
 	case 401:
 		throw atomic::HttpError{ "Permission denied", 401, atomic::ErrorTypes::AuthorizationError };
 	}
-	// General
 	rapidjson::Document d;
 	d.Parse(r.text.c_str());
 	std::string status = d["status"].GetString();
