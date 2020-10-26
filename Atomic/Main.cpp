@@ -16,7 +16,8 @@ int main()
     try {
 #endif
         rolimons::ItemDB items = rolimons::getRolimonItems();
-        
+        std::vector<int> stuff = {3, 29, 12, 34, 77};
+        std::cout << atomic::random_choice(stuff);
 #ifndef VS_DEBUG
     }
     catch (...) {
