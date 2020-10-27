@@ -9,7 +9,7 @@ int atomic::random(const int& min, const int& max) {
 	return db(mt);
 }
 
-std::string atomic::getItemStringDemand(const atomic::Demand& demand) {
+std::string atomic::getDemandString(const atomic::Demand& demand) {
 	switch (demand) {
 	case atomic::Demand::NotAssigned:
 		return "Not Assigned";
@@ -29,19 +29,19 @@ std::string atomic::getItemStringDemand(const atomic::Demand& demand) {
 }
 
 std::vector<std::string> atomic::split(const std::string& str, const char& separator) {
-	std::vector<std::string> sp = {};
-	std::string buffer = "";
-	for (int i = 0; i < str.size(); ++i) {
+	std::vector<std::string> split_items = {};
+	std::string stringHolder = "";
+	for (size_t i = 0; i < str.size(); ++i) {
 		if (str[i] == separator) {
-			sp.push_back(buffer);
-			buffer = "";
+			split_items.push_back(stringHolder);
+			stringHolder.clear();
 			continue;
 		}
-		buffer += str[i];
+		stringHolder += str[i];
 	}
-	if (buffer != "")
-		sp.push_back(buffer);
-	return sp;
+	if (!stringHolder.empty())
+		split_items.push_back(stringHolder);
+	return split_items;
 }
 
 bool atomic::isStatusSuccess(int status_code) {
