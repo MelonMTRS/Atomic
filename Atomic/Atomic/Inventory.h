@@ -25,7 +25,7 @@ namespace atomic {
 		// Searching / Indexing
 		[[nodiscard]] atomic::UniqueItem operator[](int index) const { return this->m_inventory[index]; }
 		[[nodiscard]] atomic::UniqueItem& findItemByName(const std::string& name);
-		[[nodiscard]] atomic::UniqueItem findItemById(const int& assetId);
+		[[nodiscard]] atomic::UniqueItem& findItemById(const int& assetId);
 		[[nodiscard]] ItemContainer itemMatch(const std::function<bool(const atomic::UniqueItem&)>& function);
 	};
 }
