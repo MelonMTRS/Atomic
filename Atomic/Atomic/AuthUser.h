@@ -2,9 +2,9 @@
 #define ATOMIC_AUTHUSER_H
 #include <string>
 #include <iostream>
+#include "./API/Rolimons.h"
 #include "./Inventory.h"
 #include "./User.h"
-#include "./API/Rolimons.h"
 
 namespace atomic {
 	class AuthUser {

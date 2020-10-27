@@ -43,3 +43,21 @@ std::vector<std::string> atomic::split(const std::string& str, const char& separ
 		sp.push_back(buffer);
 	return sp;
 }
+
+bool atomic::isStatusSuccess(int status_code) {
+	switch (status_code) {
+	case 200:
+	case 203:
+	case 206:
+	case 226:
+	case 201:
+	case 204:
+	case 207:
+	case 202:
+	case 205:
+	case 208:
+		return true;
+	default:
+		return false;
+	}
+}

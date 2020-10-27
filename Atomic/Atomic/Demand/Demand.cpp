@@ -3,6 +3,7 @@
 #include <thread>
 #include <iostream>
 #include "../rapidjson/document.h"
+#include "../Functions.h"
 #include "../Exceptions.h"
 #include "./Demand.h"
 #include "./cpr/cpr.h"
@@ -22,7 +23,7 @@ atomic::Demand atomic::getItemDemand(const atomic::Item& item) {
 	case 400:
 		throw atomic::HttpError{"Invalid AssetId", 400};
 	default:
-		if (r.status_code != 200)
+		if (!atomic::isStatusSuccess(r.status_code))
 			throw atomic::HttpError{r.text, r.status_code};
 	}
 	rapidjson::Document d;

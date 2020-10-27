@@ -12,7 +12,7 @@
 	const cpr::Cookies authorization = { {".ROBLOSECURITY", atomic::formatCookie(cookie)} };
 	const cpr::Body empty{""};
 	cpr::Response r = cpr::Post(logout, authorization, empty);
-	if (r.status_code != 403)
+	if (!atomic::isStatusSuccess(r.status_code))
 		throw atomic::HttpError{"Http Error", r.status_code};
 	else
 		return r.header["X-CSRF-TOKEN"];
@@ -22,7 +22,7 @@
 	cookie = atomic::formatCookie(cookie);
 	cpr::Response info = cpr::Get(cpr::Url{ "https://users.roblox.com/v1/users/authenticated" },
 								  cpr::Cookies{ {".ROBLOSECURITY", cookie} });
-	if (info.status_code != 200)
+	if (!atomic::isStatusSuccess(info.status_code))
 		throw atomic::HttpError{"Cookie Authorization Failed", info.status_code, atomic::ErrorTypes::AuthorizationError};
 	rapidjson::Document doc;
 	doc.Parse(info.text.c_str());
@@ -37,6 +37,9 @@
 		throw atomic::HttpError{ "Permission Failure", 403, atomic::ErrorTypes::PermissionError };
 	case 400:
 		throw atomic::HttpError{ "UserDoesNotExist", 400 };
+	default:
+		if (!atomic::isStatusSuccess(r.status_code))
+			throw atomic::HttpError{ r.text, r.status_code };
 	}
 	if (r.status_code != 200)
 		throw atomic::HttpError{"Inventory fetch failure", r.status_code};
@@ -60,6 +63,9 @@
 		throw atomic::HttpError{"Permission Error", 403, atomic::ErrorTypes::PermissionError};
 	case 400:
 		throw atomic::HttpError{ "InvalidUser", 400 };
+	default:
+		if (!atomic::isStatusSuccess(r.status_code))
+			throw atomic::HttpError{ r.text, r.status_code };
 	}
 	rapidjson::Document d;
 	d.Parse(r.text.c_str());
@@ -80,6 +86,9 @@
 		throw atomic::HttpError{ "Not found or not authorized", 400, atomic::ErrorTypes::NotFoundError };
 	case 401:
 		throw atomic::HttpError{ "Permission denied", 401, atomic::ErrorTypes::AuthorizationError };
+	default:
+		if (!atomic::isStatusSuccess(r.status_code))
+			throw atomic::HttpError{ r.text, r.status_code };
 	}
 	rapidjson::Document d;
 	d.Parse(r.text.c_str());
@@ -120,7 +129,7 @@
 	case 401:
 		throw atomic::HttpError{"Authorization Denied", 401, atomic::ErrorTypes::AuthorizationError};
 	default:
-		if (r.status_code != 200)
+		if (!atomic::isStatusSuccess(r.status_code))
 			throw atomic::HttpError{ r.text, r.status_code };
 	}
 	rapidjson::Document d;
@@ -140,7 +149,7 @@
 	const cpr::Url url = { "https://premiumfeatures.roblox.com/v1/users/" + std::to_string(user.getId()) + "/validate-membership" };
 	const cpr::Cookies cookies = { {".ROBLOSECURITY", authuser.getCookie()} };
 	cpr::Response r = cpr::Get(url, cookies);
-	if (r.status_code != 200)
+	if (!atomic::isStatusSuccess(r.status_code))
 		throw atomic::HttpError{"HttpError", r.status_code};
 	return r.text == "true" ? roblox::Membership::Premium : roblox::Membership::Normal;
 }
@@ -156,8 +165,8 @@
 	case 403:
 		throw atomic::HttpError{"RoleSetId is invalid or does not exist", 403, atomic::ErrorTypes::NotFoundError};
 	default:
-		if (r.status_code != 200)
-			throw atomic::HttpError{r.text, r.status_code};
+		if (!atomic::isStatusSuccess(r.status_code))
+			throw atomic::HttpError{ r.text, r.status_code };
 	}
 	rapidjson::Document data;
 	data.Parse(r.text.c_str());

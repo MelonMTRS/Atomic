@@ -26,7 +26,7 @@ atomic::Demand getItemDemand(int level) {
 [[nodiscard]] rolimons::ItemDB rolimons::getRolimonItems() {
 	const cpr::Url url = {"https://www.rolimons.com/itemapi/itemdetails"};
 	const cpr::Response r = cpr::Get(url);
-	if (r.status_code != 200)
+	if (!atomic::isStatusSuccess(r.status_code))
 		throw atomic::HttpError{"RolimonsFetchError", r.status_code};
 	rolimons::ItemDB d;
 	d.Parse(r.text.c_str());
