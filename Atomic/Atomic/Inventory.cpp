@@ -7,15 +7,8 @@
 }
 
 [[nodiscard]] atomic::UniqueItem& atomic::Inventory::findItemByName(const std::string& name) {
-	auto lower = [&](const std::string& stringToLower) {
-		std::string newString = "";
-		for (auto c = stringToLower.begin(); c != stringToLower.end(); ++c) {
-			newString += tolower(*c);
-		}
-		return newString;
-	};
 	for (auto item = this->begin(); item != this->end(); ++item) {
-		if (lower(name) == lower(item->name))
+		if (atomic::lower(name) == atomic::lower(item->name))
 			return *item;
 	}
 	throw atomic::ItemNotFound{"The item " + name + " could not be found"};

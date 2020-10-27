@@ -11,7 +11,9 @@ namespace atomic {
 	Type random_choice(const std::vector<Type>& arr) { return arr[atomic::random(0, arr.size() - 1)]; }
 	std::string getDemandString(const atomic::Demand& demand);
 	std::vector<std::string> split(const std::string& str, const char& separator);
-	bool isStatusSuccess(int status_code);
+	bool isStatusSuccess(const int& status_code);
+	std::string lower(const std::string& str);
+	std::string upper(const std::string& str);
 }
 
 #endif

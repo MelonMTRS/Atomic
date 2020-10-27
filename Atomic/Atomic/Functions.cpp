@@ -44,7 +44,7 @@ std::vector<std::string> atomic::split(const std::string& str, const char& separ
 	return split_items;
 }
 
-bool atomic::isStatusSuccess(int status_code) {
+bool atomic::isStatusSuccess(const int& status_code) {
 	switch (status_code) {
 	case 200:
 	case 201:
@@ -60,4 +60,20 @@ bool atomic::isStatusSuccess(int status_code) {
 	default:
 		return false;
 	}
+}
+
+std::string atomic::lower(const std::string& str) {
+	std::string newString = "";
+	for (auto c = str.begin(); c != str.end(); ++c) {
+		newString += tolower(*c);
+	}
+	return newString;
+}
+
+std::string atomic::upper(const std::string& str) {
+	std::string newString = "";
+	for (auto c = str.begin(); c != str.end(); ++c) {
+		newString += toupper(*c);
+	}
+	return newString;
 }
