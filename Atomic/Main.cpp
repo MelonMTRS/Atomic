@@ -11,6 +11,8 @@
 #include "Atomic/Functions.h"
 #include "Atomic/Bot.h"
 
+std::string operating_system = "";
+
 int hmain()
 {
 #ifndef VS_DEBUG
@@ -27,12 +29,17 @@ int hmain()
 }
 
 void clear() {
-    // TODO: linux support
-    std::system("cls"); // replace with api function
+    if (operating_system == "windows")
+        std::system("cls");
+    else if (operating_system == "linux")
+        std::system("clear");
+    else
+        std::system("cls");
 }
 
-void throwException(std::string message) {
-    clear();
+void throwException(std::string message, bool safeMode=false) {
+    if (!safeMode)
+        clear();
     std::cerr << message;
     std::cin.get();
     std::exit(EXIT_FAILURE);
@@ -43,6 +50,20 @@ int main() {
     rolimons::ItemDB* items;
     atomic::AuthUser user;
     config::Parser mainConfig;
+    if (!config::configExists()) {
+        std::cout << "Could not find default config, creating...\n";
+        try {
+            config::createConfig(config::getDefaultConfig());
+            std::cout << "Config has been created, please open config.cfg and modify it as desired, then run Atomic again.";
+            std::cin.get();
+            std::exit(EXIT_SUCCESS);
+        }
+        catch (const atomic::HttpError& error) {
+            throwException("Error occured while trying to fetch the default config, please restart and try again.\n", true);
+        }
+    }
+    mainConfig = config::parse("config.cfg");
+    operating_system = std::get<std::string>(config::get(mainConfig, "operating_system"));
     try {
         items = new rolimons::ItemDB{ rolimons::getRolimonItems() };
     }
@@ -54,19 +75,6 @@ int main() {
     catch (const atomic::HttpError& error) {
         throwException("FATAL: Failed to get rolimons values, make sure you have an active internet connection then restart Atomic\n");
     }
-    if (!config::configExists()) {
-        std::cout << "Could not find default config, creating...\n";
-        try {
-            config::createConfig(config::getDefaultConfig());
-            std::cout << "Config has been created, please open config.cfg and modify it as desired, then run Atomic again.";
-            std::cin.get();
-            std::exit(EXIT_SUCCESS);
-        }
-        catch (const atomic::HttpError& error) {
-            throwException("Error occured while trying to fetch the default config, please restart and try again.\n");
-        }
-    }
-    mainConfig = config::parse("config.cfg");
     std::string robloSecurity = std::get<std::string>(config::get(mainConfig, "ROBLOSECURITY"));
     try {
         user = roblox::getUserFromCookie(robloSecurity);
