@@ -16,6 +16,8 @@ int main()
     try {
 #endif
         rolimons::ItemDB items = rolimons::getRolimonItems();
+        rolimons::RolimonsUser user = rolimons::getUser(items, 1480997);
+        std::cout << "Total Rap: " << user.rap << "\nTotal Value: " << user.value;
 #ifndef VS_DEBUG
     }
     catch (...) {

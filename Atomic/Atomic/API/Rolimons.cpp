@@ -33,6 +33,38 @@ atomic::Demand getItemDemand(int level) {
 	return d;
 }
 
+[[nodiscard]] rolimons::RolimonsUser rolimons::getUser(ItemDB& items, int userId) {
+	const cpr::Url url = {"https://www.rolimons.com/api/playerassets/" + std::to_string(userId)};
+	const cpr::Response r = cpr::Get(url);
+	switch (r.status_code) {
+	case 422:
+		throw atomic::HttpError{ "PlayerNotFound", 422, atomic::ErrorTypes::NotFoundError };
+	default:
+		if (!atomic::isStatusSuccess(r.status_code))
+			throw atomic::HttpError{ "PlayerFetchError", r.status_code };
+	}
+	rapidjson::Document d;
+	d.Parse(r.text.c_str());
+	int totalValue = 0;
+	int totalRap = 0;
+	int totalCollectibles = 0;
+	if (d["success"].GetBool()) {
+		for (auto asset = d["playerAssets"].MemberBegin(); asset != d["playerAssets"].MemberEnd(); ++asset) {
+			if (asset->value.IsArray()) {
+				for (auto& v : asset->value.GetArray()) {
+					if (v.IsInt64()) {
+						atomic::UniqueItem item = rolimons::getSpecificItem(items, std::stoi(asset->name.GetString()), v.GetInt64());
+						totalValue += item.value;
+						totalRap += item.rap;
+					}
+				}
+				totalCollectibles++;
+			}
+		}
+	}
+	return rolimons::RolimonsUser{userId, totalRap, totalValue, totalCollectibles};
+}
+
 [[nodiscard]] bool rolimons::isProjected(rolimons::ItemDB& items, const std::int64_t& assetId) {
 	const std::string asset = std::to_string(assetId);
 	if (items["items"][asset.c_str()].IsArray()) {
