@@ -15,6 +15,7 @@ size_t getDocumentSize(const rapidjson::Value& val) {
 	return size;
 }
 
+// This is NOT an efficient demand calculator, however it's good enough to identify bad items
 atomic::Demand atomic::getItemDemand(const atomic::Item& item) {
 	const cpr::Url url = {"https://economy.roblox.com/v1/assets/" + std::to_string(item.id) + "/resale-data"};
 	std::future<cpr::Response> future = cpr::GetAsync(url);
