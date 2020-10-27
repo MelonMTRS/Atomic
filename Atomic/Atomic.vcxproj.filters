@@ -51,6 +51,9 @@
     <ClCompile Include="Atomic\Demand\Demand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Atomic\Config\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Atomic\Item.h">
@@ -204,6 +207,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Atomic\Demand\Demand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Atomic\Config\Config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

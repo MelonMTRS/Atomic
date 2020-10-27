@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="Atomic\AuthUser.cpp" />
     <ClCompile Include="Atomic\Bot.cpp" />
+    <ClCompile Include="Atomic\Config\Config.cpp" />
     <ClCompile Include="Atomic\Config\Parser.cpp" />
     <ClCompile Include="Atomic\Conversion.cpp" />
     <ClCompile Include="Atomic\API\Wrapper.cpp" />
@@ -171,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="Atomic\AuthUser.h" />
     <ClInclude Include="Atomic\Bot.h" />
+    <ClInclude Include="Atomic\Config\Config.h" />
     <ClInclude Include="Atomic\Config\Parser.h" />
     <ClInclude Include="Atomic\Demand\Demand.h" />
     <ClInclude Include="Atomic\Exceptions.h" />
