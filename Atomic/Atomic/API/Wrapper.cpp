@@ -12,7 +12,7 @@
 	const cpr::Cookies authorization = { {".ROBLOSECURITY", atomic::formatCookie(cookie)} };
 	const cpr::Body empty{""};
 	cpr::Response r = cpr::Post(logout, authorization, empty);
-	if (!atomic::isStatusSuccess(r.status_code))
+	if (r.status_code != 403)
 		throw atomic::HttpError{"Http Error", r.status_code};
 	else
 		return r.header["X-CSRF-TOKEN"];
