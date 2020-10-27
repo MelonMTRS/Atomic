@@ -4,7 +4,7 @@
 #include "./API/Rolimons.h"
 
 [[nodiscard]] atomic::Inventory atomic::AuthUser::getInventory(rolimons::ItemDB& items) {
-	return roblox::getInventory(atomic::User{ this->m_id }, items);
+	return roblox::getInventory(this->getUser(), items);
 }
 
 [[nodiscard]] const bool atomic::AuthUser::canTradeWith(const atomic::User& user) const {
@@ -12,7 +12,7 @@
 }
 
 [[nodiscard]] const bool atomic::AuthUser::isPremium() const {
-	return roblox::getMembership(*this, atomic::User{ this->m_id }) == roblox::Membership::Premium;
+	return roblox::getMembership(*this, this->getUser()) == roblox::Membership::Premium;
 }
 
 [[nodiscard]] const bool atomic::AuthUser::isCookieValid() const {
