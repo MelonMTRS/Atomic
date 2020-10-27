@@ -57,8 +57,8 @@ atomic::Demand getItemDemand(int level) {
 						totalValue += item.value;
 						totalRap += item.rap;
 					}
+					totalCollectibles++;
 				}
-				totalCollectibles++;
 			}
 		}
 	}
