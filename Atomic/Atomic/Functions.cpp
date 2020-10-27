@@ -56,6 +56,8 @@ bool atomic::isStatusSuccess(const int& status_code) {
 	case 208:
 	case 207:
 	case 226:
+	case 302:
+	case 304:
 		return true;
 	default:
 		return false;

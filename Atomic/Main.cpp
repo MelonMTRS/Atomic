@@ -11,7 +11,7 @@
 #include "Atomic/Functions.h"
 #include "Atomic/Bot.h"
 
-int main()
+int hmain()
 {
 #ifndef VS_DEBUG
     try {
@@ -26,18 +26,30 @@ int main()
     return EXIT_SUCCESS;
 }
 
-int release_main() {
+int main() {
     rolimons::ItemDB* items;
     try {
         items = new rolimons::ItemDB{ rolimons::getRolimonItems() };
     }
     catch (const std::bad_alloc&) {
-        std::cout << "Rare Allocation Error: Unable to allocate enough memory, please re-start.\n";
+        std::cerr << "Rare Allocation Error: Unable to allocate enough memory, doing a stack allocation...\n";
+        items = &rolimons::getRolimonItems();
+    }
+    catch (const atomic::HttpError& error) {
+        std::cerr << "FATAL: Failed to get rolimons values, make sure you have an active internet connection then restart Atomic\n";
         std::cin.get();
         std::exit(EXIT_FAILURE);
     }
     if (!config::configExists()) {
         std::cout << "Could not find default config, creating...\n";
+        try {
+            config::createConfig(config::getDefaultConfig());
+        }
+        catch (const atomic::HttpError& error) {
+            std::cerr << "Error occured while trying to fetch the default config, please restart and try again.\n";
+            std::cin.get();
+            std::exit(EXIT_FAILURE);
+        }
     }
     return EXIT_SUCCESS;
 }

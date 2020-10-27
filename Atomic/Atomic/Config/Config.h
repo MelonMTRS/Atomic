@@ -6,6 +6,7 @@
 namespace config {
 	bool configExists();
 	std::string getDefaultConfig();
+	void createConfig(std::string configData);
 }
 
 #endif
