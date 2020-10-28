@@ -37,11 +37,6 @@ namespace atomic {
 		atomic::ErrorTypes errorType = ErrorTypes::DefaultError;
 	};
 
-	struct TradeFormFailure {
-		const std::string message;
-		atomic::ErrorTypes errorType = ErrorTypes::DefaultError;
-	};
-
 	// Config Errors
 
 	struct ConfigLoadFailure {
