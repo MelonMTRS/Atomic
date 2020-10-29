@@ -33,7 +33,7 @@ atomic::Demand getItemDemand(int level) {
 	return d;
 }
 
-[[nodiscard]] rolimons::RolimonsUser rolimons::getUser(ItemDB& items, int userId) {
+[[nodiscard]] rolimons::RolimonsUser rolimons::getUser(ItemDB& items, const int& userId) {
 	const cpr::Url url = {"https://www.rolimons.com/api/playerassets/" + std::to_string(userId)};
 	const cpr::Response r = cpr::Get(url);
 	switch (r.status_code) {

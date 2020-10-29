@@ -5,6 +5,7 @@
 #include "../Item.h"
 
 namespace rolimons {
+	// TODO: Change ItemDB to a class with proper methods for updating values
 	using ItemDB = rapidjson::Document;
 
 	struct RolimonsUser {
@@ -20,7 +21,7 @@ namespace rolimons {
 	[[nodiscard]] atomic::Item getRandomItem(ItemDB& items);
 	[[nodiscard]] atomic::UniqueItem getSpecificItem(ItemDB& items, const std::int64_t& assetId, const std::int64_t& userAssetId);
 	[[nodiscard]] std::int64_t getItemValue(ItemDB& items, const std::int64_t& assetId);
-	[[nodiscard]] RolimonsUser getUser(ItemDB& items, int userId);
+	[[nodiscard]] RolimonsUser getUser(ItemDB& items, const int& userId);
 }
 
 #endif
