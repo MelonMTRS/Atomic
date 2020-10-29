@@ -162,6 +162,7 @@
     <ClCompile Include="Atomic\Conversion.cpp" />
     <ClCompile Include="Atomic\API\Wrapper.cpp" />
     <ClCompile Include="Atomic\Demand\Demand.cpp" />
+    <ClCompile Include="Atomic\Exceptions.cpp" />
     <ClCompile Include="Atomic\Functions.cpp" />
     <ClCompile Include="Atomic\Inventory.cpp" />
     <ClCompile Include="Atomic\API\Rolimons.cpp" />

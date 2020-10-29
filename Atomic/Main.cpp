@@ -8,6 +8,7 @@
 #include "Atomic/Config/Parser.h"
 #include "Atomic/Conversion.h"
 #include "Atomic/User.h"
+#include "Atomic/Exceptions.h"
 #include "Atomic/Functions.h"
 #include "Atomic/Bot.h"
 
@@ -30,18 +31,6 @@ int main()
 
 // DIVIDER
 
-
-void clear() {
-    std::system("cls");
-}
-
-void throwException(std::string message) {
-    clear();
-    std::cerr << message;
-    std::cin.get();
-    std::exit(EXIT_FAILURE);
-}
-
 int release_main() {
     std::cout << "<Loading...>\n";
     rolimons::ItemDB* items;
@@ -51,15 +40,15 @@ int release_main() {
         items = new rolimons::ItemDB{ rolimons::getRolimonItems() };
     }
     catch (const std::bad_alloc&) {
-        clear();
+        atomic::clear();
         std::cerr << "Rare Allocation Error: Unable to allocate enough memory, doing a stack allocation...\n";
         items = &rolimons::getRolimonItems();
     }
     catch (const atomic::HttpError& error) {
-        throwException("FATAL: Failed to get rolimons values, make sure you have an active internet connection then restart Atomic\n");
+        atomic::throwException("FATAL: Failed to get rolimons values, make sure you have an active internet connection then restart Atomic\n");
     }
     if (!config::configExists()) {
-        clear();
+        atomic::clear();
         std::cout << "Could not find default config, creating...\n";
         try {
             config::createConfig(config::getDefaultConfig());
@@ -68,7 +57,7 @@ int release_main() {
             std::exit(EXIT_SUCCESS);
         }
         catch (const atomic::HttpError& error) {
-            throwException("Error occured while trying to fetch the default config, please restart and try again.\n");
+            atomic::throwException("Error occured while trying to fetch the default config, please restart and try again.\n");
         }
     }
     mainConfig = config::parse("config.cfg");
@@ -77,10 +66,10 @@ int release_main() {
         user = roblox::getUserFromCookie(robloSecurity);
     }
     catch (const atomic::HttpError& error) {
-        throwException("Failed to login, please make sure you added the correct roblosecurity cookie\nStatus code: " + std::to_string(error.status_code) + "\n");
+        atomic::throwException("Failed to login, please make sure you added the correct roblosecurity cookie\nStatus code: " + std::to_string(error.status_code) + "\n");
     }
     if (!user.isPremium()) {
-        throwException("Login was a success, however it looks like you don't have premium!\nAtomic cannot trade without it\n");
+        atomic::throwException("Login was a success, however it looks like you don't have premium!\nAtomic cannot trade without it\n");
     }
     return EXIT_SUCCESS;
 }

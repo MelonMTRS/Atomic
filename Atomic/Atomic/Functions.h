@@ -14,6 +14,7 @@ namespace atomic {
 	bool isStatusSuccess(const int& status_code);
 	std::string lower(const std::string& str);
 	std::string upper(const std::string& str);
+	void clear();
 }
 
 #endif

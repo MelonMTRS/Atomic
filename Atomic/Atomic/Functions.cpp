@@ -79,3 +79,8 @@ std::string atomic::upper(const std::string& str) {
 	}
 	return newString;
 }
+
+
+void atomic::clear() {
+	std::system("cls");
+}

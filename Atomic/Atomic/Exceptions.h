@@ -3,6 +3,8 @@
 #include <string>
 
 namespace atomic {
+	void throwException(std::string message);
+
 	enum class ErrorTypes {
 		DefaultError,
 		PermissionError,
