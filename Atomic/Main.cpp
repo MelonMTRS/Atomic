@@ -11,9 +11,7 @@
 #include "Atomic/Functions.h"
 #include "Atomic/Bot.h"
 
-std::string operating_system = "";
-
-int hmain()
+int main()
 {
 #ifndef VS_DEBUG
     try {
@@ -28,6 +26,11 @@ int hmain()
     return EXIT_SUCCESS;
 }
 
+
+
+// DIVIDER
+
+
 void clear() {
     std::system("cls");
 }
@@ -39,12 +42,11 @@ void throwException(std::string message) {
     std::exit(EXIT_FAILURE);
 }
 
-int main() {
+int release_main() {
     std::cout << "<Loading...>\n";
     rolimons::ItemDB* items;
     atomic::AuthUser user;
     config::Parser mainConfig;
-    mainConfig = config::parse("config.cfg");
     try {
         items = new rolimons::ItemDB{ rolimons::getRolimonItems() };
     }
@@ -57,6 +59,7 @@ int main() {
         throwException("FATAL: Failed to get rolimons values, make sure you have an active internet connection then restart Atomic\n");
     }
     if (!config::configExists()) {
+        clear();
         std::cout << "Could not find default config, creating...\n";
         try {
             config::createConfig(config::getDefaultConfig());
@@ -68,6 +71,7 @@ int main() {
             throwException("Error occured while trying to fetch the default config, please restart and try again.\n");
         }
     }
+    mainConfig = config::parse("config.cfg");
     std::string robloSecurity = std::get<std::string>(config::get(mainConfig, "ROBLOSECURITY"));
     try {
         user = roblox::getUserFromCookie(robloSecurity);
