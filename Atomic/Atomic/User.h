@@ -10,12 +10,9 @@ namespace atomic {
 		const std::int64_t m_id;
 		const std::string m_name;
 	public:
-		User(const std::int64_t& id, const std::string& name="None", const bool& confirmExistence=false)
+		User(const std::int64_t& id, const std::string& name="None")
 			: m_id{ id }, m_name{ name }
 		{
-			if (confirmExistence) {
-				// TODO: Confirm if User does exist
-			}
 		}
 
 		[[nodiscard]] const std::int64_t getId() const noexcept { return this->m_id; }

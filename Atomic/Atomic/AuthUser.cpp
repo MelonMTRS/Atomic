@@ -20,7 +20,7 @@
 	try {
 		user = roblox::getUserFromCookie(this->m_cookie);
 	}
-	catch (atomic::HttpError error) {
+	catch (atomic::HttpError) {
 		return false;
 	}
 	return true;

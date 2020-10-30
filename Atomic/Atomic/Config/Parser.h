@@ -8,10 +8,19 @@
 // TODO: Improve this entire system
 
 namespace config {
-	using Parser = std::map<std::string, std::string>;
-	using ParseValue = std::variant<int, bool, std::string>;
-	config::Parser parse(std::string filename);
-	ParseValue get(config::Parser ParseObject, std::string key);
+	class Config {
+	private:
+		std::string m_filename;
+		std::map<std::string, std::string> m_data;
+	public:
+		Config() = default;
+		Config(std::string filename);
+
+		int getInt(std::string key);
+		int64_t getInt64(std::string key);
+		bool getBool(std::string key);
+		std::string getString(std::string key);
+	};
 }
 
 #endif

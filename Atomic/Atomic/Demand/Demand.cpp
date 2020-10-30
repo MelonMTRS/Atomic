@@ -18,8 +18,7 @@ size_t getDocumentSize(const rapidjson::Value& val) {
 // This is NOT an efficient demand calculator, however it's good enough to identify bad items
 atomic::Demand atomic::getItemDemand(const atomic::Item& item) {
 	const cpr::Url url = {"https://economy.roblox.com/v1/assets/" + std::to_string(item.id) + "/resale-data"};
-	std::future<cpr::Response> future = cpr::GetAsync(url);
-	cpr::Response r = future.get();
+	cpr::Response r = cpr::Get(url);
 	switch (r.status_code) {
 	case 400:
 		throw atomic::HttpError{"Invalid AssetId", 400};

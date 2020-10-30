@@ -35,7 +35,7 @@ int release_main() {
     std::cout << "<Loading...>\n";
     rolimons::ItemDB* items;
     atomic::AuthUser user;
-    config::Parser mainConfig;
+    config::Config mainConfig;
     try {
         items = new rolimons::ItemDB{ rolimons::getRolimonItems() };
     }
@@ -60,8 +60,8 @@ int release_main() {
             atomic::throwException("Error occured while trying to fetch the default config, please restart and try again.\n");
         }
     }
-    mainConfig = config::parse("config.cfg");
-    std::string robloSecurity = std::get<std::string>(config::get(mainConfig, "ROBLOSECURITY"));
+    mainConfig = {"config.cfg"};
+    std::string robloSecurity = mainConfig.getString("ROBLOSECURITY");
     try {
         user = roblox::getUserFromCookie(robloSecurity);
     }

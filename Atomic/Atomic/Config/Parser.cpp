@@ -9,9 +9,7 @@
 
 /*
     just a note here:
-    this entire code was made a while ago and hasn't been updated much since
-    i'm planning to revamp when I finish most of the important stuff in atomic
-    but for now, it does the job
+    This is not a complete parser for cfg files
 */
 
 std::string strip(std::string s) {
@@ -24,17 +22,10 @@ std::string strip(std::string s) {
     return s;
 }
 
-bool isdigit(std::string s) {
-    for (char c : s) {
-        if (std::isdigit(c) == 0)
-            return false;
-    }
-    return true;
-}
-
-
-config::Parser config::parse(std::string filename) {
-    config::Parser f = {};
+config::Config::Config(std::string filename)
+    : m_filename{filename}
+{
+    std::map<std::string, std::string> configData = {};
     std::ifstream config{ filename };
     if (!config)
         throw atomic::ConfigLoadFailure{};
@@ -45,24 +36,28 @@ config::Parser config::parse(std::string filename) {
             continue;
         std::vector<std::string> s = atomic::split(line, '=');
         if (s.size() == 2)
-            f[strip(s[0])] = strip(s[1]);
+            configData[strip(s[0])] = strip(s[1]);
     }
-    return f;
+    this->m_data = configData;
 }
 
-config::ParseValue config::get(config::Parser ParseObject, std::string key) {
-    try {
-        ParseObject.at(key);
-    }
-    catch (std::out_of_range) {
-        throw atomic::ItemFetchFailure{};
-    }
-    std::string value = ParseObject[key];
-    if (value == "true")
+int config::Config::getInt(std::string key) {
+    return std::stoi(this->m_data[key]);
+}
+
+int64_t config::Config::getInt64(std::string key) {
+    return std::stoll(this->m_data[key]);
+}
+
+bool config::Config::getBool(std::string key) {
+    std::string val = atomic::lower(strip(this->m_data[key]));
+    if (val == "true")
         return true;
-    else if (value == "false")
+    else if (val == "false")
         return false;
-    else if (isdigit(value))
-        return std::stoi(value);
-    return value;
+    throw atomic::UnknownValue{ "Unknown value" };
+}
+
+std::string config::Config::getString(std::string key) {
+    return this->m_data[key];
 }

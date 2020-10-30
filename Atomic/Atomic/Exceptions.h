@@ -44,6 +44,10 @@ namespace atomic {
 	struct ConfigLoadFailure {
 		const std::string message;
 	};
+
+	struct UnknownValue {
+		const std::string message;
+	};
 }
 
 #endif
