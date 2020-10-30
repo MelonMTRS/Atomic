@@ -5,8 +5,7 @@
 #include "./Inventory.h"
 #include "./Trade.h"
 
-// Trades above this rap will return atomic::TradeAction::Ignore
-#define TOTAL_ACCEPTED_RAP 4500
+#define MAX_RANGE 2
 
 /*
 * Algorithmic functions
@@ -20,7 +19,7 @@ namespace atomic {
 	};
 	[[nodiscard]] atomic::Offer makeOffer(atomic::Inventory& AuthInventory, atomic::Inventory& VictimInventory);
 	[[nodiscard]] atomic::TradeAction evaluateTrade(atomic::Trade& trade);
-	[[nodiscard]] atomic::User findUser(atomic::AuthUser& user, rolimons::ItemDB& items, int maxRange=2); // Returns a random user to trade with
+	[[nodiscard]] atomic::User findUser(atomic::AuthUser& user, rolimons::ItemDB& items, int maxRange=MAX_RANGE); // Returns a random user to trade with
 }
 
 #endif

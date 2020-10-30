@@ -42,5 +42,5 @@ atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items, i
 		}
 		return atomic::findUser(user, items); // If it couldn't find anything, then try again until it does.
 	}
-	return atomic::findUser(user, items, 2);
+	return atomic::findUser(user, items, MAX_RANGE);
 }
