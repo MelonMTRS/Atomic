@@ -14,12 +14,12 @@ namespace config {
 		std::map<std::string, std::string> m_data;
 	public:
 		Config() = default;
-		Config(std::string filename);
+		Config(const std::string& filename);
 
-		int getInt(std::string key);
-		int64_t getInt64(std::string key);
-		bool getBool(std::string key);
-		std::string getString(std::string key);
+		int const getInt(const std::string& key);
+		int64_t const getInt64(const std::string& key);
+		bool const getBool(const std::string& key);
+		std::string const getString(const std::string& key);
 	};
 }
 

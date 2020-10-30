@@ -22,7 +22,7 @@ std::string strip(std::string s) {
     return s;
 }
 
-config::Config::Config(std::string filename)
+config::Config::Config(const std::string& filename)
     : m_filename{filename}
 {
     std::map<std::string, std::string> configData = {};
@@ -41,15 +41,15 @@ config::Config::Config(std::string filename)
     this->m_data = configData;
 }
 
-int config::Config::getInt(std::string key) {
+int const config::Config::getInt(const std::string& key) {
     return std::stoi(this->m_data[key]);
 }
 
-int64_t config::Config::getInt64(std::string key) {
+int64_t const config::Config::getInt64(const std::string& key) {
     return std::stoll(this->m_data[key]);
 }
 
-bool config::Config::getBool(std::string key) {
+bool const config::Config::getBool(const std::string& key) {
     std::string val = atomic::lower(strip(this->m_data[key]));
     if (val == "true")
         return true;
@@ -58,6 +58,6 @@ bool config::Config::getBool(std::string key) {
     throw atomic::UnknownValue{ "Unknown value" };
 }
 
-std::string config::Config::getString(std::string key) {
+std::string const config::Config::getString(const std::string& key) {
     return this->m_data[key];
 }
