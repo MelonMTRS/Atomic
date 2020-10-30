@@ -1,11 +1,6 @@
 #ifndef ATOMIC_CONFIGPARSER_PARSER_H
 #define ATOMIC_CONFIGPARSER_PARSER_H
-#include <iostream>
-#include <vector>
 #include <map>
-#include <variant> // C++17
-
-// TODO: Improve this entire system
 
 namespace config {
 	class Config {

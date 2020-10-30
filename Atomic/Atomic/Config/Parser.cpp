@@ -1,11 +1,10 @@
-#include "../Exceptions.h"
-#include "../Functions.h"
-#include "./Parser.h"
 #include <fstream>
 #include <string>
 #include <vector>
 #include <map>
-#include <cctype>
+#include "./Parser.h"
+#include "../Exceptions.h"
+#include "../Functions.h"
 
 /*
     just a note here:

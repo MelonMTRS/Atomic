@@ -1,12 +1,8 @@
-#include <chrono>
-#include <future>
-#include <thread>
-#include <iostream>
-#include "../rapidjson/document.h"
-#include "../Functions.h"
-#include "../Exceptions.h"
 #include "./Demand.h"
 #include "./cpr/cpr.h"
+#include "../Functions.h"
+#include "../Exceptions.h"
+#include "../rapidjson/document.h"
 
 size_t getDocumentSize(const rapidjson::Value& val) {
 	size_t size = 0;

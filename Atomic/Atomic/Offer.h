@@ -2,7 +2,7 @@
 #define ATOMIC_OFFER_H
 #include <vector>
 #include <numeric>
-#include "Item.h"
+#include "./Item.h"
 
 namespace atomic {
 	using OfferHolder = std::vector<atomic::UniqueItem>;
