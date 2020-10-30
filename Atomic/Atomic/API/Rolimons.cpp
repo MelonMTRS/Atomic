@@ -136,3 +136,12 @@ atomic::Demand getItemDemand(int level) {
 	else
 		throw atomic::ItemNotFound{ "Item could not be found" };
 }
+
+void rolimons::setItemDemand(ItemDB& items, const std::int64_t& assetId, const atomic::Demand& newDemand) {
+	items["items"][std::to_string(assetId).c_str()][5].SetInt(atomic::getDemandId(newDemand));
+	/*
+	just a reminder for me:
+	this should only be used on items with a non assigned demand, to prevent having to get the items demand each time
+	we cache it instead
+	*/
+}

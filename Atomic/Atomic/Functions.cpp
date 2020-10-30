@@ -28,6 +28,25 @@ std::string atomic::getDemandString(const atomic::Demand& demand) {
 	}
 }
 
+int atomic::getDemandId(const atomic::Demand& demand) {
+	switch (demand) {
+	case atomic::Demand::NotAssigned:
+		return -1;
+	case atomic::Demand::Terrible:
+		return 0;
+	case atomic::Demand::Low:
+		return 1;
+	case atomic::Demand::Normal:
+		return 2;
+	case atomic::Demand::High:
+		return 3;
+	case atomic::Demand::Amazing:
+		return 4;
+	default:
+		return 404;
+	}
+}
+
 std::vector<std::string> atomic::split(const std::string& str, const char& separator) {
 	std::vector<std::string> split_items = {};
 	std::string stringHolder = "";
