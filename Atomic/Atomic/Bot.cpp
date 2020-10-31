@@ -14,7 +14,11 @@ atomic::TradeAction atomic::evaluateTrade(atomic::Trade& trade) {
 }
 
 atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items, int maxRange) {
-	const int method = atomic::random(1, maxRange);
+	int method;
+	if (!(atomic::random(1, 5) == 1)) // Method 2 should be used less often because it may generate the same users
+		method = 1;
+	else
+		method = 2;
 	if (method == 1) {
 		// Limited Item Resellers
 		atomic::Item randomItem = rolimons::getRandomItem(items);

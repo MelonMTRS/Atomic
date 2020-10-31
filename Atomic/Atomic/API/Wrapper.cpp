@@ -104,14 +104,14 @@
 		tradeType = atomic::TradeType::Inbound;
 	else
 		tradeType = atomic::TradeType::Unknown;
-	int offeringIterator = 0;
+	size_t offeringIterator = 0;
 	for (auto& v : d["offers"][0]["userAssets"].GetArray()) {
 		if (v["name"].IsString() && v["assetId"].IsInt64() && v["id"].IsInt64() && v["recentAveragePrice"].IsInt64()) {
 			offering[offeringIterator] = rolimons::getSpecificItem(items, v["assetId"].GetInt64(), v["id"].GetInt64());
 			offeringIterator++;
 		}
 	}
-	int requestingIterator = 0;
+	size_t requestingIterator = 0;
 	for (auto& v : d["offers"][1]["userAssets"].GetArray()) {
 		if (v["name"].IsString() && v["assetId"].IsInt64() && v["id"].IsInt64() && v["recentAveragePrice"].IsInt64()) {
 			requesting[requestingIterator] = rolimons::getSpecificItem(items, v["assetId"].GetInt64(), v["id"].GetInt64());
