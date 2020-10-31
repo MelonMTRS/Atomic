@@ -7,8 +7,6 @@
 
 namespace atomic {
 	int random(const int& min, const int& max);
-	template <typename Type>
-	Type random_choice(const std::vector<Type>& arr) { return arr[atomic::random(0, arr.size() - 1)]; }
 	std::string getDemandString(const atomic::Demand& demand);
 	int getDemandId(const atomic::Demand& demand);
 	std::vector<std::string> split(const std::string& str, const char& separator);

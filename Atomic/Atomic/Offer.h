@@ -1,19 +1,20 @@
 #ifndef ATOMIC_OFFER_H
 #define ATOMIC_OFFER_H
-#include <vector>
+#include <array>
 #include <numeric>
 #include "./Item.h"
 
 namespace atomic {
-	using OfferHolder = std::vector<atomic::UniqueItem>;
+	using OfferHolder = std::array<atomic::UniqueItem, 4U>;
 
 	class Offer {
 	private:
-		const OfferHolder m_offering;
-		const OfferHolder m_requesting;
-		const int m_robuxOffering;
-		const int m_robuxRequesting;
+		OfferHolder m_offering;
+		OfferHolder m_requesting;
+		int m_robuxOffering = 0;
+		int m_robuxRequesting = 0;
 	public:
+		Offer() = default;
 		Offer(const OfferHolder& offering, const OfferHolder& requesting, const int& robuxOffering = 0, const int& robuxRequesting = 0): 
 			m_offering{ offering }, m_requesting{ requesting },
 			m_robuxOffering{ robuxOffering }, m_robuxRequesting{robuxRequesting}

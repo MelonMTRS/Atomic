@@ -17,9 +17,10 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        rolimons::ItemDB items = rolimons::getRolimonItems();
-        rolimons::setItemDemand(items, 527365852, atomic::Demand::Low);
-        std::cout << atomic::getDemandString(rolimons::getItem(items, 527365852).demand);
+        atomic::Offer offer;
+        std::array<atomic::UniqueItem, 4U> items = {};
+        std::array<atomic::UniqueItem, 4U> items2 = {};
+        offer = {items, items2, 0, 0};
 #ifndef VS_DEBUG
     }
     catch (...) {

@@ -35,9 +35,9 @@
     d["offers"][1]["robux"].SetInt(trade.getOffer().getRobuxOffered());
     auto offering = trade.getOffer().getOffering();
     auto requesting = trade.getOffer().getRequesting();
-    for (atomic::ItemContainer::iterator item = offering.begin(); item != offering.end(); ++item)
+    for (auto item = offering.begin(); item != offering.end(); ++item)
         d["offers"][1]["userAssetIds"].PushBack(item->userAssetId, d.GetAllocator());
-    for (atomic::ItemContainer::iterator item = requesting.begin(); item != requesting.end(); ++item)
+    for (auto item = requesting.begin(); item != requesting.end(); ++item)
         d["offers"][0]["userAssetIds"].PushBack(item->userAssetId, d.GetAllocator());
 
     rapidjson::StringBuffer buffer;

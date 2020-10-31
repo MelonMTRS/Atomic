@@ -35,15 +35,24 @@ namespace atomic {
 	};
 
 	struct UniqueItem {
-		const std::string name;
-		const std::int64_t id;
-		const std::int64_t userAssetId; // Unique Identifier Id
-		const std::int64_t rap;
+		std::string name;
+		std::int64_t id;
+		std::int64_t userAssetId; // Unique Identifier Id
+		std::int64_t rap;
 		std::int64_t value = -1;
 		atomic::Demand demand = atomic::Demand::NotSet;
 
 		Item getRegularItem() {
 			return Item{ name, id, rap, value, demand };
+		}
+
+		void operator=(const UniqueItem& newItem) {
+			this->name = newItem.name;
+			this->id = newItem.id;
+			this->userAssetId = newItem.userAssetId;
+			this->rap = newItem.rap;
+			this->value = newItem.value;
+			this->demand = newItem.demand;
 		}
 	};
 }

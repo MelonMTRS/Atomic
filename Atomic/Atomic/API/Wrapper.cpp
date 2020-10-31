@@ -1,3 +1,4 @@
+#include <array>
 #include "cpr/cpr.h"
 #include "./Wrapper.h"
 #include "./Rolimons.h"
@@ -77,8 +78,10 @@
 	const cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
 	cpr::Response r = cpr::Get(url, cookies);
 	atomic::TradeType tradeType;
-	std::vector<atomic::UniqueItem> offering = {};
-	std::vector<atomic::UniqueItem> requesting = {};
+	std::array<atomic::UniqueItem, 4U> offering = {};
+	std::array<atomic::UniqueItem, 4U> requesting = {};
+	//std::vector<atomic::UniqueItem> offering = {};
+	//std::vector<atomic::UniqueItem> requesting = {};
 	int robuxOffering;
 	int robuxRequesting;
 	switch (r.status_code) {
@@ -103,14 +106,18 @@
 		tradeType = atomic::TradeType::Inbound;
 	else
 		tradeType = atomic::TradeType::Unknown;
+	int offeringIterator = 0;
 	for (auto& v : d["offers"][0]["userAssets"].GetArray()) {
-		if (v["name"].IsString() && v["assetId"].IsInt64() && v["userAssetId"].IsInt64() && v["recentAveragePrice"].IsInt64()) {
-			offering.push_back(rolimons::getSpecificItem(items, v["assetId"].GetInt64(), v["userAssetId"].GetInt64()));
+		if (v["name"].IsString() && v["assetId"].IsInt64() && v["id"].IsInt64() && v["recentAveragePrice"].IsInt64()) {
+			offering[offeringIterator] = rolimons::getSpecificItem(items, v["assetId"].GetInt64(), v["id"].GetInt64());
+			offeringIterator++;
 		}
 	}
+	int requestingIterator = 0;
 	for (auto& v : d["offers"][1]["userAssets"].GetArray()) {
-		if (v["name"].IsString() && v["assetId"].IsInt64() && v["userAssetId"].IsInt64() && v["recentAveragePrice"].IsInt64()) {
-			requesting.push_back(rolimons::getSpecificItem(items, v["assetId"].GetInt64(), v["userAssetId"].GetInt64()));
+		if (v["name"].IsString() && v["assetId"].IsInt64() && v["id"].IsInt64() && v["recentAveragePrice"].IsInt64()) {
+			requesting[requestingIterator] = rolimons::getSpecificItem(items, v["assetId"].GetInt64(), v["id"].GetInt64());
+			requestingIterator++;
 		}
 	}
 	robuxOffering = d["offers"][0]["robux"].GetInt(); // lets be real, no ones gonna offer you more than 2147483647 robux
