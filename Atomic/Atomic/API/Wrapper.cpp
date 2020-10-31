@@ -80,8 +80,6 @@
 	atomic::TradeType tradeType;
 	std::array<atomic::UniqueItem, 4U> offering = {};
 	std::array<atomic::UniqueItem, 4U> requesting = {};
-	//std::vector<atomic::UniqueItem> offering = {};
-	//std::vector<atomic::UniqueItem> requesting = {};
 	int robuxOffering;
 	int robuxRequesting;
 	switch (r.status_code) {

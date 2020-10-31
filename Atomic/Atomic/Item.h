@@ -25,12 +25,8 @@ namespace atomic {
 		std::int64_t value = -1;
 		atomic::Demand demand = atomic::Demand::NotSet;
 
-		void operator=(const Item& newItem) {
-			this->name = newItem.name;
-			this->id = newItem.id;
-			this->rap = newItem.rap;
-			this->value = newItem.value;
-			this->demand = newItem.demand;
+		void operator=(const Item* newItem) {
+			*this = newItem;
 		}
 	};
 
@@ -46,13 +42,8 @@ namespace atomic {
 			return Item{ name, id, rap, value, demand };
 		}
 
-		void operator=(const UniqueItem& newItem) {
-			this->name = newItem.name;
-			this->id = newItem.id;
-			this->userAssetId = newItem.userAssetId;
-			this->rap = newItem.rap;
-			this->value = newItem.value;
-			this->demand = newItem.demand;
+		void operator=(const UniqueItem* newItem) {
+			*this = newItem;
 		}
 	};
 }
