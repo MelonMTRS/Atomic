@@ -42,6 +42,11 @@ Atomic will not be trading any items that exceed this value, set it to an obnoxi
 
 The minimum amount of profit Atomic should try to aim for
 
+`maximum_item_to_trade [characters]`
+
+The maximum amount of items that Atomic will be able to offer/request, you can change this if you wish to upgrade/downgrade  
+For example, if set to 4/1, it'll be able to offer up to 4 items and can only request 1, if set to 3/3 it'll only be able to offer up to 3 items and request 3 items.
+
 # Inbound
 
 `evaluate_inbound_trades [true/false]`
