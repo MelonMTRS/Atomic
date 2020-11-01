@@ -14,11 +14,7 @@ atomic::TradeAction atomic::evaluateTrade(atomic::Trade& trade) {
 }
 
 atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items, int maxRange) {
-	int method;
-	if (!(atomic::random(1, 5) == 1)) // Method 2 should be used less often because it may generate the same users
-		method = 1;
-	else
-		method = 2;
+	int method = atomic::random(1, 5) == 1 ? 2 : 1;
 	if (method == 1) {
 		// Limited Item Resellers
 		atomic::Item randomItem = rolimons::getRandomItem(items);
@@ -27,7 +23,8 @@ atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items, i
 		}
 		std::vector<atomic::User> resellers = roblox::getResellers(user, randomItem);
 		for (auto reseller = resellers.begin(); reseller != resellers.end(); ++reseller) {
-			if (roblox::can_trade(user, *reseller)) {
+			// TODO: Pick resellers by random
+			if (user.canTradeWith(*reseller)) {
 				return *reseller;
 			}
 		}
