@@ -23,6 +23,13 @@ namespace roblox {
 		FAIL
 	};
 
+	struct UnactivatedTrade {
+		int tradeId;
+		//atomic::Trade load() {
+			
+		//}
+	};
+
 	[[nodiscard]] std::string getToken(const std::string& cookie);
 	[[nodiscard]] atomic::AuthUser getUserFromCookie(std::string cookie);
 	[[nodiscard]] roblox::Membership getMembership(const atomic::AuthUser& authuser, const atomic::User& user);
