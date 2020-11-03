@@ -24,10 +24,10 @@ namespace roblox {
 	};
 
 	struct UnactivatedTrade {
-		int tradeId;
-		//atomic::Trade load() {
-			
-		//}
+		std::int64_t tradeId;
+		atomic::Trade load(const atomic::AuthUser& user, rolimons::ItemDB& items) {
+			return roblox::getTrade(user, items, tradeId);
+		}
 	};
 
 	[[nodiscard]] std::string getToken(const std::string& cookie);
@@ -38,10 +38,10 @@ namespace roblox {
 	roblox::TradeResult counterTrade(const atomic::AuthUser& user, const atomic::Trade& trade, const atomic::Offer& newOffer);
 	roblox::TradeResult declineTrade(const atomic::AuthUser& user, const atomic::Trade& trade);
 	[[nodiscard]] bool can_trade(const atomic::AuthUser& user, const atomic::User& target);
-	[[nodiscard]] atomic::Trade getTrade(const atomic::AuthUser& user, rolimons::ItemDB& items, const int& tradeId);
+	[[nodiscard]] atomic::Trade getTrade(const atomic::AuthUser& user, rolimons::ItemDB& items, const std::int64_t& tradeId);
 	[[nodiscard]] std::vector<atomic::User> getResellers(const atomic::AuthUser& user, const atomic::Item& item);
 	[[nodiscard]] std::vector<atomic::User> getUsersInGroup(const int& groupId, const std::int64_t& roleId);
-	[[nodiscard]] std::vector<atomic::Trade> getTrades(const atomic::AuthUser& user, const atomic::TradeType& tradeType, const int& limit=25);
+	[[nodiscard]] std::vector<roblox::UnactivatedTrade> getTrades(const atomic::AuthUser& user, const atomic::TradeType& tradeType, const int& limit=25);
 }
 
 #endif

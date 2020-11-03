@@ -17,10 +17,7 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        atomic::Offer offer;
-        std::array<atomic::UniqueItem, 4U> items = {};
-        std::array<atomic::UniqueItem, 4U> items2 = {};
-        offer = {items, items2, 0, 0};
+        
 #ifndef VS_DEBUG
     }
     catch (...) {

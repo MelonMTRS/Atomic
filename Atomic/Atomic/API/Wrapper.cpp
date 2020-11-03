@@ -73,7 +73,7 @@
 	return d["canTrade"].GetBool();
 }
 
-[[nodiscard]] atomic::Trade roblox::getTrade(const atomic::AuthUser& user, rolimons::ItemDB& items, const int& tradeId) {
+[[nodiscard]] atomic::Trade roblox::getTrade(const atomic::AuthUser& user, rolimons::ItemDB& items, const std::int64_t& tradeId) {
 	const cpr::Url url = {"https://trades.roblox.com/v1/trades/" + std::to_string(tradeId)};
 	const cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
 	cpr::Response r = cpr::Get(url, cookies);
@@ -184,4 +184,38 @@
 		}
 	}
 	return users;
+}
+
+[[nodiscard]] std::vector<roblox::UnactivatedTrade> roblox::getTrades(const atomic::AuthUser& user, const atomic::TradeType& tradeType, const int& limit) {
+	std::string TradeType;
+	std::vector<roblox::UnactivatedTrade> trades;
+	switch (tradeType) {
+	case atomic::TradeType::Completed:
+		TradeType = "completed";
+		break;
+	case atomic::TradeType::Inbound:
+		TradeType = "inbound";
+		break;
+	case atomic::TradeType::Outbound:
+		TradeType = "outbound";
+		break;
+	case atomic::TradeType::Inactive:
+		TradeType = "inactive";
+		break;
+	default:
+		throw atomic::ItemFetchFailure{"Unknown tradetype"};
+	}
+	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
+	cpr::Response r = cpr::Get(cpr::Url{"https://trades.roblox.com/v1/trades/completed?limit=" + std::to_string(limit)}, cookies);
+	if (!atomic::isStatusSuccess(r.status_code)) {
+		throw atomic::HttpError{"HTTP failed", r.status_code};
+	}
+	rapidjson::Document d;
+	d.Parse(r.text.c_str());
+	for (auto& trade : d["data"].GetArray()) {
+		if (trade["id"].IsInt64()) {
+			trades.push_back(roblox::UnactivatedTrade{ trade["id"].GetInt64() });
+		}
+	}
+	return trades;
 }

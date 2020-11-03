@@ -3,7 +3,7 @@
 #include <string>
 
 namespace atomic {
-	void throwException(std::string message);
+	void throwException(const std::string& message);
 
 	enum class ErrorTypes {
 		DefaultError,
