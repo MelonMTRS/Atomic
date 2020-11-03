@@ -7,10 +7,6 @@
 
 #define MAX_RANGE 2
 
-/*
-* Algorithmic functions
-*/
-
 namespace atomic {
 	enum class TradeAction {
 		Accept,
@@ -19,7 +15,7 @@ namespace atomic {
 	};
 	[[nodiscard]] atomic::Offer makeOffer(atomic::Inventory& AuthInventory, atomic::Inventory& VictimInventory);
 	[[nodiscard]] atomic::TradeAction evaluateTrade(atomic::Trade& trade);
-	[[nodiscard]] atomic::User findUser(atomic::AuthUser& user, rolimons::ItemDB& items, int maxRange=MAX_RANGE); // Returns a random user to trade with
+	[[nodiscard]] atomic::User findUser(atomic::AuthUser& user, rolimons::ItemDB& items, int maxRange=MAX_RANGE);
 }
 
 #endif

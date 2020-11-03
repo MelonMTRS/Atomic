@@ -26,4 +26,5 @@ void config::createConfig(std::string configData) {
 	if (!config)
 		throw atomic::ConfigLoadFailure{"Failed to create"};
 	config << configData;
+	config.close();
 }

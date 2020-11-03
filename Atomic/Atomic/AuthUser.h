@@ -28,7 +28,6 @@ namespace atomic {
 		[[nodiscard]] atomic::Inventory getInventory(rolimons::ItemDB& items);
 		[[nodiscard]] const bool canTradeWith(const atomic::User& user) const;
 		[[nodiscard]] const bool isPremium() const;
-		[[nodiscard]] const bool isCookieValid() const; // whether or not the .roblosecurity is valid
 	};
 }
 

@@ -14,14 +14,3 @@
 [[nodiscard]] const bool atomic::AuthUser::isPremium() const {
 	return roblox::getMembership(*this, this->getUser()) == roblox::Membership::Premium;
 }
-
-[[nodiscard]] const bool atomic::AuthUser::isCookieValid() const {
-	atomic::AuthUser user;
-	try {
-		user = roblox::getUserFromCookie(this->m_cookie);
-	}
-	catch (atomic::HttpError) {
-		return false;
-	}
-	return true;
-}
