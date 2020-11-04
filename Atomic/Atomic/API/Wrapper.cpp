@@ -1,4 +1,5 @@
 #include <array>
+#include <array>
 #include "cpr/cpr.h"
 #include "./Wrapper.h"
 #include "./Rolimons.h"
@@ -186,9 +187,9 @@
 	return users;
 }
 
-[[nodiscard]] std::vector<roblox::UnactivatedTrade> roblox::getTrades(const atomic::AuthUser& user, const atomic::TradeType& tradeType, const int& limit) {
+[[nodiscard]] std::vector<std::int64_t> roblox::getTrades(const atomic::AuthUser& user, const atomic::TradeType& tradeType, const int& limit) {
 	std::string TradeType;
-	std::vector<roblox::UnactivatedTrade> trades;
+	std::vector<std::int64_t> trades;
 	switch (tradeType) {
 	case atomic::TradeType::Completed:
 		TradeType = "completed";
@@ -214,7 +215,7 @@
 	d.Parse(r.text.c_str());
 	for (auto& trade : d["data"].GetArray()) {
 		if (trade["id"].IsInt64()) {
-			trades.push_back(roblox::UnactivatedTrade{ trade["id"].GetInt64() });
+			trades.push_back(trade["id"].GetInt64());
 		}
 	}
 	return trades;

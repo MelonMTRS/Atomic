@@ -15,13 +15,13 @@ namespace atomic {
 
 	class Trade {
 	private:
-		const int m_tradeId;
+		const std::int64_t m_tradeId;
 		const atomic::AuthUser m_authUser;
 		const atomic::User m_trader;
 		const atomic::Offer m_offer;
 		const atomic::TradeType m_TradeType;
 	public:
-		Trade(const int& tradeId, const atomic::AuthUser& authUser, const atomic::User& trader, const atomic::Offer& offer, const atomic::TradeType& tradeType) : 
+		Trade(const std::int64_t& tradeId, const atomic::AuthUser& authUser, const atomic::User& trader, const atomic::Offer& offer, const atomic::TradeType& tradeType) : 
 			m_tradeId{ tradeId },
 			m_trader{ trader }, m_authUser{ authUser },
 			m_offer{ offer }, m_TradeType{ tradeType }

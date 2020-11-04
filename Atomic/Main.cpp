@@ -17,7 +17,7 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        
+        atomic::throwException("Failed to do something.\n");
 #ifndef VS_DEBUG
     }
     catch (...) {
@@ -33,7 +33,7 @@ int main()
 
 int release_main() {
     std::cout << "<Loading...>\n";
-    rolimons::ItemDB* items;
+    rolimons::ItemDB* items; // TODO: make into std::atomic
     atomic::AuthUser user;
     config::Config mainConfig;
     try {

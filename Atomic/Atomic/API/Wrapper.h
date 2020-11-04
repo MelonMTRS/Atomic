@@ -23,13 +23,6 @@ namespace roblox {
 		FAIL
 	};
 
-	struct UnactivatedTrade {
-		std::int64_t tradeId;
-		atomic::Trade load(const atomic::AuthUser& user, rolimons::ItemDB& items) {
-			return roblox::getTrade(user, items, tradeId);
-		}
-	};
-
 	[[nodiscard]] std::string getToken(const std::string& cookie);
 	[[nodiscard]] atomic::AuthUser getUserFromCookie(std::string cookie);
 	[[nodiscard]] roblox::Membership getMembership(const atomic::AuthUser& authuser, const atomic::User& user);
@@ -41,7 +34,7 @@ namespace roblox {
 	[[nodiscard]] atomic::Trade getTrade(const atomic::AuthUser& user, rolimons::ItemDB& items, const std::int64_t& tradeId);
 	[[nodiscard]] std::vector<atomic::User> getResellers(const atomic::AuthUser& user, const atomic::Item& item);
 	[[nodiscard]] std::vector<atomic::User> getUsersInGroup(const int& groupId, const std::int64_t& roleId);
-	[[nodiscard]] std::vector<roblox::UnactivatedTrade> getTrades(const atomic::AuthUser& user, const atomic::TradeType& tradeType, const int& limit=25);
+	[[nodiscard]] std::vector<std::int64_t> getTrades(const atomic::AuthUser& user, const atomic::TradeType& tradeType, const int& limit=25);
 }
 
 #endif
