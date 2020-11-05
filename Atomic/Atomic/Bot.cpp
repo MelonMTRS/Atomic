@@ -37,8 +37,8 @@ atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items, i
 		int& randomRole = focusedRoles[atomic::random(0, focusedRoles.size()-1)];
 		std::vector<atomic::User> users = roblox::getUsersInGroup(tradingGroup, randomRole);
 		while (true) {
-			atomic::User& randomUser = users[atomic::random(0, users.size() - 1)];
-			if (roblox::can_trade(user, randomUser))
+			const atomic::User& randomUser = users[atomic::random(0, users.size() - 1)];
+			if (user.canTradeWith(randomUser))
 				return randomUser;
 		}
 		return atomic::findUser(user, items); // If it couldn't find anything, then try again until it does.

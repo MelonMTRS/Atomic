@@ -14,7 +14,7 @@ namespace config {
 		int const getInt(const std::string& key);
 		int64_t const getInt64(const std::string& key);
 		bool const getBool(const std::string& key);
-		std::string const getString(const std::string& key);
+		std::string const getString(const std::string& key) noexcept;
 	};
 }
 

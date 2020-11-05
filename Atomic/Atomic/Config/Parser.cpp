@@ -54,7 +54,7 @@ bool const config::Config::getBool(const std::string& key) {
         return true;
     else if (val == "false")
         return false;
-    throw atomic::UnknownValue{ "Unknown value" };
+    throw atomic::ConfigKeyParse{"getBool", key};
 }
 
 std::string const config::Config::getString(const std::string& key) {

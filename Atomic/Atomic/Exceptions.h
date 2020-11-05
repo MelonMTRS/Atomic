@@ -38,6 +38,11 @@ namespace atomic {
 		const std::string message;
 	};
 
+	struct ConfigKeyParse {
+		const std::string message;
+		const std::string key;
+	};
+
 	struct UnknownValue {
 		const std::string message;
 	};

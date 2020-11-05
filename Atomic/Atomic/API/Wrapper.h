@@ -8,10 +8,6 @@
 #include "../AuthUser.h"
 #include "../Trade.h"
 
-/*
-* Wrapper for the Roblox API
-*/
-
 namespace roblox {
 	enum class Membership {
 		Normal,
