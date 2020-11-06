@@ -1,8 +1,9 @@
 #include "cpr/cpr.h"
 #include "./Rolimons.h"
 #include "../Functions.h"
-#include "../rapidjson/document.h"
 #include "../Exceptions.h"
+#include "../Inventory.h"
+#include "../rapidjson/document.h"
 
 atomic::Demand getItemDemand(int level) {
 	switch (level) {
@@ -45,6 +46,7 @@ atomic::Demand getItemDemand(int level) {
 	}
 	rapidjson::Document d;
 	d.Parse(r.text.c_str());
+	atomic::ItemContainer inventory;
 	int totalValue = 0;
 	int totalRap = 0;
 	int totalCollectibles = 0;
@@ -53,7 +55,8 @@ atomic::Demand getItemDemand(int level) {
 			if (asset->value.IsArray()) {
 				for (auto& v : asset->value.GetArray()) {
 					if (v.IsInt64()) {
-						atomic::UniqueItem item = rolimons::getSpecificItem(items, std::stoi(asset->name.GetString()), v.GetInt64());
+						atomic::UniqueItem item = rolimons::getSpecificItem(items, std::stoull(asset->name.GetString()), v.GetInt64());
+						inventory.push_back(item);
 						totalValue += item.value;
 						totalRap += item.rap;
 					}
@@ -62,7 +65,7 @@ atomic::Demand getItemDemand(int level) {
 			}
 		}
 	}
-	return rolimons::RolimonsUser{userId, totalRap, totalValue, totalCollectibles};
+	return rolimons::RolimonsUser{ userId, atomic::Inventory{ inventory }, totalRap, totalValue, totalCollectibles };
 }
 
 [[nodiscard]] bool rolimons::isProjected(rolimons::ItemDB& items, const std::int64_t& assetId) {

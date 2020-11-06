@@ -57,6 +57,6 @@ bool const config::Config::getBool(const std::string& key) {
     throw atomic::ConfigKeyParse{"getBool", key};
 }
 
-std::string const config::Config::getString(const std::string& key) {
+std::string const config::Config::getString(const std::string& key) noexcept {
     return this->m_data[key];
 }

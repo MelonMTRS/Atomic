@@ -1,14 +1,15 @@
 #ifndef ATOMIC_API_ROLIMONS_H
 #define ATOMIC_API_ROLIMONS_H
-#include <cstdint>
-#include "../rapidjson/document.h"
+#include "../Inventory.h"
 #include "../Item.h"
+#include "../rapidjson/document.h"
 
 namespace rolimons {
 	using ItemDB = rapidjson::Document;
 
 	struct RolimonsUser {
 		int id;
+		atomic::Inventory inventory;
 		int rap;
 		int value;
 		int collectiblesCount;

@@ -17,7 +17,11 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        atomic::throwException("Failed to do something.\n");
+        rolimons::ItemDB items = rolimons::getRolimonItems();
+        rolimons::RolimonsUser user = rolimons::getUser(items, 2207291);
+        for (auto item = user.inventory.begin(); item != user.inventory.end(); ++item) {
+            std::cout << "Name: " << item->name << '\n' << "Value: " << item->value << '\n';
+        }
 #ifndef VS_DEBUG
     }
     catch (...) {
