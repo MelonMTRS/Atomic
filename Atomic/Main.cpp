@@ -11,17 +11,39 @@
 #include "Atomic/Exceptions.h"
 #include "Atomic/Functions.h"
 #include "Atomic/Bot.h"
+#include <chrono>
+
+class Timer
+{
+private:
+    // Type aliases to make accessing nested type easier
+    using clock_t = std::chrono::high_resolution_clock;
+    using second_t = std::chrono::duration<double, std::ratio<1> >;
+
+    std::chrono::time_point<clock_t> m_beg;
+
+public:
+    Timer() : m_beg(clock_t::now())
+    {
+    }
+
+    void reset()
+    {
+        m_beg = clock_t::now();
+    }
+
+    double elapsed() const
+    {
+        return std::chrono::duration_cast<second_t>(clock_t::now() - m_beg).count();
+    }
+};
 
 int main()
 {
 #ifndef VS_DEBUG
     try {
 #endif
-        rolimons::ItemDB items = rolimons::getRolimonItems();
-        rolimons::RolimonsUser user = rolimons::getUser(items, 2207291);
-        for (auto item = user.inventory.begin(); item != user.inventory.end(); ++item) {
-            std::cout << "Name: " << item->name << '\n' << "Value: " << item->value << '\n';
-        }
+        
 #ifndef VS_DEBUG
     }
     catch (...) {

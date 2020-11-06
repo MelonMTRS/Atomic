@@ -124,6 +124,7 @@ atomic::Demand getItemDemand(int level) {
 			}
 		}
 	}
+	return rolimons::getRandomItem(items);
 }
 
 [[nodiscard]] atomic::UniqueItem rolimons::getSpecificItem(rolimons::ItemDB& items, const std::int64_t& assetId, const std::int64_t& userAssetId) {
