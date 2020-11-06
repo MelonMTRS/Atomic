@@ -2,7 +2,7 @@ Atomic's TODO:
 
 - The botting algorithm (obviously)
 - A better demand calculator for non-assigned items
-- roblox::getTrades(), possibly create a non-activated struct to prevent having to use std::async
 - Support for trading with multiple roblox accounts at once (using threading)
+- Make a get inventory function that uses rolimon's https://www.rolimons.com/api/playerassets/{userid}
 
 IMPORTANT: For inbound trades: If an offer's rap is way too high than what is being requested and rolimons says the items are not projected, do a custom projected check on the items offered.
