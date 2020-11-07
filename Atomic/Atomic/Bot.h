@@ -14,7 +14,7 @@ namespace atomic {
 		Ignore
 	};
 	[[nodiscard]] atomic::Offer makeOffer(atomic::Inventory& AuthInventory, atomic::Inventory& VictimInventory);
-	[[nodiscard]] atomic::TradeAction evaluateTrade(atomic::Trade& trade);
+	[[nodiscard]] atomic::TradeAction evaluateTrade(const atomic::Trade& trade);
 	[[nodiscard]] atomic::User findUser(atomic::AuthUser& user, rolimons::ItemDB& items, int maxRange=MAX_RANGE);
 }
 
