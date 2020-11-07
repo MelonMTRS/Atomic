@@ -30,6 +30,11 @@ Have an item that you do not want the bot to trade? Add it here, separate items 
 
 If you want to trade by rap then set it to `rap`, otherwise leave it at `value`
 
+`time_between_trade [number]`
+
+The amount of time it should wait before it searches for a new user to trade with.  
+Setting this below 6 may cause roblox to temporarily rate limit you.
+
 `trade_projected_at_value [true/false]`
 
 If you're being offered a projected item or you're offering one, setting this to true will trade it at its actual value, if you have trade_by set to `rap`, then it'll still trade by value.
