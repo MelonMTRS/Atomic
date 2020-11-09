@@ -104,27 +104,17 @@ atomic::Demand getItemDemand(int level) {
 [[nodiscard]] atomic::Item rolimons::getRandomItem(rolimons::ItemDB& items) {
 	const int itemsSize = items["item_count"].GetInt();
 	const int randomItem = atomic::random(0, itemsSize-1);
-	size_t cursor = 0;
-	for (auto item = items["items"].MemberBegin(); item != items["items"].MemberEnd(); ++item) {
-		if (cursor != randomItem) {
-			cursor++;
-		}
-		else {
-			if (item->value.IsArray()) {
-				std::int64_t itemValue = item->value[3].GetInt64();
-				if (itemValue == -1)
-					itemValue = item->value[2].GetInt64();
-				return atomic::Item{
-					item->value[0].GetString(),
-					std::stoll(item->name.GetString()),
-					item->value[2].GetInt64(),
-					itemValue,
-					getItemDemand(item->value[5].GetInt())
-				};
-			}
-		}
-	}
-	return rolimons::getRandomItem(items);
+	rapidjson::Value::ConstMemberIterator item = items["items"].MemberBegin()+randomItem;
+	std::int64_t itemValue = item->value[3].GetInt64();
+	if (itemValue == -1)
+		itemValue = item->value[2].GetInt64();
+	return atomic::Item{
+		item->value[0].GetString(),
+		std::stoll(item->name.GetString()),
+		item->value[2].GetInt64(),
+		itemValue,
+		getItemDemand(item->value[5].GetInt())
+	};
 }
 
 [[nodiscard]] atomic::UniqueItem rolimons::getSpecificItem(rolimons::ItemDB& items, const std::int64_t& assetId, const std::int64_t& userAssetId) {

@@ -17,7 +17,8 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        
+        rolimons::ItemDB items = rolimons::getRolimonItems();
+        std::cout << "Name: " << rolimons::getRandomItem(items).name;
 #ifndef VS_DEBUG
     }
     catch (...) {
