@@ -25,7 +25,7 @@ atomic::Demand getItemDemand(int level) {
 }
 
 [[nodiscard]] rolimons::ItemDB rolimons::getRolimonItems() {
-	const cpr::Url url = {"https://www.rolimons.com/itemapi/itemdetails"};
+	const cpr::Url url = "https://www.rolimons.com/itemapi/itemdetails";
 	const cpr::Response r = cpr::Get(url);
 	if (!atomic::isStatusSuccess(r.status_code))
 		throw atomic::HttpError{"RolimonsFetchError", r.status_code};
@@ -35,7 +35,7 @@ atomic::Demand getItemDemand(int level) {
 }
 
 [[nodiscard]] rolimons::RolimonsUser rolimons::getUser(ItemDB& items, const int& userId) {
-	const cpr::Url url = {"https://www.rolimons.com/api/playerassets/" + std::to_string(userId)};
+	const cpr::Url url = "https://www.rolimons.com/api/playerassets/" + std::to_string(userId);
 	const cpr::Response r = cpr::Get(url);
 	switch (r.status_code) {
 	case 422:

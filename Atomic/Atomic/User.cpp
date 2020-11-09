@@ -3,5 +3,5 @@
 #include "./API/Rolimons.h"
 
 [[nodiscard]] atomic::Inventory atomic::User::getInventory(rolimons::ItemDB& items) const noexcept {
-	return roblox::getInventory(*this, items);
+	return rolimons::getUser(items, this->getId()).inventory;
 }

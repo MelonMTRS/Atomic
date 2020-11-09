@@ -27,11 +27,11 @@ atomic::Demand atomic::getItemDemand(const atomic::Item& item) {
 	const size_t salesPointSize = getDocumentSize(d["priceDataPoints"]);
 	if (salesPointSize > 175)
 		return atomic::Demand::Amazing;
-	else if (salesPointSize > 160)
+	else if (salesPointSize > 150)
 		return atomic::Demand::High;
 	else if (salesPointSize > 80)
 		return atomic::Demand::Normal;
-	else if (salesPointSize < 80 && salesPointSize > 20)
+	else if (salesPointSize > 20)
 		return atomic::Demand::Low;
 	else
 		return atomic::Demand::Terrible;
