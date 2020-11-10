@@ -1,4 +1,5 @@
 #include <random>
+#include <ctime>
 #include "./Functions.h"
 #include "./Item.h"
 
@@ -102,4 +103,8 @@ std::string atomic::upper(const std::string& str) {
 
 void atomic::clear() {
 	std::system("cls");
+}
+
+std::int64_t atomic::getUnixTime() {
+	return std::time(nullptr);
 }
