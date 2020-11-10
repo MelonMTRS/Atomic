@@ -17,8 +17,8 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        rolimons::ItemDB items = rolimons::getRolimonItems();
-        std::cout << "Name: " << rolimons::getRandomItem(items).name;
+        std::vector<int> a = {3, 5, 5, 1, 98, 12};
+        std::cout << atomic::random_choice(a);
 #ifndef VS_DEBUG
     }
     catch (...) {

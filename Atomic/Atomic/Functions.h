@@ -14,6 +14,11 @@ namespace atomic {
 	std::string lower(const std::string& str);
 	std::string upper(const std::string& str);
 	void clear();
+
+	template<typename Type>
+	Type random_choice(const std::vector<Type>& v) {
+		return v[atomic::random(0, v.size() - 1)];
+	}
 }
 
 #endif
