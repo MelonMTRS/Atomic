@@ -1,3 +1,4 @@
+#define _SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING
 #include <array>
 #include <array>
 #include "cpr/cpr.h"

@@ -17,7 +17,7 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        std::cout << atomic::getUnixTime() << '\n';
+        
 #ifndef VS_DEBUG
     }
     catch (...) {
