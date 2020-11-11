@@ -170,7 +170,7 @@
     <ClCompile Include="Atomic\API\Rolimons.cpp" />
     <ClCompile Include="Atomic\Trade.cpp" />
     <ClCompile Include="Atomic\User.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Atomic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Atomic\AuthUser.h" />
