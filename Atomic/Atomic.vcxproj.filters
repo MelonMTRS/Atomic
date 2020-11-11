@@ -30,9 +30,6 @@
     <ClCompile Include="Atomic\Config\Parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Atomic\User.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Atomic\Inventory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

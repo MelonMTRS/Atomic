@@ -169,7 +169,6 @@
     <ClCompile Include="Atomic\Inventory.cpp" />
     <ClCompile Include="Atomic\API\Rolimons.cpp" />
     <ClCompile Include="Atomic\Trade.cpp" />
-    <ClCompile Include="Atomic\User.cpp" />
     <ClCompile Include="Atomic.cpp" />
   </ItemGroup>
   <ItemGroup>

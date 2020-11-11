@@ -17,7 +17,9 @@ namespace atomic {
 
 		[[nodiscard]] const std::int64_t getId() const noexcept { return this->m_id; }
 		[[nodiscard]] const std::string name() const noexcept { return this->m_name; }
-		[[nodiscard]] atomic::Inventory getInventory(rolimons::ItemDB& items) const noexcept;
+		[[nodiscard]] atomic::Inventory getInventory(rolimons::ItemDB& items) const noexcept {
+			return rolimons::getUser(items, this->getId()).inventory;
+		}
 		void send_trade() const;
 	};
 }
