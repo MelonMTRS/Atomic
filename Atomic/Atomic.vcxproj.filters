@@ -45,9 +45,6 @@
     <ClCompile Include="Atomic\Functions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Atomic\Demand\Demand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Atomic\Config\Config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -55,6 +52,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Atomic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Atomic\Demand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -209,10 +209,10 @@
     <ClInclude Include="Atomic\Functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Atomic\Demand\Demand.h">
+    <ClInclude Include="Atomic\Config\Config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Atomic\Config\Config.h">
+    <ClInclude Include="Atomic\Demand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

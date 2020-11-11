@@ -1,9 +1,9 @@
 #define _SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING
 #include "./Demand.h"
 #include "./cpr/cpr.h"
-#include "../Functions.h"
-#include "../Exceptions.h"
-#include "../rapidjson/document.h"
+#include "./Functions.h"
+#include "./Exceptions.h"
+#include "./rapidjson/document.h"
 
 size_t getDocumentSize(const rapidjson::Value& val) {
 	size_t size = 0;

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Atomic/Config/Config.h"
-#include "Atomic/Demand/Demand.h"
+#include "Atomic/Demand.h"
 #include "Atomic/Exceptions.h"
 #include "Atomic/Config/Parser.h"
 #include "Atomic/API/Rolimons.h"

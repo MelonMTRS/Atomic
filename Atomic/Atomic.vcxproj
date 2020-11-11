@@ -163,7 +163,7 @@
     <ClCompile Include="Atomic\Config\Parser.cpp" />
     <ClCompile Include="Atomic\Conversion.cpp" />
     <ClCompile Include="Atomic\API\Wrapper.cpp" />
-    <ClCompile Include="Atomic\Demand\Demand.cpp" />
+    <ClCompile Include="Atomic\Demand.cpp" />
     <ClCompile Include="Atomic\Exceptions.cpp" />
     <ClCompile Include="Atomic\Functions.cpp" />
     <ClCompile Include="Atomic\Inventory.cpp" />
@@ -177,7 +177,7 @@
     <ClInclude Include="Atomic\Bot.h" />
     <ClInclude Include="Atomic\Config\Config.h" />
     <ClInclude Include="Atomic\Config\Parser.h" />
-    <ClInclude Include="Atomic\Demand\Demand.h" />
+    <ClInclude Include="Atomic\Demand.h" />
     <ClInclude Include="Atomic\Exceptions.h" />
     <ClInclude Include="Atomic\Functions.h" />
     <ClInclude Include="Atomic\Inventory.h" />
