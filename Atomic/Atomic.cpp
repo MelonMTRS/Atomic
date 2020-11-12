@@ -17,9 +17,14 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        atomic::UniqueItem r = {"Name", 231432, 45355, 54356, 1223, atomic::Demand::Low};
-        r = {"Item2", 1232, 432432, 12312, 1222, atomic::Demand::High};
-        std::cout << r.name;
+        std::cout << std::boolalpha;
+        rolimons::ItemDB items = rolimons::getRolimonItems();
+        atomic::Item randomItem1 = rolimons::getRandomItem(items);
+        atomic::Item randomItem2 = rolimons::getRandomItem(items);
+        std::cout << "Name: " << randomItem1.name << '\n' << "Value: " << randomItem1.value << '\n';
+        std::cout << "Name: " << randomItem2.name << '\n' << "Value: " << randomItem2.value << "\n\n";
+        bool comparison = randomItem1 != randomItem2;
+        std::cout << comparison;
 #ifndef VS_DEBUG
     }
     catch (...) {
