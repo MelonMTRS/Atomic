@@ -30,8 +30,7 @@ namespace atomic {
 		}
 	};
 
-	class UniqueItem : public Item {
-	public:
+	struct UniqueItem : public Item {
 		std::int64_t userAssetId;
 		UniqueItem() = default;
 		UniqueItem(std::string p_name, std::int64_t p_id, std::int64_t p_userAssetId,
