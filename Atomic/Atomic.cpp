@@ -17,7 +17,9 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        
+        atomic::UniqueItem r = {"Name", 231432, 45355, 54356, 1223, atomic::Demand::Low};
+        r = {"Item2", 1232, 432432, 12312, 1222, atomic::Demand::High};
+        std::cout << r.name;
 #ifndef VS_DEBUG
     }
     catch (...) {
