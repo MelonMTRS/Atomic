@@ -22,4 +22,9 @@ namespace atomic {
 	}
 }
 
+namespace computational {
+	template <typename Type>
+	double getAverage(const std::vector<Type>& values);
+}
+
 #endif
