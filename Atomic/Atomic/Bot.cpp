@@ -22,20 +22,18 @@ atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items, i
 			randomItem = rolimons::getRandomItem(items);
 		}
 		std::vector<atomic::User> resellers = roblox::getResellers(user, randomItem);
-		for (auto reseller = resellers.begin(); reseller != resellers.end(); ++reseller) {
-			// TODO: Pick resellers by random
-			if (user.canTradeWith(*reseller)) {
-				return *reseller;
-			}
+		while (true) {
+			const atomic::User& randomUser = atomic::random_choice(resellers);
+			if (user.canTradeWith(randomUser))
+				return randomUser;
 		}
 		return atomic::findUser(user, items);
 	}
 	else if (method == 2) {
 		// Group User Searching
-		int tradingGroup = { 650266 };
-		std::array<int, 3> focusedRoles = { 21783158, 36901726, 3843519 }; // RoleIds to focus on
-		int& randomRole = focusedRoles[atomic::random(0, focusedRoles.size()-1)];
-		std::vector<atomic::User> users = roblox::getUsersInGroup(tradingGroup, randomRole);
+		constexpr std::array<int, 3> focusedRoles = { 21783158, 36901726, 3843519 };
+		const int randomRole = focusedRoles[atomic::random(0, focusedRoles.size()-1)];
+		std::vector<atomic::User> users = roblox::getUsersInGroup(650266, randomRole);
 		while (true) {
 			const atomic::User& randomUser = atomic::random_choice(users);
 			if (user.canTradeWith(randomUser))
