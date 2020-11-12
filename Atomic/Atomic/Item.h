@@ -18,7 +18,7 @@ namespace atomic {
 		std::string name;
 		std::int64_t id;
 		std::int64_t rap;
-		std::int64_t value = -1;
+		std::int64_t value;
 		atomic::Demand demand = atomic::Demand::NotAssigned;
 
 		void operator=(const Item* newItem) { *this = newItem; }
@@ -40,13 +40,10 @@ namespace atomic {
 
 		UniqueItem() = default;
 		UniqueItem(std::string p_name, std::int64_t p_id, std::int64_t p_userAssetId,
-		           std::int64_t p_rap, std::int64_t p_value=-1, atomic::Demand p_demand=Demand::NotAssigned)
+		           std::int64_t p_rap, std::int64_t p_value, atomic::Demand p_demand=Demand::NotAssigned)
 			: Item{ p_name, p_id, p_rap, p_value, p_demand }, userAssetId{p_userAssetId} {}
 
-		Item getItem() {
-			return Item{ name, id, rap, value, demand };
-		}
-
+		Item getItem() { return Item{ name, id, rap, value, demand }; }
 		void operator=(const UniqueItem* newItem) { *this = newItem; }
 	};
 }

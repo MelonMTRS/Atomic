@@ -114,7 +114,7 @@ std::int64_t atomic::getUnixTime() {
 template <typename Type>
 double computational::getAverage(const std::vector<Type>& values) {
 	double total = 0;
-	int totalNumbers = values.size();
+	size_t totalNumbers = values.size();
 	for (auto value = values.begin(); value != values.end(); ++value)
 		total += *value;
 	return total / totalNumbers;
