@@ -13,7 +13,7 @@ atomic::TradeAction atomic::evaluateTrade(const atomic::Trade& trade) {
 	return atomic::TradeAction::Ignore; // Temporarily to avoid errors
 }
 
-atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items, int maxRange) {
+atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items) {
 	int method = atomic::random(1, 5) == 1 ? 2 : 1;
 	if (method == 1) {
 		// Limited Item Resellers
@@ -41,5 +41,5 @@ atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items, i
 		}
 		return atomic::findUser(user, items); // If it couldn't find anything, then try again until it does.
 	}
-	return atomic::findUser(user, items, MAX_RANGE);
+	return atomic::findUser(user, items);
 }

@@ -5,8 +5,6 @@
 #include "./Inventory.h"
 #include "./Trade.h"
 
-#define MAX_RANGE 2
-
 namespace atomic {
 	enum class TradeAction {
 		Accept,
@@ -15,7 +13,7 @@ namespace atomic {
 	};
 	[[nodiscard]] atomic::Offer makeOffer(atomic::Inventory& AuthInventory, atomic::Inventory& VictimInventory);
 	[[nodiscard]] atomic::TradeAction evaluateTrade(const atomic::Trade& trade);
-	[[nodiscard]] atomic::User findUser(atomic::AuthUser& user, rolimons::ItemDB& items, int maxRange=MAX_RANGE);
+	[[nodiscard]] atomic::User findUser(atomic::AuthUser& user, rolimons::ItemDB& items);
 }
 
 #endif
