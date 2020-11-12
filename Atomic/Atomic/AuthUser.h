@@ -21,7 +21,7 @@ namespace atomic {
 
 		inline void setCookie(const std::string& newCookie) noexcept { this->m_cookie = newCookie; }
 		[[nodiscard]] inline const atomic::User getUser() const noexcept { return atomic::User{ this->m_id }; };
-		[[nodiscard]] inline const std::string getName() const noexcept { return this->m_name; }
+		[[nodiscard]] inline const std::string name() const noexcept { return this->m_name; }
 		[[nodiscard]] inline const std::string getCookie() const noexcept { return this->m_cookie; }
 		[[nodiscard]] inline const std::string getXcsrf() const noexcept { return this->m_xcsrf; }
 		[[nodiscard]] inline const int getId() const noexcept { return this->m_id; }

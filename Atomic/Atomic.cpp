@@ -17,14 +17,7 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        std::cout << std::boolalpha;
-        rolimons::ItemDB items = rolimons::getRolimonItems();
-        atomic::Item randomItem1 = rolimons::getRandomItem(items);
-        atomic::Item randomItem2 = rolimons::getRandomItem(items);
-        std::cout << "Name: " << randomItem1.name << '\n' << "Value: " << randomItem1.value << '\n';
-        std::cout << "Name: " << randomItem2.name << '\n' << "Value: " << randomItem2.value << "\n\n";
-        bool comparison = randomItem1 != randomItem2;
-        std::cout << comparison;
+        
 #ifndef VS_DEBUG
     }
     catch (...) {
