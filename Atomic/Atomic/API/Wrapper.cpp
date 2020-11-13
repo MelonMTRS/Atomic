@@ -234,3 +234,39 @@ std::int64_t roblox::sendTrade(const atomic::AuthUser& user, const atomic::Trade
 	d.Parse(r.text.c_str());
 	return d["id"].GetInt64();
 }
+
+void roblox::declineTrade(const atomic::AuthUser& user, const int& tradeId) {
+	const cpr::Url url = "https://trades.roblox.com/v1/trades/" + std::to_string(tradeId) + "/decline";
+	const cpr::Header headers = { {"X-CSRF-TOKEN", user.getXcsrf()}, {"content-type", "text/json"} };
+	const cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
+	cpr::Response r = cpr::Post(url, cookies, headers);
+	if (!atomic::isStatusSuccess(r.status_code)) {
+		switch (r.status_code) {
+		case 400:
+			throw atomic::HttpError{ r.text, 400 };
+		case 401:
+			throw atomic::HttpError{ "Authorization Error", 401, atomic::ErrorTypes::AuthorizationError };
+		case 403:
+			throw atomic::HttpError{ "Token Validation Error", 403, atomic::ErrorTypes::AuthorizationError };
+		}
+		throw atomic::HttpError{ "Trade Decline Failed", r.status_code };
+	}
+}
+
+void roblox::acceptTrade(const atomic::AuthUser& user, const int& tradeId) {
+	const cpr::Url url = "https://trades.roblox.com/v1/trades/" + std::to_string(tradeId) + "/accept";
+	const cpr::Header headers = { {"X-CSRF-TOKEN", user.getXcsrf()}, {"content-type", "text/json"} };
+	const cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
+	cpr::Response r = cpr::Post(url, cookies, headers);
+	if (!atomic::isStatusSuccess(r.status_code)) {
+		switch (r.status_code) {
+		case 400:
+			throw atomic::HttpError{ r.text, 400 };
+		case 401:
+			throw atomic::HttpError{ "Authorization Error", 401, atomic::ErrorTypes::AuthorizationError };
+		case 403:
+			throw atomic::HttpError{ "Token Validation Error", 403, atomic::ErrorTypes::AuthorizationError };
+		}
+		throw atomic::HttpError{ "Trade Accept Failed", r.status_code };
+	}
+}

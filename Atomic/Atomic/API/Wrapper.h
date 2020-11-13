@@ -14,19 +14,14 @@ namespace roblox {
 		Premium
 	};
 
-	enum class TradeResult {
-		OK,
-		FAIL
-	};
-
 	[[nodiscard]] std::string getToken(const std::string& cookie);
 	[[nodiscard]] atomic::AuthUser getUserFromCookie(std::string cookie);
 	[[nodiscard]] roblox::Membership getMembership(const atomic::AuthUser& authuser, const atomic::User& user);
 	[[nodiscard]] atomic::Inventory getInventory(const atomic::User& user, rolimons::ItemDB& items);
 	std::int64_t sendTrade(const atomic::AuthUser& user, const atomic::Trade& trade);
-	roblox::TradeResult acceptTrade(const atomic::AuthUser& user, const atomic::Trade& trade);
-	roblox::TradeResult counterTrade(const atomic::AuthUser& user, const atomic::Trade& trade, const atomic::Offer& newOffer);
-	roblox::TradeResult declineTrade(const atomic::AuthUser& user, const atomic::Trade& trade);
+	void acceptTrade(const atomic::AuthUser& user, const int& tradeId);
+	void counterTrade(const atomic::AuthUser& user, const int& tradeId, const atomic::Offer& newOffer);
+	void declineTrade(const atomic::AuthUser& user, const int& tradeId);
 	[[nodiscard]] bool can_trade(const atomic::AuthUser& user, const atomic::User& target);
 	[[nodiscard]] atomic::Trade getTrade(const atomic::AuthUser& user, rolimons::ItemDB& items, const std::int64_t& tradeId);
 	[[nodiscard]] std::vector<atomic::User> getResellers(const atomic::AuthUser& user, const atomic::Item& item);

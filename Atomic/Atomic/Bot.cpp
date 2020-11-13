@@ -6,8 +6,6 @@
 #include "./Item.h"
 #include "./Exceptions.h"
 
-#include <iostream> // temp
-
 atomic::TradeAction atomic::evaluateTrade(const atomic::Trade& trade) {
 	if (trade.getTradeType() == atomic::TradeType::Inbound) {
 		// TODO: Evaluation here
