@@ -1,5 +1,5 @@
 #define _SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING
-#include <array>
+#include <iostream>
 #include <array>
 #include "cpr/cpr.h"
 #include "./Wrapper.h"
@@ -220,4 +220,17 @@
 		}
 	}
 	return trades;
+}
+
+std::int64_t roblox::sendTrade(const atomic::AuthUser& user, const atomic::Trade& trade) {
+	const cpr::Url url = "https://trades.roblox.com/v1/trades/send";
+	const cpr::Body body = atomic::tradeToJSON(user, trade);
+	const cpr::Header headers = { {"X-CSRF-TOKEN", user.getXcsrf()}, {"content-type", "text/json"} };
+	const cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
+	const cpr::Response r = cpr::Post(url, body, cookies, headers);
+	if (!atomic::isStatusSuccess(r.status_code))
+		throw atomic::HttpError{"Trade Request Failed", r.status_code};
+	rapidjson::Document d;
+	d.Parse(r.text.c_str());
+	return d["id"].GetInt64();
 }

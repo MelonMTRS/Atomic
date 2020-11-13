@@ -23,7 +23,8 @@ namespace roblox {
 	[[nodiscard]] atomic::AuthUser getUserFromCookie(std::string cookie);
 	[[nodiscard]] roblox::Membership getMembership(const atomic::AuthUser& authuser, const atomic::User& user);
 	[[nodiscard]] atomic::Inventory getInventory(const atomic::User& user, rolimons::ItemDB& items);
-	roblox::TradeResult sendTrade(const atomic::AuthUser& user, const atomic::Trade& trade);
+	std::int64_t sendTrade(const atomic::AuthUser& user, const atomic::Trade& trade);
+	roblox::TradeResult acceptTrade(const atomic::AuthUser& user, const atomic::Trade& trade);
 	roblox::TradeResult counterTrade(const atomic::AuthUser& user, const atomic::Trade& trade, const atomic::Offer& newOffer);
 	roblox::TradeResult declineTrade(const atomic::AuthUser& user, const atomic::Trade& trade);
 	[[nodiscard]] bool can_trade(const atomic::AuthUser& user, const atomic::User& target);
