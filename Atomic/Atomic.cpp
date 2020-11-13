@@ -17,7 +17,10 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        
+        rolimons::ItemDB items = rolimons::getRolimonItems();
+        atomic::AuthUser user = roblox::getUserFromCookie("COOKIE");
+        atomic::User randomUser = atomic::findUser(user, items);
+        std::cout << randomUser.name() << "ID: " << randomUser.getId() << '\n';
 #ifndef VS_DEBUG
     }
     catch (...) {
