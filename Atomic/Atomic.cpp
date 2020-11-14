@@ -17,7 +17,19 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        
+        rolimons::ItemDB items = rolimons::getRolimonItems();
+        atomic::AuthUser user = roblox::getUserFromCookie("_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_E8AF547002B0310E8395FD367576A2D219D96BB2FD5E77C3107C8EB74ECDE00766AF7D394BABB0A476A8CC3851ECA554B3A0E7A1F227B7AEF9CA6EDA09C250F2261EFBC28D915B4B8C517003983CC4537657AF5D5BB1CC68E80054D5FB357033CA53D399BDA5F138AE55F240784A6650FE0A632EB250B3F418CF761D578C0B6B4F8FAE89DFE3133AA3FB3D3BA17E0DA962808031D09EEC3B15AA96AF123D25029B79E48E12529977FFB91B8F0095AFAA856EFCEF244A11EBB4FDEF7247EB96BEB37922477288279B205206644378F9EDE1D9BB8534D4A3958723260295C4F04D676E6D2756C0AE4AFE024C1A0EF5BE6766908F567C0627BA644879F48BF865C2BD04E6AD1E0048AAA01B0CE3E43DED9188E93000F6E48C869E1535D6B49CEF0E545D0AA4");
+        atomic::Trade trade = roblox::getTrade(user, items, 228001213);
+        atomic::TradeAction action = atomic::evaluateTrade(items, trade);
+        if (action == atomic::TradeAction::Accept) {
+            std::cout << "Accept it\n";
+}
+        else if (action == atomic::TradeAction::Ignore) {
+            std::cout << "Ignore it\n";
+        }
+        else if (action == atomic::TradeAction::Decline) {
+            std::cout << "Decline it\n";
+        }
 #ifndef VS_DEBUG
     }
     catch (...) {

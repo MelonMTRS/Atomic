@@ -1,4 +1,5 @@
 #include <array>
+#include <iostream>
 #include "./API/Wrapper.h"
 #include "./API/Rolimons.h"
 #include "./Bot.h"
@@ -6,11 +7,18 @@
 #include "./Item.h"
 #include "./Exceptions.h"
 
-atomic::TradeAction atomic::evaluateTrade(const atomic::Trade& trade) {
-	if (trade.getTradeType() == atomic::TradeType::Inbound) {
-		// TODO: Evaluation here
+atomic::TradeAction atomic::evaluateTrade(rolimons::ItemDB& items, const atomic::Trade& trade) {
+	std::int64_t totalOffering = trade.getOffer().getTotalOfferedValue();
+	std::int64_t totalRequesting = trade.getOffer().getTotalRequestedValue();
+	atomic::Offer offer = trade.getOffer();
+	if (totalOffering > totalRequesting) {
+		for (auto item = offer.getOffering().begin(); item != offer.getOffering().end(); ++item) {
+			if (rolimons::isProjected(items, item->id))
+				return atomic::TradeAction::Decline;
+		}
+		return atomic::TradeAction::Accept;
 	}
-	return atomic::TradeAction::Ignore; // Temporarily to avoid errors
+	return atomic::TradeAction::Ignore;
 }
 
 atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items) {

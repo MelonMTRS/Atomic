@@ -29,30 +29,26 @@ namespace atomic {
 
 		[[nodiscard]] inline const std::int64_t getTotalOfferedRap() const {
 			std::int64_t sum = 0;
-			for (auto offer = this->m_offering.begin(); offer != this->m_offering.end(); ++offer) {
+			for (auto offer = this->m_offering.begin(); offer != this->m_offering.end(); ++offer)
 				sum += offer->rap;
-			}
 			return sum;
 		}
 		[[nodiscard]] inline const std::int64_t getTotalRequestedRap() const {
 			std::int64_t sum = 0;
-			for (auto request = this->m_requesting.begin(); request != this->m_requesting.end(); ++request) {
+			for (auto request = this->m_requesting.begin(); request != this->m_requesting.end(); ++request)
 				sum += request->rap;
-			}
 			return sum;
 		}
 		[[nodiscard]] inline const std::int64_t getTotalOfferedValue() const {
 			std::int64_t sum = 0;
-			for (auto offer = this->m_offering.begin(); offer != this->m_offering.end(); ++offer) {
+			for (auto offer = this->m_offering.begin(); offer != this->m_offering.end(); ++offer)
 				sum += offer->value;
-			}
 			return sum;
 		}
 		[[nodiscard]] inline const std::int64_t getTotalRequestedValue() const {
 			std::int64_t sum = 0;
-			for (auto request = this->m_requesting.begin(); request != this->m_requesting.end(); ++request) {
+			for (auto request = this->m_requesting.begin(); request != this->m_requesting.end(); ++request)
 				sum += request->value;
-			}
 			return sum;
 		}
 	};
