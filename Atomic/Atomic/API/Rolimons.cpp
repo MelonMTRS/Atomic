@@ -72,7 +72,9 @@ atomic::Demand getItemDemand(int level) {
 [[nodiscard]] bool rolimons::isProjected(rolimons::ItemDB& items, const std::int64_t& assetId) {
 	const std::string asset = std::to_string(assetId);
 	if (items["items"][asset.c_str()].IsArray()) {
-		return items["items"][asset.c_str()][7].GetInt() == 1;
+		if (items["items"][asset.c_str()][7].IsInt()) {
+			return items["items"][asset.c_str()][7].GetInt() == 1;
+		}
 	}
 	else {
 		throw atomic::ItemNotFound{ "Item could not be found" };

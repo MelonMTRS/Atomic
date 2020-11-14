@@ -100,24 +100,28 @@
 		tradeType = atomic::TradeType::Completed;
 	else if (status == "Expired")
 		tradeType = atomic::TradeType::Inactive;
-	else if (status == "Open")
-		tradeType = atomic::TradeType::Outbound;
 	else if (d["isActive"].GetBool())
 		tradeType = atomic::TradeType::Inbound;
+	else if (status == "Open")
+		tradeType = atomic::TradeType::Outbound;
 	else
 		tradeType = atomic::TradeType::Unknown;
 	size_t offeringIterator = 0;
 	for (auto& v : d["offers"][0]["userAssets"].GetArray()) {
 		if (v["name"].IsString() && v["assetId"].IsInt64() && v["id"].IsInt64() && v["recentAveragePrice"].IsInt64()) {
-			offering[offeringIterator] = rolimons::getSpecificItem(items, v["assetId"].GetInt64(), v["id"].GetInt64());
-			offeringIterator++;
+			if (v["id"].GetInt64() != 0) {
+				offering[offeringIterator] = rolimons::getSpecificItem(items, v["assetId"].GetInt64(), v["id"].GetInt64());
+				offeringIterator++;
+			}
 		}
 	}
 	size_t requestingIterator = 0;
 	for (auto& v : d["offers"][1]["userAssets"].GetArray()) {
 		if (v["name"].IsString() && v["assetId"].IsInt64() && v["id"].IsInt64() && v["recentAveragePrice"].IsInt64()) {
-			requesting[requestingIterator] = rolimons::getSpecificItem(items, v["assetId"].GetInt64(), v["id"].GetInt64());
-			requestingIterator++;
+			if (v["id"].GetInt64() != 0) {
+				requesting[requestingIterator] = rolimons::getSpecificItem(items, v["assetId"].GetInt64(), v["id"].GetInt64());
+				requestingIterator++;
+			}
 		}
 	}
 	robuxOffering = d["offers"][0]["robux"].GetInt(); // lets be real, no ones gonna offer you more than 2147483647 robux

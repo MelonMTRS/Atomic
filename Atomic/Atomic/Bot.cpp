@@ -13,9 +13,12 @@ atomic::TradeAction atomic::evaluateTrade(rolimons::ItemDB& items, const atomic:
 	atomic::Offer offer = trade.getOffer();
 	if (totalOffering > totalRequesting) {
 		for (auto item = offer.getOffering().begin(); item != offer.getOffering().end(); ++item) {
-			if (rolimons::isProjected(items, item->id))
-				return atomic::TradeAction::Decline;
+			if (item->id != 0) {
+				if (rolimons::isProjected(items, item->id))
+					return atomic::TradeAction::Decline;
+			}
 		}
+		// TODO: If trade is going to get accepted, run getAverageSalesPointPrice and compare in case item has been lowballed
 		return atomic::TradeAction::Accept;
 	}
 	return atomic::TradeAction::Ignore;
