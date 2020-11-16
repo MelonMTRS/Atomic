@@ -5,6 +5,7 @@
 
 namespace atomic {
 	atomic::Demand getItemDemand(const atomic::Item& item);
+	int getAveragePrice(const atomic::Item& item);
 }
 
 #endif

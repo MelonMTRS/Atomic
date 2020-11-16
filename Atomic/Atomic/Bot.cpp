@@ -2,6 +2,7 @@
 #include <iostream>
 #include "./API/Wrapper.h"
 #include "./API/Rolimons.h"
+#include "./Demand.h"
 #include "./Bot.h"
 #include "./Functions.h"
 #include "./Item.h"
@@ -18,7 +19,12 @@ atomic::TradeAction atomic::evaluateTrade(rolimons::ItemDB& items, const atomic:
 					return atomic::TradeAction::Decline;
 			}
 		}
-		// TODO: If trade is going to get accepted, run getAverageSalesPointPrice and compare in case item has been lowballed
+		for (auto item = offer.getOffering().begin(); item != offer.getOffering().end(); ++item) {
+			if (computational::getPercent(atomic::getAveragePrice(*item), item->rap) < 35) {
+				// Probably a projected and rolimons hasn't caught on to it yet
+				return atomic::TradeAction::Decline;
+			}
+		}
 		return atomic::TradeAction::Accept;
 	}
 	return atomic::TradeAction::Ignore;

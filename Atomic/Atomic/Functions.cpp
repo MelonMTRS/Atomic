@@ -111,11 +111,14 @@ std::int64_t atomic::getUnixTime() {
 
 // Computational
 
-template <typename Type>
-double computational::getAverage(const std::vector<Type>& values) {
+double computational::getAverage(const std::vector<int>& values) {
 	double total = 0;
 	size_t totalNumbers = values.size();
 	for (auto value = values.begin(); value != values.end(); ++value)
 		total += *value;
 	return total / totalNumbers;
+}
+
+int computational::getPercent(double first, double second) {
+	return (first / second) * 100;
 }

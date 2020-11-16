@@ -23,8 +23,8 @@ namespace atomic {
 }
 
 namespace computational {
-	template <typename Type>
-	double getAverage(const std::vector<Type>& values);
+	double getAverage(const std::vector<int>& values);
+	int getPercent(double first, double second);
 }
 
 #endif

@@ -12,24 +12,18 @@
 #include "Atomic/Functions.h"
 #include "Atomic/Bot.h"
 
+/*
+atomic::getAveragePrice() returns the average price which is usually a tad lower than the actual rap
+
+check if it's way too low and assume it's projected if it is
+*/
+
 int main()
 {
 #ifndef VS_DEBUG
     try {
 #endif
-        rolimons::ItemDB items = rolimons::getRolimonItems();
-        atomic::AuthUser user = roblox::getUserFromCookie("COOKIE");
-        atomic::Trade trade = roblox::getTrade(user, items, 228444899);
-        atomic::TradeAction action = atomic::evaluateTrade(items, trade);
-        if (action == atomic::TradeAction::Accept) {
-            std::cout << "Accept it\n";
-}
-        else if (action == atomic::TradeAction::Ignore) {
-            std::cout << "Ignore it\n";
-        }
-        else if (action == atomic::TradeAction::Decline) {
-            std::cout << "Decline it\n";
-        }
+        
 #ifndef VS_DEBUG
     }
     catch (...) {
@@ -54,7 +48,7 @@ int release_main() {
     catch (const std::bad_alloc&) {
         atomic::clear();
         std::cerr << "Rare Allocation Error: Unable to allocate enough memory, doing a stack allocation...\n";
-        items = &rolimons::getRolimonItems();
+        //items = &rolimons::getRolimonItems();
     }
     catch (const atomic::HttpError& error) {
         atomic::throwException("FATAL: Failed to get rolimons values, make sure you have an active internet connection then restart Atomic\n");
