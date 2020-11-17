@@ -20,12 +20,15 @@ atomic::TradeAction atomic::evaluateTrade(rolimons::ItemDB& items, const atomic:
 			}
 		}
 		for (auto item = offer.getOffering().begin(); item != offer.getOffering().end(); ++item) {
-			if (computational::getPercent(atomic::getAveragePrice(*item), item->rap) < 35) {
+			if (computational::getPercent(atomic::getAveragePrice(*item), static_cast<double>(item->rap)) < 35) {
 				// Probably a projected and rolimons hasn't caught on to it yet
 				return atomic::TradeAction::Decline;
 			}
 		}
 		return atomic::TradeAction::Accept;
+	}
+	else {
+		return atomic::TradeAction::Decline;
 	}
 	return atomic::TradeAction::Ignore;
 }

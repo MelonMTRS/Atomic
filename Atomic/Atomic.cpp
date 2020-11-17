@@ -12,12 +12,6 @@
 #include "Atomic/Functions.h"
 #include "Atomic/Bot.h"
 
-/*
-atomic::getAveragePrice() returns the average price which is usually a tad lower than the actual rap
-
-check if it's way too low and assume it's projected if it is
-*/
-
 int main()
 {
 #ifndef VS_DEBUG
