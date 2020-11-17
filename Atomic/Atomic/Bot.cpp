@@ -1,5 +1,6 @@
 #include <array>
 #include <iostream>
+#include "./Config/Parser.h"
 #include "./API/Wrapper.h"
 #include "./API/Rolimons.h"
 #include "./Demand.h"
@@ -8,7 +9,7 @@
 #include "./Item.h"
 #include "./Exceptions.h"
 
-[[nodiscard]] atomic::TradeAction atomic::evaluateTrade(rolimons::ItemDB& items, const atomic::Trade& trade) {
+[[nodiscard]] atomic::TradeAction atomic::evaluateTrade(rolimons::ItemDB& items, const atomic::Trade& trade, const config::Config&) {
 	std::int64_t totalOffering = trade.getOffer().getTotalOfferedValue();
 	std::int64_t totalRequesting = trade.getOffer().getTotalRequestedValue();
 	atomic::Offer offer = trade.getOffer();

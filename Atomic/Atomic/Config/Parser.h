@@ -11,6 +11,8 @@ namespace config {
 		Config() = default;
 		Config(const std::string& filename);
 
+		bool keyExists(const std::string& key);
+
 		int const getInt(const std::string& key);
 		int64_t const getInt64(const std::string& key);
 		bool const getBool(const std::string& key);

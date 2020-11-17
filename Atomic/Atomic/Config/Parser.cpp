@@ -40,6 +40,10 @@ config::Config::Config(const std::string& filename)
     this->m_data = configData;
 }
 
+bool config::Config::keyExists(const std::string& key) {
+    return this->m_data.find(key) != this->m_data.end();
+}
+
 int const config::Config::getInt(const std::string& key) {
     return std::stoi(this->m_data[key]);
 }
