@@ -24,7 +24,7 @@ namespace atomic {
 
 namespace computational {
 	double getAverage(const std::vector<int>& values);
-	int getPercent(double first, double second);
+	int getPercent(const double& first, const double& second);
 }
 
 #endif

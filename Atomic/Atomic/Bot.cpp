@@ -8,7 +8,7 @@
 #include "./Item.h"
 #include "./Exceptions.h"
 
-atomic::TradeAction atomic::evaluateTrade(rolimons::ItemDB& items, const atomic::Trade& trade) {
+[[nodiscard]] atomic::TradeAction atomic::evaluateTrade(rolimons::ItemDB& items, const atomic::Trade& trade) {
 	std::int64_t totalOffering = trade.getOffer().getTotalOfferedValue();
 	std::int64_t totalRequesting = trade.getOffer().getTotalRequestedValue();
 	atomic::Offer offer = trade.getOffer();
@@ -33,7 +33,7 @@ atomic::TradeAction atomic::evaluateTrade(rolimons::ItemDB& items, const atomic:
 	return atomic::TradeAction::Ignore;
 }
 
-atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items) {
+[[nodiscard]] atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items) {
 	int method = atomic::random(1, 5) == 1 ? 2 : 1;
 	if (method == 1) {
 		// Limited Item Resellers
@@ -43,7 +43,7 @@ atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items) {
 		}
 		std::vector<atomic::User> resellers = roblox::getResellers(user, randomItem);
 		int tries = 0;
-		while (!(tries >= 25)) {
+		while (tries <= 25) {
 			tries++;
 			const atomic::User& randomUser = atomic::random_choice(resellers);
 			if (user.canTradeWith(randomUser))
@@ -57,7 +57,7 @@ atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items) {
 		const int randomRole = focusedRoles[atomic::random(0, focusedRoles.size()-1)];
 		std::vector<atomic::User> users = roblox::getUsersInGroup(650266, randomRole);
 		int tries = 0;
-		while (!(tries >= 25)) {
+		while (tries <= 25) {
 			tries++;
 			const atomic::User& randomUser = atomic::random_choice(users);
 			if (user.canTradeWith(randomUser))

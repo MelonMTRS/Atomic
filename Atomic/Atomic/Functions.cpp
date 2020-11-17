@@ -119,6 +119,6 @@ double computational::getAverage(const std::vector<int>& values) {
 	return total / totalNumbers;
 }
 
-int computational::getPercent(double first, double second) {
+int computational::getPercent(const double& first, const double& second) {
 	return (first / second) * 100;
 }

@@ -98,7 +98,7 @@
 	std::string status = d["status"].GetString();
 	if (status == "Completed")
 		tradeType = atomic::TradeType::Completed;
-	else if (status == "Expired")
+	else if (status == "Expired" || status == "Declined")
 		tradeType = atomic::TradeType::Inactive;
 	else if (d["isActive"].GetBool())
 		tradeType = atomic::TradeType::Inbound;
