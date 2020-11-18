@@ -40,17 +40,17 @@ int release_main() {
         items = new rolimons::ItemDB{ rolimons::getRolimonItems() };
     }
     catch (const std::bad_alloc&) {
-        atomic::throwException("Rare Allocation Error: Unable to allocate enough memory for main.ItemDB, please re-start\n");
+        atomic::throwException("Rare Allocation Error: Unable to allocate enough memory for main.ItemDB, please restart Atomic\n");
     }
     catch (const atomic::HttpError&) {
-        atomic::throwException("FATAL: Failed to get rolimons values, make sure you have an active internet connection then restart Atomic\n");
+        atomic::throwException("Failed to get rolimons values, make sure you have an active internet connection\n");
     }
     if (!config::configExists()) {
         atomic::clear();
         std::cout << "Could not find default config, creating...\n";
         try {
             config::createConfig(config::getDefaultConfig());
-            std::cout << "Config has been created, please open config.cfg and modify it as desired, then run Atomic again.";
+            std::cout << "Config has been created, please open config.cfg and modify it as desired, then restart Atomic again.";
             std::cin.get();
             std::exit(EXIT_SUCCESS);
         }

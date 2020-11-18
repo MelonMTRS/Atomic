@@ -7,6 +7,13 @@
 	return rolimons::getUser(items, this->getId()).inventory;
 }
 
+[[nodiscard]] atomic::Inventory atomic::AuthUser::getRobloxInventory(rolimons::ItemDB& items) {
+	/*
+		A backup function when rolimons is down and getInventory() does not work
+	*/
+	return roblox::getInventory(this->getUser(), items);
+}
+
 [[nodiscard]] const bool atomic::AuthUser::canTradeWith(const atomic::User& user) const {
 	return roblox::can_trade(*this, user);
 }
