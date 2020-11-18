@@ -10,6 +10,12 @@
 #include "./Exceptions.h"
 
 [[nodiscard]] atomic::TradeAction atomic::evaluateTrade(rolimons::ItemDB& items, const atomic::Trade& trade, const config::Config&) {
+	/*
+		TODO: restructure this entire function to follow the dependency ratio with a starter base of 0.5
+		greater than 1 = accept
+		less than 1 = decline
+		-1 = ignore
+	*/
 	std::int64_t totalOffering = trade.getOffer().getTotalOfferedValue();
 	std::int64_t totalRequesting = trade.getOffer().getTotalRequestedValue();
 	atomic::Offer offer = trade.getOffer();
@@ -17,6 +23,13 @@
 		for (auto item = offer.getOffering().begin(); item != offer.getOffering().end(); ++item) {
 			if (item->id != 0) {
 				if (rolimons::isProjected(items, item->id))
+					return atomic::TradeAction::Decline;
+				atomic::Demand itemDemand = item->demand;
+				if (itemDemand == atomic::Demand::NotAssigned) {
+					itemDemand = atomic::getItemDemand(*item);
+					rolimons::setItemDemand(items, item->id, itemDemand);
+				}
+				if (itemDemand == atomic::Demand::Terrible)
 					return atomic::TradeAction::Decline;
 			}
 		}

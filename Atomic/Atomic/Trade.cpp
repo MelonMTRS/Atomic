@@ -1,8 +1,9 @@
+#include "./API/Wrapper.h"
 #include "./Trade.h"
 
 void atomic::Trade::decline() const {
 	if (this->m_TradeType == atomic::TradeType::Inbound || this->m_TradeType == atomic::TradeType::Outbound) {
-		// TODO: Canceling here
+		roblox::declineTrade(this->m_authUser, this->m_tradeId);
 	}
 }
 
