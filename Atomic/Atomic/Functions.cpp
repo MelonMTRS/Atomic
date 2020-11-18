@@ -120,5 +120,5 @@ double computational::getAverage(const std::vector<int>& values) {
 }
 
 int computational::getPercent(const double& first, const double& second) {
-	return (first / second) * 100;
+	return static_cast<int>((first / second) * 100);
 }

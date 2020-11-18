@@ -26,7 +26,6 @@ namespace atomic {
 		[[nodiscard]] inline const std::string getXcsrf() const noexcept { return this->m_xcsrf; }
 		[[nodiscard]] inline const int getId() const noexcept { return this->m_id; }
 		[[nodiscard]] atomic::Inventory getInventory(rolimons::ItemDB& items);
-		[[nodiscard]] atomic::Inventory getRobloxInventory(rolimons::ItemDB& items);
 		[[nodiscard]] const bool canTradeWith(const atomic::User& user) const;
 		[[nodiscard]] const bool isPremium() const;
 	};

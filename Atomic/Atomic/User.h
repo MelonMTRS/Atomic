@@ -20,9 +20,6 @@ namespace atomic {
 		[[nodiscard]] atomic::Inventory getInventory(rolimons::ItemDB& items) const noexcept {
 			return rolimons::getUser(items, this->getId()).inventory;
 		}
-		[[nodiscard]] atomic::Inventory getRobloxInventory(rolimons::ItemDB& items) const noexcept {
-			return roblox::getInventory(*this, items);
-		}
 		void send_trade() const;
 	};
 }

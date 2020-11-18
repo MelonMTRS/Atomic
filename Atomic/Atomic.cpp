@@ -1,3 +1,5 @@
+#include <chrono>
+#include <thread>
 #include <iostream>
 #include "Atomic/Config/Config.h"
 #include "Atomic/Demand.h"
@@ -17,7 +19,7 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-        
+
 #ifndef VS_DEBUG
     }
     catch (...) {

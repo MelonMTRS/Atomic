@@ -54,5 +54,5 @@ int atomic::getAveragePrice(const atomic::Item& item) {
 	d.Parse(r.text.c_str());
 	for (auto& v : d["priceDataPoints"].GetArray())
 		averagePrices.push_back(v["value"].GetInt());
-	return computational::getAverage(averagePrices);
+	return static_cast<int>(computational::getAverage(averagePrices));
 }

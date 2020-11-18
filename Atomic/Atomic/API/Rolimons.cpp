@@ -79,6 +79,7 @@ atomic::Demand getItemDemand(int level) {
 	else {
 		throw atomic::ItemNotFound{ "Item could not be found" };
 	}
+	return false;
 }
 
 [[nodiscard]] atomic::Item rolimons::getItem(rolimons::ItemDB& items, const std::int64_t& assetId) {
