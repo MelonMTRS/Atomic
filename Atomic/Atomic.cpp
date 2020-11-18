@@ -40,11 +40,9 @@ int release_main() {
         items = new rolimons::ItemDB{ rolimons::getRolimonItems() };
     }
     catch (const std::bad_alloc&) {
-        atomic::clear();
-        std::cerr << "Rare Allocation Error: Unable to allocate enough memory, doing a stack allocation...\n";
-        //items = &rolimons::getRolimonItems();
+        atomic::throwException("Rare Allocation Error: Unable to allocate enough memory for main.ItemDB, please re-start\n");
     }
-    catch (const atomic::HttpError& error) {
+    catch (const atomic::HttpError&) {
         atomic::throwException("FATAL: Failed to get rolimons values, make sure you have an active internet connection then restart Atomic\n");
     }
     if (!config::configExists()) {

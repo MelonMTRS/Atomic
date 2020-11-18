@@ -66,5 +66,9 @@
 		}
 		return atomic::findUser(user, items); // If it couldn't find anything, then try again until it does.
 	}
+	else if (method == 3) {
+		// TODO: Search through the authenticated user's inactive/completed trades
+		// If user does not have any or barely has any, mark it in cache so this method is not used again
+	}
 	return atomic::findUser(user, items);
 }

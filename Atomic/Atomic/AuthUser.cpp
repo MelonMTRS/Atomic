@@ -4,7 +4,7 @@
 #include "./API/Rolimons.h"
 
 [[nodiscard]] atomic::Inventory atomic::AuthUser::getInventory(rolimons::ItemDB& items) {
-	return roblox::getInventory(this->getUser(), items);
+	return rolimons::getUser(items, this->getId()).inventory;
 }
 
 [[nodiscard]] const bool atomic::AuthUser::canTradeWith(const atomic::User& user) const {
