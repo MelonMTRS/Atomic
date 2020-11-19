@@ -1,13 +1,13 @@
 #include <array>
 #include <iostream>
-#include "./Config/Parser.h"
-#include "./API/Wrapper.h"
 #include "./API/Rolimons.h"
-#include "./Demand.h"
+#include "./API/Wrapper.h"
 #include "./Bot.h"
+#include "./Config/Parser.h"
+#include "./Demand.h"
+#include "./Exceptions.h"
 #include "./Functions.h"
 #include "./Item.h"
-#include "./Exceptions.h"
 
 [[nodiscard]] atomic::TradeAction atomic::evaluateTrade(rolimons::ItemDB& items, const atomic::Trade& trade, const config::Config&) {
 	/*

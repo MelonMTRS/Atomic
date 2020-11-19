@@ -1,18 +1,16 @@
-#include <chrono>
-#include <thread>
 #include <iostream>
-#include "Atomic/Config/Config.h"
-#include "Atomic/Demand.h"
-#include "Atomic/Exceptions.h"
-#include "Atomic/Config/Parser.h"
 #include "Atomic/API/Rolimons.h"
 #include "Atomic/API/Wrapper.h"
+#include "Atomic/Bot.h"
+#include "Atomic/Config/Config.h"
+#include "Atomic/Config/Parser.h"
 #include "Atomic/Config/Parser.h"
 #include "Atomic/Conversion.h"
-#include "Atomic/User.h"
+#include "Atomic/Demand.h"
+#include "Atomic/Exceptions.h"
 #include "Atomic/Exceptions.h"
 #include "Atomic/Functions.h"
-#include "Atomic/Bot.h"
+#include "Atomic/User.h"
 
 int main()
 {

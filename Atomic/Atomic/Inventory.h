@@ -1,7 +1,7 @@
 #ifndef ATOMIC_INVENTORY_H
 #define ATOMIC_INVENTORY_H
-#include <vector>
 #include <functional>
+#include <vector>
 #include "./Item.h"
 
 namespace atomic {

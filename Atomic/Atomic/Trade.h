@@ -1,8 +1,8 @@
 #ifndef ATOMIC_TRADE_H
 #define ATOMIC_TRADE_H
 #include "./AuthUser.h"
-#include "./User.h"
 #include "./Offer.h"
+#include "./User.h"
 
 namespace atomic {
 	enum class TradeType {

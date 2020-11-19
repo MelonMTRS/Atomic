@@ -1,7 +1,7 @@
+#include "./API/Rolimons.h"
+#include "./API/Wrapper.h"
 #include "./AuthUser.h"
 #include "./Exceptions.h"
-#include "./API/Wrapper.h"
-#include "./API/Rolimons.h"
 
 [[nodiscard]] atomic::Inventory atomic::AuthUser::getInventory(rolimons::ItemDB& items) {
 	return rolimons::getUser(items, this->getId()).inventory;

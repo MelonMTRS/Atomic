@@ -1,7 +1,7 @@
-#include <iostream>
 #include <Windows.h>
-#include "./Functions.h"
+#include <iostream>
 #include "./Exceptions.h"
+#include "./Functions.h"
 
 void atomic::throwException(const std::string& message) {
 	MessageBoxA(NULL, message.c_str(), "Atomic Error", MB_ICONERROR);

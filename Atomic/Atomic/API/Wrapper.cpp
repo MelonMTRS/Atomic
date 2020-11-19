@@ -1,14 +1,14 @@
 #define _SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING
-#include <iostream>
 #include <array>
-#include "cpr/cpr.h"
-#include "./Wrapper.h"
-#include "./Rolimons.h"
-#include "../Exceptions.h"
+#include <iostream>
 #include "../Conversion.h"
-#include "../Trade.h"
+#include "../Exceptions.h"
 #include "../Functions.h"
+#include "../Trade.h"
 #include "../rapidjson/document.h"
+#include "./Rolimons.h"
+#include "./Wrapper.h"
+#include "cpr/cpr.h"
 
 [[nodiscard]] std::string roblox::getToken(const std::string& cookie) {
 	const cpr::Url logout = { "https://auth.roblox.com/v2/logout" };

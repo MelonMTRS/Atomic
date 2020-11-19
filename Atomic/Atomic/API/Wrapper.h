@@ -1,12 +1,12 @@
 #ifndef ATOMIC_API_WRAPPER_H
 #define ATOMIC_API_WRAPPER_H
 #include <string>
-#include "./Rolimons.h"
-#include "../User.h"
+#include "../AuthUser.h"
 #include "../Inventory.h"
 #include "../Offer.h"
-#include "../AuthUser.h"
 #include "../Trade.h"
+#include "../User.h"
+#include "./Rolimons.h"
 
 namespace roblox {
 	enum class Membership {

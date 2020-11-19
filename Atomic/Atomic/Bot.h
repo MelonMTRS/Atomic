@@ -1,9 +1,9 @@
 #ifndef ATOMIC_BOT_H
 #define ATOMIC_BOT_H
-#include "./Config/Parser.h"
-#include "./Offer.h"
 #include "./AuthUser.h"
+#include "./Config/Parser.h"
 #include "./Inventory.h"
+#include "./Offer.h"
 #include "./Trade.h"
 
 namespace atomic {

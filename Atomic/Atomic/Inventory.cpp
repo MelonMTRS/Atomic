@@ -1,6 +1,6 @@
-#include "./Inventory.h"
 #include "./Exceptions.h"
 #include "./Functions.h"
+#include "./Inventory.h"
 
 [[nodiscard]] const atomic::UniqueItem atomic::Inventory::getRandomItem() const {
 	return this->m_inventory[atomic::random(0, this->item_count()-1)];

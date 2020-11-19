@@ -1,10 +1,10 @@
 #define _SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING
-#include "cpr/cpr.h"
-#include "./Rolimons.h"
-#include "../Functions.h"
 #include "../Exceptions.h"
+#include "../Functions.h"
 #include "../Inventory.h"
 #include "../rapidjson/document.h"
+#include "./Rolimons.h"
+#include "cpr/cpr.h"
 
 atomic::Demand getItemDemand(int level) {
 	switch (level) {

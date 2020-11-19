@@ -1,11 +1,11 @@
 #define _SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING
 #include <filesystem>
 #include <fstream>
-#include "../Functions.h"
 #include "../Exceptions.h"
+#include "../Functions.h"
 #include "./Config.h"
-#include "./cpr/cpr.h"
 #include "./Parser.h"
+#include "./cpr/cpr.h"
 
 namespace fs = std::filesystem;
 

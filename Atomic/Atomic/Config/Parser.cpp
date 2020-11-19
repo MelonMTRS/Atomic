@@ -1,10 +1,10 @@
 #include <fstream>
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
-#include "./Parser.h"
 #include "../Exceptions.h"
 #include "../Functions.h"
+#include "./Parser.h"
 
 /*
     just a note here:
