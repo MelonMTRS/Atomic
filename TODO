@@ -1,6 +1,5 @@
 Atomic's TODO:
 
-- The botting algorithm (obviously)
-- A better demand calculator for non-assigned items
-- For inbound trades: If an offer's rap is way too high than what is being requested and rolimons says the items are not projected, do a custom projected check on the items offered.
-- Support for trading with multiple roblox accounts at once (using threading)
+1. The botting algorithm / 50% complete
+2. A better demand calculator for non-assigned items
+3. Support for trading with multiple roblox accounts at once (using threading)
