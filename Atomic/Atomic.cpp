@@ -17,7 +17,7 @@ int main()
 #ifndef VS_DEBUG
     try {
 #endif
-
+        
 #ifndef VS_DEBUG
     }
     catch (...) {

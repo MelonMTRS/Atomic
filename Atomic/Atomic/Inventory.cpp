@@ -1,9 +1,18 @@
+#include <algorithm>
 #include "./Exceptions.h"
 #include "./Functions.h"
 #include "./Inventory.h"
 
 [[nodiscard]] const atomic::UniqueItem atomic::Inventory::getRandomItem() const {
 	return this->m_inventory[atomic::random(0, this->item_count()-1)];
+}
+
+[[nodiscard]] const atomic::UniqueItem atomic::Inventory::getRandomItem(const std::vector<std::string>& notForTrade) const {
+	atomic::UniqueItem randomItem = atomic::random_choice(this->m_inventory);
+	while (std::find(notForTrade.begin(), notForTrade.end(), std::to_string(randomItem.id)) != std::end(notForTrade)) {
+		randomItem = atomic::random_choice(this->m_inventory);
+	}
+	return randomItem;
 }
 
 [[nodiscard]] atomic::UniqueItem& atomic::Inventory::findItemByName(const std::string& name) {

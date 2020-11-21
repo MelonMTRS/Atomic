@@ -8,8 +8,9 @@
 #include "./Exceptions.h"
 #include "./Functions.h"
 #include "./Item.h"
+#include "./Offer.h"
 
-[[nodiscard]] atomic::TradeAction atomic::evaluateTrade(rolimons::ItemDB& items, const atomic::Trade& trade, const config::Config&) {
+[[nodiscard]] atomic::TradeAction atomic::evaluateTrade(rolimons::ItemDB& items, const atomic::Trade& trade, config::Config& config) {
 	/*
 		TODO: restructure this entire function to follow the dependency ratio with a starter base of 0.5
 		greater than 1 = accept
@@ -45,6 +46,28 @@
 		return atomic::TradeAction::Decline;
 	}
 	return atomic::TradeAction::Ignore;
+}
+
+[[nodiscard]] atomic::Offer atomic::makeOffer(atomic::Inventory& AuthInventory, atomic::Inventory& VictimInventory, config::Config& config) {
+	atomic::OfferHolder offering{};
+	atomic::OfferHolder requesting{};
+	int offeringCursor = 0;
+	int requestingCursor = 0;
+	std::vector<std::string> notForTrade;
+	bool hasItemsNotForTrade;
+	if (config.getString("not_for_trade") == "false") {
+		hasItemsNotForTrade = false;
+	} else {
+		hasItemsNotForTrade = true;
+		std::vector<std::string> notForTrade = atomic::split(config.getString("not_for_trade"), ',');
+	}
+	for (auto item = VictimInventory.begin(); item != VictimInventory.end(); ++item) {
+		atomic::UniqueItem randomItem = hasItemsNotForTrade ? AuthInventory.getRandomItem(notForTrade) : AuthInventory.getRandomItem();
+		while (randomItem.value > config.getInt64("max_item_value") || (computational::getPercent(randomItem.value, item->value) < 100 || computational::getPercent(randomItem.value, item->value) > 115)) {
+			randomItem = hasItemsNotForTrade ? AuthInventory.getRandomItem(notForTrade) : AuthInventory.getRandomItem();
+		}
+	}
+	return atomic::Offer{offering, requesting, 0, 0};
 }
 
 [[nodiscard]] atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items) {
