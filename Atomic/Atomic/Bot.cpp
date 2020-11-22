@@ -20,6 +20,8 @@
 	std::int64_t totalOffering = trade.getOffer().getTotalOfferedValue();
 	std::int64_t totalRequesting = trade.getOffer().getTotalRequestedValue();
 	atomic::Offer offer = trade.getOffer();
+	if (offer.getRobuxOffered() != 0 || offer.getRobuxRequested() != 0)
+		return atomic::TradeAction::Ignore;
 	if (totalOffering > totalRequesting) {
 		for (auto item = offer.getOffering().begin(); item != offer.getOffering().end(); ++item) {
 			if (item->id != 0) {
@@ -60,12 +62,6 @@
 	} else {
 		hasItemsNotForTrade = true;
 		std::vector<std::string> notForTrade = atomic::split(config.getString("not_for_trade"), ',');
-	}
-	for (auto item = VictimInventory.begin(); item != VictimInventory.end(); ++item) {
-		atomic::UniqueItem randomItem = hasItemsNotForTrade ? AuthInventory.getRandomItem(notForTrade) : AuthInventory.getRandomItem();
-		while (randomItem.value > config.getInt64("max_item_value") || (computational::getPercent(randomItem.value, item->value) < 100 || computational::getPercent(randomItem.value, item->value) > 115)) {
-			randomItem = hasItemsNotForTrade ? AuthInventory.getRandomItem(notForTrade) : AuthInventory.getRandomItem();
-		}
 	}
 	return atomic::Offer{offering, requesting, 0, 0};
 }

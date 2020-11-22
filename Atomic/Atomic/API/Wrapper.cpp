@@ -233,7 +233,7 @@ std::int64_t roblox::sendTrade(const atomic::AuthUser& user, const atomic::Trade
 	const cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
 	const cpr::Response r = cpr::Post(url, body, cookies, headers);
 	if (!atomic::isStatusSuccess(r.status_code))
-		throw atomic::HttpError{"Trade Request Failed", r.status_code};
+		throw atomic::HttpError{"Trade Request Failed: " + r.text, r.status_code};
 	rapidjson::Document d;
 	d.Parse(r.text.c_str());
 	return d["id"].GetInt64();

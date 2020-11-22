@@ -19,6 +19,10 @@ namespace atomic {
 		atomic::ErrorTypes errorType = ErrorTypes::DefaultError;
 	};
 
+	struct TradeFormFailure {
+		std::string message;
+	};
+
 	struct KeyNotFound {
 		std::string message;
 		atomic::ErrorTypes errorType = ErrorTypes::DefaultError;
