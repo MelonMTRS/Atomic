@@ -12,7 +12,6 @@
 #include "Atomic/Functions.h"
 #include "Atomic/User.h"
 
-
 int main()
 {
 #ifndef VS_DEBUG

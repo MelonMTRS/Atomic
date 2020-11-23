@@ -68,18 +68,18 @@ template<typename Num, typename Lowest, typename Highest>
 		throw atomic::TradeFormFailure{atomic::TradeErrorTypes::USER_HAS_NO_ITEMS};
 	atomic::OfferHolder offering{};
 	atomic::OfferHolder requesting{};
+	int offeringCursor = 0;
+	int requestingCursor = 0;
 	std::vector<std::string> minimumItemsToTrade = atomic::split(config.getString("maximum_items_to_trade"), '/');
 	int totalOffering = clamp(AuthInventory.item_count(), 1, std::stoi(minimumItemsToTrade[0]));
 	int totalRequesting = clamp(VictimInventory.item_count(), 1, std::stoi(minimumItemsToTrade[1]));
-	int offeringCursor = 0;
-	int requestingCursor = 0;
 	std::vector<std::string> notForTrade;
 	bool hasItemsNotForTrade;
 	if (config.getString("not_for_trade") == "false") {
 		hasItemsNotForTrade = false;
 	} else {
 		hasItemsNotForTrade = true;
-		std::vector<std::string> notForTrade = atomic::split(config.getString("not_for_trade"), ','); // TODO: Pass as parameter
+		notForTrade = atomic::split(config.getString("not_for_trade"), ','); // TODO: Pass as parameter
 	}
 	std::cout << totalOffering << '\n';
 	std::cout << totalRequesting << '\n';

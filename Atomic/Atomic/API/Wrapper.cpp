@@ -16,7 +16,7 @@
 	const cpr::Body empty{""};
 	cpr::Response r = cpr::Post(logout, authorization, empty);
 	if (r.status_code != 403)
-		throw atomic::HttpError{"Http Error", r.status_code};
+		throw atomic::HttpError{ "Http Error", r.status_code };
 	else
 		return r.header["X-CSRF-TOKEN"];
 }

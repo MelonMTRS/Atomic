@@ -5,6 +5,8 @@
 #include "./Inventory.h"
 #include "./User.h"
 
+#pragma warning(disable : 6495)
+
 namespace atomic {
 	class AuthUser {
 	private:
