@@ -1,4 +1,5 @@
 #include <array>
+#include <algorithm>
 #include <iostream>
 #include "./API/Rolimons.h"
 #include "./API/Wrapper.h"
@@ -50,9 +51,26 @@
 	return atomic::TradeAction::Ignore;
 }
 
-[[nodiscard]] atomic::Offer atomic::makeOffer(atomic::Inventory& AuthInventory, atomic::Inventory& VictimInventory, config::Config& config) {
+template<typename Num, typename Lowest, typename Highest>
+[[nodiscard]] constexpr Highest clamp(Num num, Lowest lowest, Highest highest) {
+	if (num < lowest)
+		return lowest;
+	else if (num > highest)
+		return highest;
+	else
+		return num;
+}
+
+[[nodiscard]] atomic::Offer atomic::makeOffer(const atomic::Inventory& AuthInventory, const atomic::Inventory& VictimInventory, config::Config& config) {
+	if (AuthInventory.item_count() == 0)
+		atomic::throwException("You do not have any limited items, cannot create trades.");
+	if (VictimInventory.item_count() == 0)
+		throw atomic::TradeFormFailure{atomic::TradeErrorTypes::USER_HAS_NO_ITEMS};
 	atomic::OfferHolder offering{};
 	atomic::OfferHolder requesting{};
+	std::vector<std::string> minimumItemsToTrade = atomic::split(config.getString("maximum_items_to_trade"), '/');
+	int totalOffering = clamp(AuthInventory.item_count(), 1, std::stoi(minimumItemsToTrade[0]));
+	int totalRequesting = clamp(VictimInventory.item_count(), 1, std::stoi(minimumItemsToTrade[1]));
 	int offeringCursor = 0;
 	int requestingCursor = 0;
 	std::vector<std::string> notForTrade;
@@ -61,8 +79,10 @@
 		hasItemsNotForTrade = false;
 	} else {
 		hasItemsNotForTrade = true;
-		std::vector<std::string> notForTrade = atomic::split(config.getString("not_for_trade"), ',');
+		std::vector<std::string> notForTrade = atomic::split(config.getString("not_for_trade"), ','); // TODO: Pass as parameter
 	}
+	std::cout << totalOffering << '\n';
+	std::cout << totalRequesting << '\n';
 	return atomic::Offer{offering, requesting, 0, 0};
 }
 

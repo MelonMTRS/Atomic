@@ -5,6 +5,7 @@
 
 namespace config {
 	bool configExists();
+	bool validateConfig(config::Config config);
 	std::string getDefaultConfig();
 	void createConfig(std::string configData);
 }

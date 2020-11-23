@@ -13,6 +13,11 @@ namespace atomic {
 		NotFoundError
 	};
 
+	enum class TradeErrorTypes {
+		USER_HAS_NO_ITEMS,
+		COULD_NOT_CREATE, // The bot cannot create a good trade with the user
+	};
+
 	struct HttpError {
 		const std::string message;
 		const int status_code;
@@ -20,7 +25,7 @@ namespace atomic {
 	};
 
 	struct TradeFormFailure {
-		std::string message;
+		atomic::TradeErrorTypes error;
 	};
 
 	struct KeyNotFound {
