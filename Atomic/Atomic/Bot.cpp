@@ -81,8 +81,45 @@ template<typename Num, typename Lowest, typename Highest>
 		hasItemsNotForTrade = true;
 		notForTrade = atomic::split(config.getString("not_for_trade"), ','); // TODO: Pass as parameter
 	}
-	std::cout << totalOffering << '\n';
-	std::cout << totalRequesting << '\n';
+	// UH QUICK VI YOU JUST GOT AN IDEA ON HOW TO DO THIS
+	// OK SO WHEN YOU PICK A RANDOM ITEM FROM THE USERS INVENTORY SEE HOW CLOSE IT IS TO THE MINIMUM PROFIT
+	// LEAVE A VARIABLE THAT HAS HOW MUCH MORE VALUE IT NEEDS TO MEET THE MINIMUM
+	// POOP
+	int totalProfit = 0;
+	bool breakNest = false;
+	for (int i = 0; i < totalRequesting && breakNest; ++i) {
+		atomic::UniqueItem randomItem = VictimInventory.getRandomItem();
+		while (std::find(requesting.begin(), requesting.end(), randomItem) != requesting.end()) {
+			std::cout << "found\n";
+			randomItem = VictimInventory.getRandomItem();
+		}
+		for (const auto& item : AuthInventory.items()) {
+			if (hasItemsNotForTrade) {
+				if (std::find(notForTrade.begin(), notForTrade.end(), std::to_string(item.id)) != notForTrade.end())
+					continue;
+			}
+			if (offeringCursor >= totalOffering || requestingCursor >= totalRequesting) {
+				breakNest = true;
+				break;
+			}
+			if (item.value > randomItem.value) {
+				std::cout << "min: " << (config.getInt64("minimum_profit") / totalOffering) << '\n';
+				if ((item.value - randomItem.value) < (config.getInt64("minimum_profit")/totalOffering)) {
+					offering[offeringCursor] = item;
+					requesting[requestingCursor] = randomItem;
+					offeringCursor++; // move to offering[++offeringCursor]
+					requestingCursor++;
+					totalProfit += item.value - randomItem.value;
+				}
+				else
+					continue;
+			}
+			else
+				continue;
+		}
+	}
+	if (offeringCursor == 0 || requestingCursor == 0)
+		throw atomic::TradeFormFailure{atomic::TradeErrorTypes::COULD_NOT_CREATE};
 	return atomic::Offer{offering, requesting, 0, 0};
 }
 

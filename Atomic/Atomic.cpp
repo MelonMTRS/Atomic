@@ -29,6 +29,13 @@ int main()
         std::cout << "Point 4\n";
         atomic::Offer offer = atomic::makeOffer(authInventory, usersInventory, c);
         std::cout << "Point 5\n";
+        for (auto s : offer.getOffering()) {
+            std::cout << s.name << '\n';
+        }
+        std::cout << "-----------------\n";
+        for (auto b : offer.getRequesting()) {
+            std::cout << b.name << '\n';
+        }
         try {
             //roblox::sendTrade(user, atomic::Trade{ NULL, user, userToTradeWith, offer, atomic::TradeType::Outbound });
         }

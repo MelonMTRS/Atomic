@@ -23,6 +23,7 @@ namespace atomic {
 		[[nodiscard]] inline const size_t item_count() const noexcept { return this->m_inventory.size(); }
 		[[nodiscard]] const ItemContainer::iterator begin() noexcept { return this->m_inventory.begin(); }
 		[[nodiscard]] const ItemContainer::iterator end() noexcept { return this->m_inventory.end(); }
+		[[nodiscard]] ItemContainer items() const noexcept { return this->m_inventory; }
 		// Searching / Indexing
 		[[nodiscard]] atomic::UniqueItem operator[](int index) const { return this->m_inventory[index]; }
 		[[nodiscard]] atomic::UniqueItem& findItemByName(const std::string& name);
