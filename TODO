@@ -3,3 +3,4 @@ Atomic's TODO:
 1. The botting algorithm / 50% complete
 2. A better demand calculator for non-assigned items
 3. Support for trading with multiple roblox accounts at once (using threading)
+4. Linux support for VPS hookups.
