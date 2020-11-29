@@ -18,7 +18,7 @@ int main()
     try {
 #endif
         rolimons::ItemDB items = rolimons::getRolimonItems();
-        atomic::AuthUser user = roblox::getUserFromCookie("COOKIE");
+        atomic::AuthUser user = roblox::getUserFromCookie("_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_86E9284958832FBE80B0040C155A8713042EDF33F52BDD6CAF810F5507D38096B87BBDB587971DE1E05FA1CA8432DE9EDE255BC729F099D712CFC5C3D3D579FD7A48ACC63D74F1746790C7196F5939CBBA480389EC790771F2D3BADC3439866D7E9ED3AA7922FF2BA0C269C96B3158CA4D47468818F340704181D741D411D262256018ACC4E30AC3B28BBD7ACC3C584BADC154945905878D368C736D61A4C584F28E0A1D73B96E2490022EC741E4ABB7403563506553AAF6BF9A22CC3763CAFEAB4F249C111F577CAF5883F1C356B857FCD05BAE5D571E181F569067348FF53EF1FA449E509EBF63124D4432A036AA62E654AD9652FF46E6BAB3E0B5AACA0A751145F61996D51AB2F6D0FBFA9CB61D28C60E95B5E1BD57A905F83F78AB1D7DD7F1841756");
         config::Config c = {"testConfig.cfg"};
         std::cout << "Point 1\n";
         atomic::User userToTradeWith = atomic::findUser(user, items);
@@ -37,8 +37,9 @@ int main()
             std::cout << b.name << " (" << b.userAssetId << ")" << '\n';
         }
         std::cout << "Total profit: " << profit << '\n';
+        std::cin.get();
         try {
-            //roblox::sendTrade(user, atomic::Trade{ NULL, user, userToTradeWith, offer, atomic::TradeType::Outbound });
+            roblox::sendTrade(user, atomic::Trade{ NULL, user, userToTradeWith, offer, atomic::TradeType::Outbound });
         }
         catch (atomic::HttpError error) {
             std::cout << "Error: " << error.message;

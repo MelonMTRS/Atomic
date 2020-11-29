@@ -129,15 +129,15 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 		}
 		throw atomic::TradeFormFailure{ atomic::TradeErrorTypes::COULD_NOT_CREATE };
 	}
-	if (totalProfit < config.getInt64("minimum_profit") && offeringCursor < totalOffering) { // Doesn't meet the minimum profit, look for an item to add.
+	if (totalProfit < config.getInt64("minimum_profit") && requestingCursor < totalRequesting) { // Doesn't meet the minimum profit, look for an item to add.
 		int requiredAmount = config.getInt64("minimum_profit") - totalProfit;
-		for (const auto& item : AuthInventory.items()) {
+		for (const auto& item : VictimInventory.items()) {
 			if (hasItemsNotForTrade) {
 				if (std::find(notForTrade.begin(), notForTrade.end(), std::to_string(item.id)) != notForTrade.end())
 					continue;
 			}
-			if (item.value >= requiredAmount && item.value < config.getInt64("minimum_profit")*3 && !itemExists(offering, item.userAssetId)) {
-				offering[offeringCursor++] = item;
+			if (item.value >= requiredAmount && item.value < config.getInt64("minimum_profit")*3 && !itemExists(requesting, item.userAssetId)) {
+				requesting[requestingCursor++] = item;
 				totalProfit += item.value;
 				break;
 			}
