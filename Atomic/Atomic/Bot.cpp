@@ -1,6 +1,7 @@
 #include <array>
 #include <algorithm>
 #include <iostream>
+#include <tuple>
 #include "./API/Rolimons.h"
 #include "./API/Wrapper.h"
 #include "./Bot.h"
@@ -11,13 +12,11 @@
 #include "./Item.h"
 #include "./Offer.h"
 
+/*
+	warning: you're about to enter the land of spaghetti
+*/
+
 [[nodiscard]] atomic::TradeAction atomic::evaluateTrade(rolimons::ItemDB& items, const atomic::Trade& trade, config::Config& config) {
-	/*
-		TODO: restructure this entire function to follow the dependency ratio with a starter base of 0.5
-		greater than 1 = accept
-		less than 1 = decline
-		-1 = ignore
-	*/
 	std::int64_t totalOffering = trade.getOffer().getTotalOfferedValue();
 	std::int64_t totalRequesting = trade.getOffer().getTotalRequestedValue();
 	atomic::Offer offer = trade.getOffer();
@@ -61,11 +60,21 @@ template<typename Num, typename Lowest, typename Highest>
 		return num;
 }
 
-[[nodiscard]] atomic::Offer atomic::makeOffer(const atomic::Inventory& AuthInventory, const atomic::Inventory& VictimInventory, config::Config& config) {
+bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetId) {
+	for (const auto& item : offer) {
+		if (item.userAssetId == userAssetId)
+			return true;
+	}
+	return false;
+}
+
+[[nodiscard]] std::tuple<atomic::Offer, int> atomic::makeOffer(const atomic::Inventory& AuthInventory, const atomic::Inventory& VictimInventory, config::Config& config, int tries) {
 	if (AuthInventory.item_count() == 0)
 		atomic::throwException("You do not have any limited items, cannot create trades.");
 	if (VictimInventory.item_count() == 0)
 		throw atomic::TradeFormFailure{atomic::TradeErrorTypes::USER_HAS_NO_ITEMS};
+	if (VictimInventory.item_count() < 3)
+		throw atomic::TradeFormFailure{atomic::TradeErrorTypes::USER_LACKS_ENOUGH_ITEMS};
 	atomic::OfferHolder offering{};
 	atomic::OfferHolder requesting{};
 	int offeringCursor = 0;
@@ -81,19 +90,16 @@ template<typename Num, typename Lowest, typename Highest>
 		hasItemsNotForTrade = true;
 		notForTrade = atomic::split(config.getString("not_for_trade"), ','); // TODO: Pass as parameter
 	}
-	// UH QUICK VI YOU JUST GOT AN IDEA ON HOW TO DO THIS
-	// OK SO WHEN YOU PICK A RANDOM ITEM FROM THE USERS INVENTORY SEE HOW CLOSE IT IS TO THE MINIMUM PROFIT
-	// LEAVE A VARIABLE THAT HAS HOW MUCH MORE VALUE IT NEEDS TO MEET THE MINIMUM
-	// POOP
 	int totalProfit = 0;
 	bool breakNest = false;
-	for (int i = 0; i < totalRequesting && breakNest; ++i) {
+	for (int i = 0; i < totalRequesting && !breakNest; ++i) {
 		atomic::UniqueItem randomItem = VictimInventory.getRandomItem();
-		while (std::find(requesting.begin(), requesting.end(), randomItem) != requesting.end()) {
-			std::cout << "found\n";
-			randomItem = VictimInventory.getRandomItem();
-		}
 		for (const auto& item : AuthInventory.items()) {
+			if (itemExists(offering, item.userAssetId))
+				continue;
+			while (itemExists(requesting, randomItem.userAssetId)) {
+				randomItem = VictimInventory.getRandomItem();
+			}
 			if (hasItemsNotForTrade) {
 				if (std::find(notForTrade.begin(), notForTrade.end(), std::to_string(item.id)) != notForTrade.end())
 					continue;
@@ -102,14 +108,13 @@ template<typename Num, typename Lowest, typename Highest>
 				breakNest = true;
 				break;
 			}
-			if (item.value > randomItem.value) {
-				std::cout << "min: " << (config.getInt64("minimum_profit") / totalOffering) << '\n';
-				if ((item.value - randomItem.value) < (config.getInt64("minimum_profit")/totalOffering)) {
-					offering[offeringCursor] = item;
-					requesting[requestingCursor] = randomItem;
-					offeringCursor++; // move to offering[++offeringCursor]
-					requestingCursor++;
-					totalProfit += item.value - randomItem.value;
+			if (item.value < randomItem.value) {
+				if ((randomItem.value - item.value) > (config.getInt64("minimum_profit")/2) && (randomItem.value - item.value) < (config.getInt64("minimum_profit")*2)) {
+					offering[offeringCursor++] = item;
+					requesting[requestingCursor++] = randomItem;
+					totalProfit += randomItem.value - item.value;
+					if (totalProfit >= config.getInt64("minimum_profit"))
+						breakNest = true;
 				}
 				else
 					continue;
@@ -118,9 +123,30 @@ template<typename Num, typename Lowest, typename Highest>
 				continue;
 		}
 	}
-	if (offeringCursor == 0 || requestingCursor == 0)
-		throw atomic::TradeFormFailure{atomic::TradeErrorTypes::COULD_NOT_CREATE};
-	return atomic::Offer{offering, requesting, 0, 0};
+	if (offeringCursor == 0 || requestingCursor == 0) {
+		if (tries < 15) {
+			return atomic::makeOffer(AuthInventory, VictimInventory, config, tries+1);
+		}
+		throw atomic::TradeFormFailure{ atomic::TradeErrorTypes::COULD_NOT_CREATE };
+	}
+	if (totalProfit < config.getInt64("minimum_profit") && offeringCursor < totalOffering) { // Doesn't meet the minimum profit, look for an item to add.
+		int requiredAmount = config.getInt64("minimum_profit") - totalProfit;
+		for (const auto& item : AuthInventory.items()) {
+			if (hasItemsNotForTrade) {
+				if (std::find(notForTrade.begin(), notForTrade.end(), std::to_string(item.id)) != notForTrade.end())
+					continue;
+			}
+			if (item.value >= requiredAmount && item.value < config.getInt64("minimum_profit")*3 && !itemExists(offering, item.userAssetId)) {
+				offering[offeringCursor++] = item;
+				totalProfit += item.value;
+				break;
+			}
+		}
+	}
+	if (totalProfit > config.getInt64("minimum_profit") * 4) { // Profit is too large, either remove an offered or requested item
+		//todo
+	}
+	return std::make_tuple(atomic::Offer{offering, requesting, 0, 0}, totalProfit);
 }
 
 [[nodiscard]] atomic::User atomic::findUser(atomic::AuthUser& user, rolimons::ItemDB& items) {

@@ -27,15 +27,16 @@ int main()
         std::cout << "Point 3\n";
         atomic::Inventory usersInventory = userToTradeWith.getInventory(items);
         std::cout << "Point 4\n";
-        atomic::Offer offer = atomic::makeOffer(authInventory, usersInventory, c);
+        auto [offer, profit] = atomic::makeOffer(authInventory, usersInventory, c);
         std::cout << "Point 5\n";
         for (auto s : offer.getOffering()) {
-            std::cout << s.name << '\n';
+            std::cout << s.name << " (" << s.userAssetId << ")" << '\n';
         }
         std::cout << "-----------------\n";
         for (auto b : offer.getRequesting()) {
-            std::cout << b.name << '\n';
+            std::cout << b.name << " (" << b.userAssetId << ")" << '\n';
         }
+        std::cout << "Total profit: " << profit << '\n';
         try {
             //roblox::sendTrade(user, atomic::Trade{ NULL, user, userToTradeWith, offer, atomic::TradeType::Outbound });
         }
