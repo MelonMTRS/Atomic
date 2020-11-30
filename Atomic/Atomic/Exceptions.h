@@ -15,7 +15,7 @@ namespace atomic {
 
 	enum class TradeErrorTypes {
 		USER_HAS_NO_ITEMS,
-		USER_LACKS_ENOUGH_ITEMS,
+		USER_LACKS_ITEMS,
 		COULD_NOT_CREATE, // The bot cannot create a good trade with the user
 	};
 

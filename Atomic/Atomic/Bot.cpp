@@ -20,6 +20,21 @@
 	std::int64_t totalOffering = trade.getOffer().getTotalOfferedValue();
 	std::int64_t totalRequesting = trade.getOffer().getTotalRequestedValue();
 	atomic::Offer offer = trade.getOffer();
+	std::vector<std::string> notForTrade;
+	bool hasItemsNotForTrade;
+	if (config.getString("not_for_trade") == "false") {
+		hasItemsNotForTrade = false;
+	}
+	else {
+		hasItemsNotForTrade = true;
+		notForTrade = atomic::split(config.getString("not_for_trade"), ','); // TODO: Pass as parameter
+	}
+	if (hasItemsNotForTrade) {
+		for (auto item = offer.getRequesting().begin(); item != offer.getRequesting().end(); ++item) {
+			if (std::find(notForTrade.begin(), notForTrade.end(), std::to_string(item->id)) != notForTrade.end())
+				continue;
+		}
+	}
 	if (offer.getRobuxOffered() != 0 || offer.getRobuxRequested() != 0)
 		return atomic::TradeAction::Ignore;
 	if (totalOffering > totalRequesting) {
@@ -61,10 +76,8 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 [[nodiscard]] std::tuple<atomic::Offer, int> atomic::makeOffer(const atomic::Inventory& AuthInventory, const atomic::Inventory& VictimInventory, config::Config& config, int tries) {
 	if (AuthInventory.item_count() == 0)
 		atomic::throwException("You do not have any limited items, cannot create trades.");
-	if (VictimInventory.item_count() == 0)
-		throw atomic::TradeFormFailure{atomic::TradeErrorTypes::USER_HAS_NO_ITEMS};
 	if (VictimInventory.item_count() < 3)
-		throw atomic::TradeFormFailure{atomic::TradeErrorTypes::USER_LACKS_ENOUGH_ITEMS};
+		throw atomic::TradeFormFailure{atomic::TradeErrorTypes::USER_LACKS_ITEMS};
 	atomic::OfferHolder offering{};
 	atomic::OfferHolder requesting{};
 	int offeringCursor = 0;
