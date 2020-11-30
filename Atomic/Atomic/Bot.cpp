@@ -20,6 +20,8 @@
 	std::int64_t totalOffering = trade.getOffer().getTotalOfferedValue();
 	std::int64_t totalRequesting = trade.getOffer().getTotalRequestedValue();
 	atomic::Offer offer = trade.getOffer();
+	if (offer.getTotalRequestedValue() > config.getInt64("ignore_trades_above"))
+		return TradeAction::Ignore;
 	std::vector<std::string> notForTrade;
 	bool hasItemsNotForTrade;
 	if (config.getString("not_for_trade") == "false") {
@@ -36,19 +38,19 @@
 		}
 	}
 	if (offer.getRobuxOffered() != 0 || offer.getRobuxRequested() != 0)
-		return atomic::TradeAction::Ignore;
+		return TradeAction::Ignore;
 	if (totalOffering > totalRequesting) {
 		for (auto item = offer.getOffering().begin(); item != offer.getOffering().end(); ++item) {
 			if (item->id != 0) {
 				if (rolimons::isProjected(items, item->id))
-					return atomic::TradeAction::Decline;
+					return TradeAction::Decline;
 				atomic::Demand itemDemand = item->demand;
 				if (itemDemand == atomic::Demand::NotAssigned) {
 					itemDemand = atomic::getItemDemand(*item);
 					rolimons::setItemDemand(items, item->id, itemDemand);
 				}
 				if (itemDemand == atomic::Demand::Terrible)
-					return atomic::TradeAction::Decline;
+					return TradeAction::Decline;
 			}
 		}
 		for (auto item = offer.getOffering().begin(); item != offer.getOffering().end(); ++item) {
@@ -57,12 +59,12 @@
 				return atomic::TradeAction::Decline;
 			}
 		}
-		return atomic::TradeAction::Accept;
+		return TradeAction::Accept;
 	}
 	else {
-		return atomic::TradeAction::Decline;
+		return TradeAction::Decline;
 	}
-	return atomic::TradeAction::Ignore;
+	return TradeAction::Ignore;
 }
 
 bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetId) {
