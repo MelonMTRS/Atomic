@@ -1,6 +1,7 @@
 #ifndef ATOMIC_INVENTORY_H
 #define ATOMIC_INVENTORY_H
 #include <functional>
+#include <initializer_list>
 #include <vector>
 #include "./Item.h"
 
@@ -14,6 +15,10 @@ namespace atomic {
 		Inventory(const ItemContainer& inventory)
 			: m_inventory{inventory}
 		{
+		}
+		Inventory(const std::initializer_list<atomic::UniqueItem> items) {
+			for (const auto& item : items)
+				m_inventory.push_back(item);
 		}
 
 		inline void addItem(const atomic::UniqueItem& item) { this->m_inventory.push_back(item); }

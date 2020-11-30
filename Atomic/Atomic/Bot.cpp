@@ -50,16 +50,6 @@
 	return atomic::TradeAction::Ignore;
 }
 
-template<typename Num, typename Lowest, typename Highest>
-[[nodiscard]] constexpr Highest clamp(Num num, Lowest lowest, Highest highest) {
-	if (num < lowest)
-		return lowest;
-	else if (num > highest)
-		return highest;
-	else
-		return num;
-}
-
 bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetId) {
 	for (const auto& item : offer) {
 		if (item.userAssetId == userAssetId)
@@ -80,8 +70,8 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 	int offeringCursor = 0;
 	int requestingCursor = 0;
 	std::vector<std::string> minimumItemsToTrade = atomic::split(config.getString("maximum_items_to_trade"), '/');
-	int totalOffering = clamp(AuthInventory.item_count(), 1, std::stoi(minimumItemsToTrade[0]));
-	int totalRequesting = clamp(VictimInventory.item_count(), 1, std::stoi(minimumItemsToTrade[1]));
+	int totalOffering = computational::clamp(AuthInventory.item_count(), 1, std::stoi(minimumItemsToTrade[0]));
+	int totalRequesting = computational::clamp(VictimInventory.item_count(), 1, std::stoi(minimumItemsToTrade[1]));
 	std::vector<std::string> notForTrade;
 	bool hasItemsNotForTrade;
 	if (config.getString("not_for_trade") == "false") {
@@ -95,10 +85,12 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 	for (int i = 0; i < totalRequesting && !breakNest; ++i) {
 		atomic::UniqueItem randomItem = VictimInventory.getRandomItem();
 		for (const auto& item : AuthInventory.items()) {
-			if (itemExists(offering, item.userAssetId))
+			if (item.value > config.getInt64("max_item_value") || itemExists(offering, item.userAssetId))
 				continue;
-			while (itemExists(requesting, randomItem.userAssetId)) {
+			int itemTries = 0;
+			while (itemExists(requesting, randomItem.userAssetId) && itemTries < 25) {
 				randomItem = VictimInventory.getRandomItem();
+				itemTries++;
 			}
 			if (hasItemsNotForTrade) {
 				if (std::find(notForTrade.begin(), notForTrade.end(), std::to_string(item.id)) != notForTrade.end())
@@ -143,8 +135,13 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 			}
 		}
 	}
-	if (totalProfit > config.getInt64("minimum_profit") * 4) { // Profit is too large, either remove an offered or requested item
-		//todo
+	if (totalProfit > config.getInt64("minimum_profit") * 3 && requestingCursor > 1) { // Profit is too large, remove a requested item
+		for (const auto& item : requesting) {
+			if (item.value <= config.getInt64("minimum_profit") * 1.5) {
+				std::remove(requesting.begin(), requesting.end(), item);
+				break;
+			}
+		}
 	}
 	return std::make_tuple(atomic::Offer{offering, requesting, 0, 0}, totalProfit);
 }

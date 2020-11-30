@@ -25,6 +25,15 @@ namespace atomic {
 namespace computational {
 	double getAverage(const std::vector<int>& values);
 	int getPercent(const double& first, const double& second);
+	template<typename Num, typename Lowest, typename Highest>
+	[[nodiscard]] constexpr Highest clamp(Num num, Lowest lowest, Highest highest) {
+		if (num < lowest)
+			return lowest;
+		else if (num > highest)
+			return highest;
+		else
+			return num;
+	}
 }
 
 #endif
