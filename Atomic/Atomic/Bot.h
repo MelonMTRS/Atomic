@@ -14,7 +14,7 @@ namespace atomic {
 		Counter,
 		Ignore
 	};
-	[[nodiscard]] std::tuple<atomic::Offer, int> makeOffer(const atomic::Inventory& AuthInventory, const atomic::Inventory& VictimInventory, config::Config& config, int tries=0);
+	[[nodiscard]] std::tuple<atomic::Offer, int> makeOffer(const atomic::Inventory& AuthInventory, const atomic::Inventory& VictimInventory, config::Config& config, rolimons::ItemDB& items, int tries=0);
 	[[nodiscard]] atomic::TradeAction evaluateTrade(rolimons::ItemDB& items, const atomic::Trade& trade, config::Config& config);
 	[[nodiscard]] atomic::User findUser(atomic::AuthUser& user, rolimons::ItemDB& items);
 }

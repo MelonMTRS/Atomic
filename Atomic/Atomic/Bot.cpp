@@ -75,7 +75,7 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 	return false;
 }
 
-[[nodiscard]] std::tuple<atomic::Offer, int> atomic::makeOffer(const atomic::Inventory& AuthInventory, const atomic::Inventory& VictimInventory, config::Config& config, int tries) {
+[[nodiscard]] std::tuple<atomic::Offer, int> atomic::makeOffer(const atomic::Inventory& AuthInventory, const atomic::Inventory& VictimInventory, config::Config& config, rolimons::ItemDB& items, int tries) {
 	if (AuthInventory.item_count() == 0)
 		atomic::throwException("You do not have any limited items, cannot create trades.");
 	if (VictimInventory.item_count() < 3)
@@ -103,7 +103,7 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 			if (item.value > config.getInt64("max_item_value") || itemExists(offering, item.userAssetId))
 				continue;
 			int itemTries = 0;
-			while (itemExists(requesting, randomItem.userAssetId) && itemTries < 25) {
+			while (itemExists(requesting, randomItem.userAssetId) && itemTries < 25 || randomItem.demand == Demand::Terrible) {
 				randomItem = VictimInventory.getRandomItem();
 				itemTries++;
 			}
@@ -132,7 +132,7 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 	}
 	if (offeringCursor == 0 || requestingCursor == 0) {
 		if (tries < 15) {
-			return atomic::makeOffer(AuthInventory, VictimInventory, config, tries+1);
+			return atomic::makeOffer(AuthInventory, VictimInventory, config, items, tries+1);
 		}
 		throw atomic::TradeFormFailure{ atomic::TradeErrorTypes::COULD_NOT_CREATE };
 	}

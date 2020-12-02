@@ -2,7 +2,6 @@
 #define ATOMIC_USER_H
 #include <string>
 #include "./API/Rolimons.h"
-#include "./Inventory.h"
 
 namespace atomic {
 	class User {
@@ -20,7 +19,6 @@ namespace atomic {
 		[[nodiscard]] atomic::Inventory getInventory(rolimons::ItemDB& items) const noexcept {
 			return rolimons::getUser(items, this->getId()).inventory;
 		}
-		void send_trade() const;
 	};
 }
 

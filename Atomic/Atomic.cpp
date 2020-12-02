@@ -1,4 +1,5 @@
 #include <iostream>
+#include <thread>
 #include "Atomic/API/Rolimons.h"
 #include "Atomic/API/Wrapper.h"
 #include "Atomic/Bot.h"
@@ -12,13 +13,13 @@
 #include "Atomic/Functions.h"
 #include "Atomic/User.h"
 
-int main()
+int debug_main()
 {
 #ifndef VS_DEBUG
     try {
 #endif
         rolimons::ItemDB items = rolimons::getRolimonItems();
-        atomic::AuthUser user = roblox::getUserFromCookie("_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_AE357615435BF4EE56EC5945BDA6611AAC728FCBBE5808A2934EEEBF3723C64986A46BC7DB5AE90CC6825D37D495E53DFE13D239BEC6FA5FC4DDB0DE8D3D3A39DC44506D98776F23A6D70AAEB325516D5E6D81479CB8B771BD069A8E2472783C3F1D9ED26ECB200ECE4EE80DE19B1C2D97EF888E37BDE37ED025611D11D6B8A5DB0406507F110C5EA753DC10A6242147C85A91C3E6255F0A77EEFF634088AA63B03707F53C32B90BAF80C91BF1E56CDD920DB7F4A23BBF7B68BB7936D08B6A1CCFF4B9905937D4AC7715CA5188278954067922E2A62B33DD823C07F21D47FFB7A485D680C73D1FCA4EEF5FE9BEAA398502758AD59C1D327402887E73CFC11060340DCD34212F8140A7288FD5D5E2AE8E7EE4B8E2F601E91595EC8609850B6A206DA76185");
+        atomic::AuthUser user = roblox::getUserFromCookie("");
         config::Config c = {"testConfig.cfg"};
         std::cout << "Point 1\n";
         atomic::User userToTradeWith = atomic::findUser(user, items);
@@ -27,7 +28,7 @@ int main()
         std::cout << "Point 3\n";
         atomic::Inventory usersInventory = userToTradeWith.getInventory(items);
         std::cout << "Point 4\n";
-        auto [offer, profit] = atomic::makeOffer(authInventory, usersInventory, c);
+        auto [offer, profit] = atomic::makeOffer(authInventory, usersInventory, c, items);
         std::cout << "Point 5\n";
         for (auto s : offer.getOffering()) {
             std::cout << s.name << " (" << s.userAssetId << ")" << '\n';
@@ -57,20 +58,13 @@ int main()
 
 // DIVIDER
 
-int release_main() {
+int main() {
     std::cout << "<Loading...>\n";
-    rolimons::ItemDB* items;
+    // TODO: Test internet connection
+    bool atomicActive = true;
+    rolimons::ItemDB items = rolimons::getRolimonItems();
     atomic::AuthUser user;
     config::Config mainConfig;
-    try {
-        items = new rolimons::ItemDB{ rolimons::getRolimonItems() };
-    }
-    catch (const std::bad_alloc&) {
-        atomic::throwException("Rare Allocation Error: Unable to allocate enough memory for main.ItemDB, please restart Atomic\n");
-    }
-    catch (const atomic::HttpError&) {
-        atomic::throwException("Failed to get rolimons values, make sure you have an active internet connection\n");
-    }
     if (!config::configExists()) {
         atomic::clear();
         std::cout << "Could not find default config, creating...\n";
@@ -85,15 +79,43 @@ int release_main() {
         }
     }
     mainConfig = {"config.cfg"};
-    std::string robloSecurity = mainConfig.getString("ROBLOSECURITY");
     try {
-        user = roblox::getUserFromCookie(robloSecurity);
+        user = roblox::getUserFromCookie(mainConfig.getString("ROBLOSECURITY"));
     }
     catch (const atomic::HttpError& error) {
         atomic::throwException("Failed to login, please make sure you added the correct roblosecurity cookie\nStatus code: " + std::to_string(error.status_code) + "\n");
     }
     if (!user.isPremium()) {
         atomic::throwException("Login was a success, however it looks like you don't have premium!\nAtomic cannot trade without it\n");
+    }
+    atomic::clear();
+    std::cout << "Login success, starting to trade...\n";
+    if (auto inventory = user.getInventory(items); inventory.item_count() < 2) {
+        std::cout << "Warning: You only have (" << inventory.item_count() << ") limited(s) in your inventory, Atomic may have problems finding good trades\n";
+    }
+    if (mainConfig.getBool("check_inbound_trades")) {
+        // TODO: Inbound
+    }
+    std::thread update_values([&]() {
+        while (atomicActive) {
+            std::this_thread::sleep_for(std::chrono::minutes(mainConfig.getInt64("update_values")));
+            items = rolimons::getRolimonItems();
+        }
+    });
+    while (atomicActive) {
+        std::cout << "Looking for a user to trade with...\n";
+        atomic::User trader = atomic::findUser(user, items);
+        std::cout << "Creating a trade with " << trader.name() << " (" << trader.getId() << ")...\n";
+        try {
+            auto [offer, profit] = atomic::makeOffer(user.getInventory(items), trader.getInventory(items), mainConfig, items);
+            roblox::sendTrade(user, atomic::Trade{ NULL, user, trader, offer, atomic::TradeType::Outbound });
+            std::cout << "Trade created with a profit of " << profit << "\n";
+        }
+        catch (const atomic::TradeFormFailure& tradeFailure) {
+            std::cout << "Failed to create a trade with " << trader.name() << '\n';
+        }
+        std::cout << "Waiting " << mainConfig.getString("time_between_trade") << " seconds...\n";
+        std::this_thread::sleep_for(std::chrono::seconds(mainConfig.getInt64("time_between_trade")));
     }
     return EXIT_SUCCESS;
 }
