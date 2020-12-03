@@ -1,7 +1,10 @@
 #include <array>
 #include <algorithm>
+#include <chrono>
 #include <iostream>
+#include <map>
 #include <tuple>
+#include <thread>
 #include "./API/Rolimons.h"
 #include "./API/Wrapper.h"
 #include "./Bot.h"
@@ -80,6 +83,7 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 		atomic::throwException("You do not have any limited items, cannot create trades.");
 	if (VictimInventory.item_count() < 3)
 		throw atomic::TradeFormFailure{atomic::TradeErrorTypes::USER_LACKS_ITEMS};
+	std::map<int64_t, atomic::Demand> demandCache = {};
 	atomic::OfferHolder offering{};
 	atomic::OfferHolder requesting{};
 	int offeringCursor = 0;
@@ -102,11 +106,25 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 		for (const auto& item : AuthInventory.items()) {
 			if (item.value > config.getInt64("max_item_value") || itemExists(offering, item.userAssetId))
 				continue;
+			if (rolimons::isProjected(items, randomItem.id))
+				continue;
 			int itemTries = 0;
 			while (itemExists(requesting, randomItem.userAssetId) && itemTries < 25 || randomItem.demand == Demand::Terrible) {
 				randomItem = VictimInventory.getRandomItem();
 				itemTries++;
 			}
+			if (randomItem.demand == atomic::Demand::NotAssigned && demandCache.find(randomItem.id) == demandCache.end()) {
+				try {
+					atomic::Demand itemDemand = atomic::getItemDemand(randomItem);
+					randomItem.demand = itemDemand;
+					rolimons::setItemDemand(items, randomItem.id, itemDemand);
+					demandCache[randomItem.id] = itemDemand;
+					std::this_thread::sleep_for(std::chrono::milliseconds(500)); // To prevent rate limits
+				}
+				catch (const atomic::HttpError& error) {};
+			}
+			if (randomItem.demand < item.demand)
+				continue;
 			if (hasItemsNotForTrade) {
 				if (std::find(notForTrade.begin(), notForTrade.end(), std::to_string(item.id)) != notForTrade.end())
 					continue;
