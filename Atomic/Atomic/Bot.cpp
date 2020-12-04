@@ -130,7 +130,7 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 			}
 			if (randomItem.demand == atomic::Demand::NotAssigned && demandCache.find(randomItem.id) != demandCache.end())
 				randomItem.demand = demandCache[randomItem.id];
-			if (randomItem.demand < item.demand) {
+			if (randomItem.demand < item.demand && !(item.demand == Demand::Amazing && (randomItem.demand == Demand::High || randomItem.demand == Demand::Normal))) {
 				continue;
 			}
 			if (offeringCursor >= totalOffering || requestingCursor >= totalRequesting) {

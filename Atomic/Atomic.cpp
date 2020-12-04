@@ -90,7 +90,23 @@ int release() {
         atomic::throwException("Login was a success, however it looks like you don't have premium!\nAtomic cannot trade without it\n");
     }
     atomic::clear();
-    std::cout << "Login success, starting to trade...\n";
+    std::cout << "Login to " << user.name() << " successful!\n";
+    std::cout << "Fetching demand info for user's inventory...\n";
+    std::map<int64_t, bool> itemsSet = {};
+    for (auto& item : user.getInventory(items)) {
+        try {
+            if (item.demand == atomic::Demand::NotAssigned && itemsSet.find(item.id) == itemsSet.end()) {
+                atomic::Demand itemDemand = atomic::getItemDemand(item);
+                std::cout << "Changed demand of " << item.name << " from " << atomic::getDemandString(item.demand) << " to " << atomic::getDemandString(itemDemand) << '\n';
+                rolimons::setItemDemand(items, item.id, itemDemand);
+                itemsSet[item.id] = true;
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            }
+        }
+        catch (const atomic::HttpError&) {
+            std::cout << "Error occured while fetching demand for " << item.name << '\n';
+        }
+    }
     if (auto inventory = user.getInventory(items); inventory.item_count() < 2) {
         std::cout << "Warning: You only have (" << inventory.item_count() << ") limited(s) in your inventory, Atomic may have problems finding good trades\n";
     }
@@ -103,7 +119,11 @@ int release() {
             items = rolimons::getRolimonItems();
         }
     });
+    std::int64_t rolls = 0;
     while (atomicActive) {
+        rolls++;
+        if (rolls % 25 == 0)
+            atomic::clear();
         std::cout << "Looking for a user to trade with...\n";
         atomic::User trader = atomic::findUser(user, items);
         std::cout << "Creating a trade with " << trader.name() << " (" << trader.getId() << ")...\n";
