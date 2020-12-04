@@ -13,7 +13,9 @@
 #include "Atomic/Functions.h"
 #include "Atomic/User.h"
 
-int debug_main()
+constexpr bool isDebug = false;
+
+int debug()
 {
 #ifndef VS_DEBUG
     try {
@@ -56,9 +58,8 @@ int debug_main()
 
 
 
-// DIVIDER
 
-int main() {
+int release() {
     std::cout << "<Loading...>\n";
     // TODO: Test internet connection
     bool atomicActive = true;
@@ -107,15 +108,25 @@ int main() {
         atomic::User trader = atomic::findUser(user, items);
         std::cout << "Creating a trade with " << trader.name() << " (" << trader.getId() << ")...\n";
         try {
-            auto [offer, profit] = atomic::makeOffer(user.getInventory(items), trader.getInventory(items), mainConfig, items);
+            auto [offer, gain] = atomic::makeOffer(user.getInventory(items), trader.getInventory(items), mainConfig, items);
             roblox::sendTrade(user, atomic::Trade{ NULL, user, trader, offer, atomic::TradeType::Outbound });
-            std::cout << "Trade created with a profit of " << profit << "\n";
+            std::cout << "Trade created with a value gain of " << gain << "\n";
         }
         catch (const atomic::TradeFormFailure& tradeFailure) {
-            std::cout << "Failed to create a trade with " << trader.name() << '\n';
+            std::cerr << "Failed to create a trade with " << trader.name() << '\n';
+        }
+        catch (const atomic::HttpError& httpError) {
+            std::cerr << "Error occured while trying to send the trade, trade ratio may be too restricting...\n";
         }
         std::cout << "Waiting " << mainConfig.getString("time_between_trade") << " seconds...\n";
         std::this_thread::sleep_for(std::chrono::seconds(mainConfig.getInt64("time_between_trade")));
     }
     return EXIT_SUCCESS;
+}
+
+int main() {
+    if (isDebug)
+        debug();
+    else
+        release();
 }

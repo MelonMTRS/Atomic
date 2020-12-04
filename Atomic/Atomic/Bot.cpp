@@ -104,6 +104,10 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 	for (int i = 0; i < totalRequesting && !breakNest; ++i) {
 		atomic::UniqueItem randomItem = VictimInventory.getRandomItem();
 		for (const auto& item : AuthInventory.items()) {
+			if (hasItemsNotForTrade) {
+				if (std::find(notForTrade.begin(), notForTrade.end(), std::to_string(item.id)) != notForTrade.end())
+					continue;
+			}
 			if (item.value > config.getInt64("max_item_value") || itemExists(offering, item.userAssetId))
 				continue;
 			if (rolimons::isProjected(items, randomItem.id))
@@ -116,6 +120,7 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 			if (randomItem.demand == atomic::Demand::NotAssigned && demandCache.find(randomItem.id) == demandCache.end()) {
 				try {
 					atomic::Demand itemDemand = atomic::getItemDemand(randomItem);
+					std::cout << "Changed demand of " << randomItem.name << " from " << atomic::getDemandString(randomItem.demand) << " to " << atomic::getDemandString(itemDemand) << '\n';
 					randomItem.demand = itemDemand;
 					rolimons::setItemDemand(items, randomItem.id, itemDemand);
 					demandCache[randomItem.id] = itemDemand;
@@ -123,11 +128,10 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 				}
 				catch (const atomic::HttpError& error) {};
 			}
-			if (randomItem.demand < item.demand)
+			if (randomItem.demand == atomic::Demand::NotAssigned && demandCache.find(randomItem.id) != demandCache.end())
+				randomItem.demand = demandCache[randomItem.id];
+			if (randomItem.demand < item.demand) {
 				continue;
-			if (hasItemsNotForTrade) {
-				if (std::find(notForTrade.begin(), notForTrade.end(), std::to_string(item.id)) != notForTrade.end())
-					continue;
 			}
 			if (offeringCursor >= totalOffering || requestingCursor >= totalRequesting) {
 				breakNest = true;

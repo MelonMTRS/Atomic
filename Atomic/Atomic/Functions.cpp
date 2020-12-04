@@ -13,7 +13,7 @@ int atomic::random(const int& min, const int& max) {
 std::string atomic::getDemandString(const atomic::Demand& demand) {
 	switch (demand) {
 	case atomic::Demand::NotAssigned:
-		return "Not Assigned";
+		return "NotAssigned";
 	case atomic::Demand::Terrible:
 		return "Terrible";
 	case atomic::Demand::Low:
