@@ -17,6 +17,8 @@ namespace atomic {
 	void clear();
 	std::int64_t getUnixTime();
 	std::string secondsToTime(std::int64_t seconds);
+	void writeFile(std::string file, std::string content);
+	std::string readFile(std::string filePath);
 
 	template<typename Type>
 	Type random_choice(const std::vector<Type>& v) {

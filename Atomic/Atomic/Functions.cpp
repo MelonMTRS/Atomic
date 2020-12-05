@@ -1,4 +1,5 @@
 #include <ctime>
+#include <fstream>
 #include <random>
 #include "./Functions.h"
 #include "./Item.h"
@@ -135,6 +136,24 @@ std::string atomic::secondsToTime(std::int64_t seconds) {
 		return std::to_string(seconds / 3600) + " hour(s)";
 	else
 		return std::to_string(seconds / 86400) + " day(s)";
+}
+
+void atomic::writeFile(std::string file, std::string content) {
+	std::ofstream f{ file };
+	f << content;
+	f.close();
+}
+
+std::string atomic::readFile(std::string filePath) {
+	std::ifstream file{ filePath };
+	std::string content = "";
+	while (file) {
+		std::string line;
+		file >> line;
+		content += line;
+	}
+	file.close();
+	return content;
 }
 
 // Computational

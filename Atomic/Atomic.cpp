@@ -22,24 +22,6 @@ namespace fs = std::filesystem;
 
 constexpr bool isDebug = false;
 
-void writeFile(std::string file, std::string content) {
-    std::ofstream f{ file };
-    f << content;
-    f.close();
-}
-
-std::string readFile(std::string filePath) {
-    std::ifstream file{ filePath };
-    std::string content = "";
-    while (file) {
-        std::string line;
-        file >> line;
-        content += line;
-    }
-    file.close();
-    return content;
-}
-
 int debug()
 {
 #ifndef VS_DEBUG
@@ -97,7 +79,7 @@ int release() {
     std::int64_t lastUpdatedDemand = 0;
     rapidjson::Document demandData;
     if (fs::is_regular_file(fs::current_path() / "data\\playerdemand.json")) {
-        std::string demandContent = readFile("data\\playerdemand.json");
+        std::string demandContent = atomic::readFile("data\\playerdemand.json");
         demandData.Parse(demandContent.c_str());
         if (demandData["lastUpdated"].IsInt64()) {
             lastUpdatedDemand = demandData["lastUpdated"].GetInt64();
@@ -130,7 +112,7 @@ int release() {
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
         playerDemandData.Accept(writer);
-        writeFile("data\\playerdemand.json", buffer.GetString());
+        atomic::writeFile("data\\playerdemand.json", buffer.GetString());
     }
     else {
         std::cout << "Found cached demand information (" << atomic::secondsToTime(atomic::getUnixTime() - lastUpdatedDemand) << " old)\n";
