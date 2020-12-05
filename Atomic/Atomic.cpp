@@ -133,7 +133,7 @@ int release() {
         writeFile("data\\playerdemand.json", buffer.GetString());
     }
     else {
-        std::cout << "Found cached demand data (" << atomic::secondsToTime(atomic::getUnixTime() - lastUpdatedDemand) << " old)\n";
+        std::cout << "Found cached demand information (" << atomic::secondsToTime(atomic::getUnixTime() - lastUpdatedDemand) << " old)\n";
         for (auto asset = demandData["items"].MemberBegin(); asset != demandData["items"].MemberEnd(); ++asset) {
             atomic::Demand itemDemand = atomic::getDemandFromString(asset->value.GetString());
             rolimons::setItemDemand(items, std::stoull(asset->name.GetString()), itemDemand);
@@ -165,7 +165,7 @@ int release() {
             std::cout << "Trade created with a value gain of " << gain << "\n";
         }
         catch (const atomic::TradeFormFailure& tradeFailure) {
-            std::cerr << "Failed to create a trade with " << trader.name() << '\n';
+            std::cerr << "Failed to create a good trade with " << trader.name() << '\n';
         }
         catch (const atomic::HttpError& httpError) {
             std::cerr << "Error occured while trying to send the trade, trade ratio may be too restricting...\n";

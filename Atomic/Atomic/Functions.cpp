@@ -127,7 +127,9 @@ std::int64_t atomic::getUnixTime() {
 }
 
 std::string atomic::secondsToTime(std::int64_t seconds) {
-	if (seconds <= 3600)
+	if (seconds <= 60)
+		return std::to_string(seconds) + " seconds";
+	else if (seconds <= 3600)
 		return std::to_string(seconds / 60) + " minute(s)";
 	else if (seconds <= 86400)
 		return std::to_string(seconds / 3600) + " hour(s)";
