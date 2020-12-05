@@ -103,7 +103,7 @@ int release() {
             lastUpdatedDemand = demandData["lastUpdated"].GetInt64();
         }
     }
-    if (lastUpdatedDemand != 0 && (atomic::getUnixTime()-lastUpdatedDemand) > 259200) {
+    if (lastUpdatedDemand == 0 || (atomic::getUnixTime()-lastUpdatedDemand) > 259200) {
         std::map<int64_t, atomic::Demand> itemsSet = {};
         for (auto& item : user.getInventory(items)) {
             try {
