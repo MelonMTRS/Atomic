@@ -109,6 +109,15 @@ std::int64_t atomic::getUnixTime() {
 	return std::time(nullptr);
 }
 
+std::string atomic::secondsToTime(std::int64_t seconds) {
+	if (seconds <= 3600)
+		return std::to_string(seconds / 60) + " minute(s)";
+	else if (seconds <= 86400)
+		return std::to_string(seconds / 3600) + " hour(s)";
+	else
+		return std::to_string(seconds / 86400) + " day(s)";
+}
+
 // Computational
 
 double computational::getAverage(const std::vector<int>& values) {

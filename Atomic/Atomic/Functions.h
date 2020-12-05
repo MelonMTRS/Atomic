@@ -15,6 +15,7 @@ namespace atomic {
 	std::string upper(const std::string& str);
 	void clear();
 	std::int64_t getUnixTime();
+	std::string secondsToTime(std::int64_t seconds);
 
 	template<typename Type>
 	Type random_choice(const std::vector<Type>& v) {

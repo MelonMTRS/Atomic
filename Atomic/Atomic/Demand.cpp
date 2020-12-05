@@ -13,7 +13,6 @@ size_t getDocumentSize(const rapidjson::Value& val) {
 	return size;
 }
 
-// This is NOT an efficient demand calculator, however it's good enough to identify bad items
 atomic::Demand atomic::getItemDemand(const atomic::Item& item) {
 	const cpr::Url url = {"https://economy.roblox.com/v1/assets/" + std::to_string(item.id) + "/resale-data"};
 	cpr::Response r = cpr::Get(url);
@@ -29,11 +28,11 @@ atomic::Demand atomic::getItemDemand(const atomic::Item& item) {
 	const size_t salesPointSize = getDocumentSize(d["priceDataPoints"]);
 	if (salesPointSize > 175)
 		return atomic::Demand::Amazing;
-	else if (salesPointSize > 150)
+	else if (salesPointSize > 155)
 		return atomic::Demand::High;
-	else if (salesPointSize > 80)
+	else if (salesPointSize > 90)
 		return atomic::Demand::Normal;
-	else if (salesPointSize > 20)
+	else if (salesPointSize > 30)
 		return atomic::Demand::Low;
 	else
 		return atomic::Demand::Terrible;

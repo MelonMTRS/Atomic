@@ -153,9 +153,9 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 		}
 	}
 	if (offeringCursor == 0 || requestingCursor == 0) {
-		if (tries < 15) {
-			return atomic::makeOffer(AuthInventory, VictimInventory, config, items, tries+1);
-		}
+		//if (tries < 15) {
+		//	return atomic::makeOffer(AuthInventory, VictimInventory, config, items, tries+1);
+		//}
 		throw atomic::TradeFormFailure{ atomic::TradeErrorTypes::COULD_NOT_CREATE };
 	}
 	if (totalProfit < config.getInt64("minimum_profit") && requestingCursor < totalRequesting) { // Doesn't meet the minimum profit, look for an item to add.

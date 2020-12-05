@@ -23,33 +23,7 @@ int debug()
 #ifndef VS_DEBUG
     try {
 #endif
-        rolimons::ItemDB items = rolimons::getRolimonItems();
-        atomic::AuthUser user = roblox::getUserFromCookie("");
-        config::Config c = {"testConfig.cfg"};
-        std::cout << "Point 1\n";
-        atomic::User userToTradeWith = atomic::findUser(user, items);
-        std::cout << "Point 2 " << userToTradeWith.name() << '\n';
-        atomic::Inventory authInventory = user.getInventory(items);
-        std::cout << "Point 3\n";
-        atomic::Inventory usersInventory = userToTradeWith.getInventory(items);
-        std::cout << "Point 4\n";
-        auto [offer, profit] = atomic::makeOffer(authInventory, usersInventory, c, items);
-        std::cout << "Point 5\n";
-        for (auto s : offer.getOffering()) {
-            std::cout << s.name << " (" << s.userAssetId << ")" << '\n';
-        }
-        std::cout << "-----------------\n";
-        for (auto b : offer.getRequesting()) {
-            std::cout << b.name << " (" << b.userAssetId << ")" << '\n';
-        }
-        std::cout << "Total profit: " << profit << '\n';
-        std::cin.get();
-        try {
-            //roblox::sendTrade(user, atomic::Trade{ NULL, user, userToTradeWith, offer, atomic::TradeType::Outbound });
-        }
-        catch (atomic::HttpError error) {
-            std::cout << "Error: " << error.message;
-        }
+        
 #ifndef VS_DEBUG
     }
     catch (...) {
@@ -89,8 +63,8 @@ int release() {
     try {
         user = roblox::getUserFromCookie(mainConfig.getString("ROBLOSECURITY"));
     }
-    catch (const atomic::HttpError& error) {
-        atomic::throwException("Failed to login, please make sure you added the correct roblosecurity cookie\nStatus code: " + std::to_string(error.status_code) + "\n");
+    catch (const atomic::ForbiddenError& error) {
+        atomic::throwException("Failed to login, please make sure you added the correct ROBLOSECURITY cookie and that you have an active internet connection\n");
     }
     if (!user.isPremium()) {
         atomic::throwException("Login was a success, however it looks like you don't have premium!\nAtomic cannot trade without it\n");
@@ -103,7 +77,7 @@ int release() {
         try {
             if (item.demand == atomic::Demand::NotAssigned && itemsSet.find(item.id) == itemsSet.end()) {
                 atomic::Demand itemDemand = atomic::getItemDemand(item);
-                std::cout << "Changed demand of " << item.name << " from " << atomic::getDemandString(item.demand) << " to " << atomic::getDemandString(itemDemand) << '\n';
+                std::cout << "Set demand of " << item.name << " to " << atomic::getDemandString(itemDemand) << '\n';
                 rolimons::setItemDemand(items, item.id, itemDemand);
                 itemsSet[item.id] = itemDemand;
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
