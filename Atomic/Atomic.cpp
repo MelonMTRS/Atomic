@@ -1,5 +1,6 @@
 #include <filesystem>
 #include <iostream>
+#include <fstream>
 #include <thread>
 #include "Atomic/API/Rolimons.h"
 #include "Atomic/API/Wrapper.h"
@@ -13,10 +14,31 @@
 #include "Atomic/Exceptions.h"
 #include "Atomic/Functions.h"
 #include "Atomic/User.h"
+// json
+#include "Atomic/rapidjson/writer.h"
+#include "Atomic/rapidjson/stringbuffer.h"
 
 namespace fs = std::filesystem;
 
 constexpr bool isDebug = false;
+
+void writeFile(std::string file, std::string content) {
+    std::ofstream f{ file };
+    f << content;
+    f.close();
+}
+
+std::string readFile(std::string filePath) {
+    std::ifstream file{ filePath };
+    std::string content = "";
+    while (file) {
+        std::string line;
+        file >> line;
+        content += line;
+    }
+    file.close();
+    return content;
+}
 
 int debug()
 {
@@ -72,19 +94,49 @@ int release() {
     atomic::clear();
     std::cout << "Login to " << user.name() << " successful!\n";
     std::cout << "Fetching demand info for user's inventory...\n";
-    std::map<int64_t, atomic::Demand> itemsSet = {};
-    for (auto& item : user.getInventory(items)) {
-        try {
-            if (item.demand == atomic::Demand::NotAssigned && itemsSet.find(item.id) == itemsSet.end()) {
-                atomic::Demand itemDemand = atomic::getItemDemand(item);
-                std::cout << "Set demand of " << item.name << " to " << atomic::getDemandString(itemDemand) << '\n';
-                rolimons::setItemDemand(items, item.id, itemDemand);
-                itemsSet[item.id] = itemDemand;
-                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    std::int64_t lastUpdatedDemand = 0;
+    rapidjson::Document demandData;
+    if (fs::is_regular_file(fs::current_path() / "data\\playerdemand.json")) {
+        std::string demandContent = readFile("data\\playerdemand.json");
+        demandData.Parse(demandContent.c_str());
+        if (demandData["lastUpdated"].IsInt64()) {
+            lastUpdatedDemand = demandData["lastUpdated"].GetInt64();
+        }
+    }
+    if (lastUpdatedDemand != 0 && (atomic::getUnixTime()-lastUpdatedDemand) > 259200) {
+        std::map<int64_t, atomic::Demand> itemsSet = {};
+        for (auto& item : user.getInventory(items)) {
+            try {
+                if (item.demand == atomic::Demand::NotAssigned && itemsSet.find(item.id) == itemsSet.end()) {
+                    atomic::Demand itemDemand = atomic::getItemDemand(item);
+                    std::cout << "Set demand of " << item.name << " to " << atomic::getDemandString(itemDemand) << '\n';
+                    rolimons::setItemDemand(items, item.id, itemDemand);
+                    itemsSet[item.id] = itemDemand;
+                    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                }
+            }
+            catch (const atomic::HttpError&) {
+                std::cout << "Error occured while fetching demand for " << item.name << '\n';
             }
         }
-        catch (const atomic::HttpError&) {
-            std::cout << "Error occured while fetching demand for " << item.name << '\n';
+        rapidjson::Document playerDemandData;
+        playerDemandData.Parse("{\"lastUpdated\": 0,\"items\": {}}");
+        playerDemandData["lastUpdated"] = atomic::getUnixTime();
+        for (const auto& [id, demand] : itemsSet) {
+            rapidjson::Value idString = {std::to_string(id).c_str(), playerDemandData.GetAllocator()};
+            rapidjson::Value demandString = {atomic::getDemandString(demand).c_str(), playerDemandData.GetAllocator()};
+            playerDemandData["items"].AddMember(idString, demandString, playerDemandData.GetAllocator());
+        }
+        rapidjson::StringBuffer buffer;
+        rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+        playerDemandData.Accept(writer);
+        writeFile("data\\playerdemand.json", buffer.GetString());
+    }
+    else {
+        std::cout << "Found cached demand data (" << atomic::secondsToTime(atomic::getUnixTime() - lastUpdatedDemand) << " old)\n";
+        for (auto asset = demandData["items"].MemberBegin(); asset != demandData["items"].MemberEnd(); ++asset) {
+            atomic::Demand itemDemand = atomic::getDemandFromString(asset->value.GetString());
+            rolimons::setItemDemand(items, std::stoull(asset->name.GetString()), itemDemand);
         }
     }
     if (auto inventory = user.getInventory(items); inventory.item_count() < 2) {

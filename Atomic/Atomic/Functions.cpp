@@ -29,6 +29,23 @@ std::string atomic::getDemandString(const atomic::Demand& demand) {
 	}
 }
 
+atomic::Demand atomic::getDemandFromString(const std::string& str) {
+	if (str == "NotAssigned")
+		return atomic::Demand::NotAssigned;
+	else if (str == "Terrible")
+		return atomic::Demand::Terrible;
+	else if (str == "Low")
+		return atomic::Demand::Low;
+	else if (str == "Normal")
+		return atomic::Demand::Normal;
+	else if (str == "High")
+		return atomic::Demand::High;
+	else if (str == "Amazing")
+		return atomic::Demand::Amazing;
+	else
+		return atomic::Demand::Unknown;
+}
+
 int atomic::getDemandId(const atomic::Demand& demand) {
 	switch (demand) {
 	case atomic::Demand::NotAssigned:
