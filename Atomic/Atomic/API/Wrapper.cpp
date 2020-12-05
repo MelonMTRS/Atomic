@@ -26,7 +26,7 @@
 	cpr::Response info = cpr::Get(cpr::Url{ "https://users.roblox.com/v1/users/authenticated" },
 								  cpr::Cookies{ {".ROBLOSECURITY", cookie} });
 	if (!atomic::isStatusSuccess(info.status_code))
-		throw atomic::HttpError{"Cookie Authorization Failed", info.status_code, atomic::ErrorTypes::AuthorizationError};
+		throw atomic::ForbiddenError{"Cookie Authorization Failed"};
 	rapidjson::Document doc;
 	doc.Parse(info.text.c_str());
 	return atomic::AuthUser{ doc["name"].GetString(), roblox::getToken(cookie), cookie, doc["id"].GetInt() };
@@ -37,15 +37,13 @@
 	cpr::Response r = cpr::Get(url);
 	switch (r.status_code) {
 	case 403:
-		throw atomic::HttpError{ "Permission Failure", 403, atomic::ErrorTypes::PermissionError };
+		throw atomic::ForbiddenError{ "Permission Failure" };
 	case 400:
 		throw atomic::HttpError{ "UserDoesNotExist", 400 };
 	default:
 		if (!atomic::isStatusSuccess(r.status_code))
 			throw atomic::HttpError{ r.text, r.status_code };
 	}
-	if (r.status_code != 200)
-		throw atomic::HttpError{"Inventory fetch failure", r.status_code};
 	rapidjson::Document inventory;
 	inventory.Parse(r.text.c_str());
 	atomic::ItemContainer container;
@@ -63,7 +61,7 @@
 	cpr::Response r = cpr::Get(url, cookies);
 	switch (r.status_code) {
 	case 403:
-		throw atomic::HttpError{"Permission Error", 403, atomic::ErrorTypes::PermissionError};
+		throw atomic::ForbiddenError{"Permission Error"};
 	case 400:
 		throw atomic::HttpError{ "InvalidUser", 400 };
 	default:
@@ -88,7 +86,7 @@
 	case 400:
 		throw atomic::HttpError{ "Not found or not authorized", 400, atomic::ErrorTypes::NotFoundError };
 	case 401:
-		throw atomic::HttpError{ "Permission denied", 401, atomic::ErrorTypes::AuthorizationError };
+		throw atomic::ForbiddenError{ "Permission denied" };
 	default:
 		if (!atomic::isStatusSuccess(r.status_code))
 			throw atomic::HttpError{ r.text, r.status_code };
@@ -138,7 +136,7 @@
 	cpr::Response r = cpr::Get(url, cookies);
 	switch (r.status_code) {
 	case 401:
-		throw atomic::HttpError{"Authorization Denied", 401, atomic::ErrorTypes::AuthorizationError};
+		throw atomic::ForbiddenError{"Authorization Denied"};
 	default:
 		if (!atomic::isStatusSuccess(r.status_code))
 			throw atomic::HttpError{ r.text, r.status_code };
@@ -233,7 +231,7 @@ std::int64_t roblox::sendTrade(const atomic::AuthUser& user, const atomic::Trade
 	const cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
 	const cpr::Response r = cpr::Post(url, body, cookies, headers);
 	if (!atomic::isStatusSuccess(r.status_code))
-		throw atomic::HttpError{"Trade Request Failed: " + r.text, r.status_code};
+		throw atomic::HttpError{r.text, r.status_code};
 	rapidjson::Document d;
 	d.Parse(r.text.c_str());
 	return d["id"].GetInt64();
@@ -249,9 +247,9 @@ void roblox::declineTrade(const atomic::AuthUser& user, const int& tradeId) {
 		case 400:
 			throw atomic::HttpError{ r.text, 400 };
 		case 401:
-			throw atomic::HttpError{ "Authorization Error", 401, atomic::ErrorTypes::AuthorizationError };
+			throw atomic::ForbiddenError{ "Authorization Error" };
 		case 403:
-			throw atomic::HttpError{ "Token Validation Error", 403, atomic::ErrorTypes::AuthorizationError };
+			throw atomic::ForbiddenError{ "Token Validation Error" };
 		}
 		throw atomic::HttpError{ "Trade Decline Failed", r.status_code };
 	}
@@ -267,9 +265,9 @@ void roblox::acceptTrade(const atomic::AuthUser& user, const int& tradeId) {
 		case 400:
 			throw atomic::HttpError{ r.text, 400 };
 		case 401:
-			throw atomic::HttpError{ "Authorization Error", 401, atomic::ErrorTypes::AuthorizationError };
+			throw atomic::ForbiddenError{ "Authorization Error" };
 		case 403:
-			throw atomic::HttpError{ "Token Validation Error", 403, atomic::ErrorTypes::AuthorizationError };
+			throw atomic::ForbiddenError{ "Token Validation Error" };
 		}
 		throw atomic::HttpError{ "Trade Accept Failed", r.status_code };
 	}

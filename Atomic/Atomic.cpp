@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <iostream>
 #include <thread>
 #include "Atomic/API/Rolimons.h"
@@ -12,6 +13,8 @@
 #include "Atomic/Exceptions.h"
 #include "Atomic/Functions.h"
 #include "Atomic/User.h"
+
+namespace fs = std::filesystem;
 
 constexpr bool isDebug = false;
 
@@ -66,6 +69,9 @@ int release() {
     rolimons::ItemDB items = rolimons::getRolimonItems();
     atomic::AuthUser user;
     config::Config mainConfig;
+    if (!fs::is_directory(fs::current_path() / "data")) {
+        fs::create_directory(fs::current_path() / "data");
+    }
     if (!config::configExists()) {
         atomic::clear();
         std::cout << "Could not find default config, creating...\n";
@@ -92,14 +98,14 @@ int release() {
     atomic::clear();
     std::cout << "Login to " << user.name() << " successful!\n";
     std::cout << "Fetching demand info for user's inventory...\n";
-    std::map<int64_t, bool> itemsSet = {};
+    std::map<int64_t, atomic::Demand> itemsSet = {};
     for (auto& item : user.getInventory(items)) {
         try {
             if (item.demand == atomic::Demand::NotAssigned && itemsSet.find(item.id) == itemsSet.end()) {
                 atomic::Demand itemDemand = atomic::getItemDemand(item);
                 std::cout << "Changed demand of " << item.name << " from " << atomic::getDemandString(item.demand) << " to " << atomic::getDemandString(itemDemand) << '\n';
                 rolimons::setItemDemand(items, item.id, itemDemand);
-                itemsSet[item.id] = true;
+                itemsSet[item.id] = itemDemand;
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
             }
         }
@@ -123,7 +129,7 @@ int release() {
     while (atomicActive) {
         rolls++;
         if (rolls % 25 == 0)
-            atomic::clear();
+            atomic::clear(); // don't wanna get the memory to 95% now
         std::cout << "Looking for a user to trade with...\n";
         atomic::User trader = atomic::findUser(user, items);
         std::cout << "Creating a trade with " << trader.name() << " (" << trader.getId() << ")...\n";

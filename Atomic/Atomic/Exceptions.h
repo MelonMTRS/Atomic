@@ -7,8 +7,6 @@ namespace atomic {
 
 	enum class ErrorTypes {
 		DefaultError,
-		PermissionError,
-		AuthorizationError,
 		RatelimitError,
 		NotFoundError
 	};
@@ -23,6 +21,10 @@ namespace atomic {
 		const std::string message;
 		const int status_code;
 		atomic::ErrorTypes errorType = ErrorTypes::DefaultError;
+	};
+
+	struct ForbiddenError {
+		const std::string message;
 	};
 
 	struct TradeFormFailure {
