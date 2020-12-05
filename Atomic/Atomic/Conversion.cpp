@@ -11,22 +11,7 @@
 }
 
 [[nodiscard]] std::string atomic::tradeToJSON(const atomic::AuthUser& user, const atomic::Trade& trade) {
-	const char* tradeStructure = R"(
-    {
-       "offers":[
-          {
-             "userId": 0,
-             "userAssetIds":[],
-             "robux": 0
-          },
-          {
-             "userId": 0,
-             "userAssetIds":[],
-             "robux": 0
-          }
-       ]
-    }
-)";
+	constexpr char tradeStructure[] = "{\"offers\":[{\"userId\":0,\"userAssetIds\":[],\"robux\":0},{\"userId\":0,\"userAssetIds\":[],\"robux\":0}]}";
     rapidjson::Document d;
     d.Parse(tradeStructure);
     d["offers"][0]["userId"].SetInt64(trade.getTrader().getId());

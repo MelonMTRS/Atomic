@@ -30,9 +30,9 @@ atomic::Demand atomic::getItemDemand(const atomic::Item& item) {
 		return atomic::Demand::Amazing;
 	else if (salesPointSize > 155)
 		return atomic::Demand::High;
-	else if (salesPointSize > 90)
+	else if (salesPointSize > 120)
 		return atomic::Demand::Normal;
-	else if (salesPointSize > 30)
+	else if (salesPointSize > 40)
 		return atomic::Demand::Low;
 	else
 		return atomic::Demand::Terrible;
