@@ -60,10 +60,13 @@ int release() {
             std::exit(EXIT_SUCCESS);
         }
         catch (const atomic::HttpError& error) {
-            atomic::throwException("Error occured while trying to fetch the default config, please restart and try again.\n");
+            atomic::throwException(error.message + " please restart and try again.\n");
         }
     }
     mainConfig = {"config.cfg"};
+    auto [success, message] = config::validateConfig(mainConfig);
+    if (!success)
+        atomic::throwException(message);
     try {
         user = roblox::getUserFromCookie(mainConfig.getString("ROBLOSECURITY"));
     }
@@ -75,6 +78,9 @@ int release() {
     }
     atomic::clear();
     std::cout << "Login to " << user.name() << " successful!\n";
+    if (atomic::lower(mainConfig.getString("trade_by")) == "rap") {
+        std::cout << "WARNING: trade_by config setting is set to rap, this is generally unrecommended, consider changing it to value\n";
+    }
     std::cout << "Fetching demand info for user's inventory...\n";
     std::int64_t lastUpdatedDemand = 0;
     rapidjson::Document demandData;
