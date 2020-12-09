@@ -25,7 +25,7 @@ constexpr bool isDebug = false;
 
 int debug()
 {
-    //
+    
     return EXIT_SUCCESS;
 }
 
