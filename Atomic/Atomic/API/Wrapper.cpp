@@ -125,7 +125,7 @@
 	robuxOffering = d["offers"][0]["robux"].GetInt(); // lets be real, no ones gonna offer you more than 2147483647 robux
 	robuxRequesting = d["offers"][1]["robux"].GetInt();
 	atomic::Offer offer = {offering, requesting, robuxOffering, robuxRequesting};
-	atomic::User trader = { d["offers"][1]["user"]["id"].GetInt() };
+	atomic::User trader = { d["offers"][0]["user"]["id"].GetInt(), d["offers"][0]["user"]["name"].GetString() };
 	return atomic::Trade{ tradeId, user, trader, offer, tradeType };
 }
 
@@ -210,7 +210,7 @@
 		throw atomic::ItemFetchFailure{"Unknown tradetype"};
 	}
 	cpr::Cookies cookies = { {".ROBLOSECURITY", user.getCookie()} };
-	cpr::Response r = cpr::Get(cpr::Url{"https://trades.roblox.com/v1/trades/completed?limit=" + std::to_string(limit)}, cookies);
+	cpr::Response r = cpr::Get(cpr::Url{"https://trades.roblox.com/v1/trades/" + TradeType + "?limit=" + std::to_string(limit)}, cookies);
 	if (!atomic::isStatusSuccess(r.status_code)) {
 		throw atomic::HttpError{"HTTP failed", r.status_code};
 	}

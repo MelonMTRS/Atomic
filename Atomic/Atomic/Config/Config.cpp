@@ -10,7 +10,7 @@
 
 namespace fs = std::filesystem;
 
-bool isnums(const std::string& str) {
+bool isnums(const std::string& str) noexcept {
 	for (char c : str) {
 		if (!std::isdigit(c))
 			return false;
@@ -23,7 +23,7 @@ bool config::configExists() {
 	return fs::is_regular_file(expectedPath);
 }
 
-std::tuple<bool, std::string> config::validateConfig(config::Config config) {
+std::tuple<bool, std::string> config::validateConfig(config::Config config) noexcept {
 	if (std::string os = atomic::lower(config.getString("operating_system")); os != "linux" && os != "windows")
 		return std::make_tuple(false, "Config value for `operating_system` set to unknown value '" + os + "'");
 	else if (!isnums(config.getString("update_values")))
