@@ -138,7 +138,7 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 				break;
 			}
 			if (item.value < randomItem.value) {
-				if ((randomItem.value - item.value) > (config.getInt64("minimum_profit")/2) && (randomItem.value - item.value) < (config.getInt64("minimum_profit")*2)) {
+				if ((randomItem.value - item.value) > (config.getInt64("minimum_profit")/2) && (randomItem.value - item.value) < (config.getInt64("minimum_profit")*2.5)) {
 					offering[offeringCursor++] = item;
 					requesting[requestingCursor++] = randomItem;
 					totalProfit += randomItem.value - item.value;
@@ -153,12 +153,9 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 		}
 	}
 	if (offeringCursor == 0 || requestingCursor == 0) {
-		//if (tries < 15) {
-		//	return atomic::makeOffer(AuthInventory, VictimInventory, config, items, tries+1);
-		//}
 		throw atomic::TradeFormFailure{ atomic::TradeErrorTypes::COULD_NOT_CREATE };
 	}
-	if (totalProfit < config.getInt64("minimum_profit") && requestingCursor < totalRequesting) { // Doesn't meet the minimum profit, look for an item to add.
+	while (totalProfit < config.getInt64("minimum_profit") && requestingCursor < totalRequesting) { // Doesn't meet the minimum profit, look for an item to add.
 		int requiredAmount = config.getInt64("minimum_profit") - totalProfit;
 		for (const auto& item : VictimInventory.items()) {
 			if (hasItemsNotForTrade) {
@@ -171,14 +168,16 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 				break;
 			}
 		}
+		break;
 	}
-	if (totalProfit > config.getInt64("minimum_profit") * 3 && requestingCursor > 1) { // Profit is too large, remove a requested item
+	while (totalProfit > config.getInt64("minimum_profit") * 2.5 && requestingCursor > 1) { // Profit is too large, remove a requested item
 		for (auto& item : requesting) {
 			if (item.value <= config.getInt64("minimum_profit") * 1.5) {
 				item.destroy();
 				break;
 			}
 		}
+		break;
 	}
 	return std::make_tuple(atomic::Offer{offering, requesting, 0, 0}, totalProfit);
 }
