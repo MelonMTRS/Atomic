@@ -29,9 +29,6 @@ int debug()
     return EXIT_SUCCESS;
 }
 
-
-
-
 int release() {
 #ifndef VS_DEBUG
     try {
@@ -171,7 +168,15 @@ int release() {
             if (rolls % 25 == 0)
                 clear();
             std::cout << "Looking for a user to trade with...\n";
-            atomic::User trader = atomic::findUser(user, items);
+            atomic::User trader = USER_DEFAULT;
+            try {
+                trader = atomic::findUser(user, items);
+            }
+            catch (const atomic::HttpError& error) {
+                std::cout << "Failed to find user, retrying...\n";
+                std::this_thread::sleep_for(750ms);
+                continue;
+            }
             std::cout << "Creating a trade with " << trader.name() << " (" << trader.getId() << ")...\n";
             try {
                 auto [offer, valueGain] = atomic::makeOffer(user.getInventory(items), trader.getInventory(items), mainConfig, items);
