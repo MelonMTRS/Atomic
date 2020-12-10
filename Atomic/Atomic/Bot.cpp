@@ -173,9 +173,9 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 		}
 	}
 	if (totalProfit > config.getInt64("minimum_profit") * 3 && requestingCursor > 1) { // Profit is too large, remove a requested item
-		for (const auto& item : requesting) {
+		for (auto& item : requesting) {
 			if (item.value <= config.getInt64("minimum_profit") * 1.5) {
-				std::remove(requesting.begin(), requesting.end(), item);
+				item.destroy();
 				break;
 			}
 		}

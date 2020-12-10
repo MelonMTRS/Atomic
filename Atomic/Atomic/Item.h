@@ -21,6 +21,10 @@ namespace atomic {
 		std::int64_t value;
 		atomic::Demand demand = atomic::Demand::NotAssigned;
 
+		void destroy() {
+			*this = atomic::Item{ "", 0, 0, 0, Demand::NotAssigned };
+		}
+
 		void operator=(const Item* newItem) { *this = newItem; }
 
 		template<typename Item_> bool operator>(const Item_ item) { return this->value > item.value; }
