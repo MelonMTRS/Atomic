@@ -156,6 +156,7 @@ int release() {
         }
         std::thread update_values([&]() {
             while (atomicActive) {
+                std::this_thread::sleep_for(std::chrono::minutes(mainConfig.getInt64("update_values")));
                 rolimons::ItemDB temporary = rolimons::getRolimonItems();
                 for (auto asset = items["items"].MemberBegin(); asset != items["items"].MemberEnd(); ++asset) {
                     if (asset->value[5].GetInt() == -1)
@@ -163,7 +164,6 @@ int release() {
                     temporary["items"][asset->name.GetString()][5].SetInt(asset->value[5].GetInt());
                 }
                 items = std::move(temporary);
-                std::this_thread::sleep_for(std::chrono::minutes(mainConfig.getInt64("update_values")));
             }
         });
         std::int64_t rolls = 0;
