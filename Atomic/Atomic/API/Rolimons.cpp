@@ -1,29 +1,11 @@
 #define _SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING
+#include "../Demand.h"
 #include "../Exceptions.h"
 #include "../Functions.h"
 #include "../Inventory.h"
 #include "../rapidjson/document.h"
 #include "./Rolimons.h"
 #include "cpr/cpr.h"
-
-atomic::Demand getItemDemand(int level) {
-	switch (level) {
-	case -1:
-		return atomic::Demand::NotAssigned;
-	case 0:
-		return atomic::Demand::Terrible;
-	case 1:
-		return atomic::Demand::Low;
-	case 2:
-		return atomic::Demand::Normal;
-	case 3:
-		return atomic::Demand::High;
-	case 4:
-		return atomic::Demand::Amazing;
-	default:
-		return atomic::Demand::Unknown;
-	}
-}
 
 [[nodiscard]] rolimons::ItemDB rolimons::getRolimonItems() {
 	const cpr::Url url = "https://www.rolimons.com/itemapi/itemdetails";
@@ -95,7 +77,7 @@ atomic::Demand getItemDemand(int level) {
 				assetId,
 				items["items"][StringAssetId][2].GetInt64(),
 				itemValue,
-				getItemDemand(items["items"][StringAssetId][5].GetInt())
+				atomic::getDemandFromId(items["items"][StringAssetId][5].GetInt())
 			};
 		}
 		else
@@ -117,7 +99,7 @@ atomic::Demand getItemDemand(int level) {
 		std::stoll(item->name.GetString()),
 		item->value[2].GetInt64(),
 		itemValue,
-		getItemDemand(item->value[5].GetInt())
+		atomic::getDemandFromId(item->value[5].GetInt())
 	};
 }
 

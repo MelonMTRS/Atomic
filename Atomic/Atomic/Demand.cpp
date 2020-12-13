@@ -55,3 +55,77 @@ int atomic::getAveragePrice(const atomic::Item& item) {
 		averagePrices.push_back(v["value"].GetInt());
 	return static_cast<int>(computational::getAverage(averagePrices));
 }
+
+atomic::Demand atomic::getDemandFromId(int level) {
+	switch (level) {
+	case -1:
+		return atomic::Demand::NotAssigned;
+	case 0:
+		return atomic::Demand::Terrible;
+	case 1:
+		return atomic::Demand::Low;
+	case 2:
+		return atomic::Demand::Normal;
+	case 3:
+		return atomic::Demand::High;
+	case 4:
+		return atomic::Demand::Amazing;
+	default:
+		return atomic::Demand::Unknown;
+	}
+}
+
+std::string atomic::getDemandString(const atomic::Demand& demand) {
+	switch (demand) {
+	case atomic::Demand::NotAssigned:
+		return "NotAssigned";
+	case atomic::Demand::Terrible:
+		return "Terrible";
+	case atomic::Demand::Low:
+		return "Low";
+	case atomic::Demand::Normal:
+		return "Normal";
+	case atomic::Demand::High:
+		return "High";
+	case atomic::Demand::Amazing:
+		return "Amazing";
+	default:
+		return "Unknown";
+	}
+}
+
+atomic::Demand atomic::getDemandFromString(const std::string& str) {
+	if (str == "NotAssigned")
+		return atomic::Demand::NotAssigned;
+	else if (str == "Terrible")
+		return atomic::Demand::Terrible;
+	else if (str == "Low")
+		return atomic::Demand::Low;
+	else if (str == "Normal")
+		return atomic::Demand::Normal;
+	else if (str == "High")
+		return atomic::Demand::High;
+	else if (str == "Amazing")
+		return atomic::Demand::Amazing;
+	else
+		return atomic::Demand::Unknown;
+}
+
+int atomic::getDemandId(const atomic::Demand& demand) {
+	switch (demand) {
+	case atomic::Demand::NotAssigned:
+		return -1;
+	case atomic::Demand::Terrible:
+		return 0;
+	case atomic::Demand::Low:
+		return 1;
+	case atomic::Demand::Normal:
+		return 2;
+	case atomic::Demand::High:
+		return 3;
+	case atomic::Demand::Amazing:
+		return 4;
+	default:
+		return 404;
+	}
+}

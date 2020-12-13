@@ -71,7 +71,7 @@ int release() {
             atomic::throwException("Failed to login, please make sure you added the correct ROBLOSECURITY cookie and that you have an active internet connection\n");
         }
         if (!user.isPremium()) {
-            atomic::throwException("Login was a success, however it looks like you don't have premium!\nAtomic cannot trade without it\n");
+            atomic::throwException("Login was a success, however it looks like you don't have roblox premium!\nAtomic cannot trade without it\n");
         }
         clear();
         std::cout << "Login to " << user.name() << " successful!\n";
@@ -156,12 +156,16 @@ int release() {
         }
         std::thread update_values([&]() {
             while (atomicActive) {
-                std::this_thread::sleep_for(std::chrono::minutes(mainConfig.getInt64("update_values")));
                 rolimons::ItemDB temporary = rolimons::getRolimonItems();
-                // TODO: Copy all demand data to this version to prevent having to re-compute.
+                for (auto asset = items["items"].MemberBegin(); asset != items["items"].MemberEnd(); ++asset) {
+                    if (asset->value[5].GetInt() == -1)
+                        continue;
+                    temporary["items"][asset->name.GetString()][5].SetInt(asset->value[5].GetInt());
+                }
                 items = std::move(temporary);
+                std::this_thread::sleep_for(std::chrono::minutes(mainConfig.getInt64("update_values")));
             }
-            });
+        });
         std::int64_t rolls = 0;
         while (atomicActive) {
             rolls++;

@@ -7,9 +7,6 @@
 
 namespace atomic {
 	int random(const int& min, const int& max);
-	std::string getDemandString(const atomic::Demand& demand);
-	int getDemandId(const atomic::Demand& demand);
-	atomic::Demand getDemandFromString(const std::string& str);
 	std::vector<std::string> split(const std::string& str, const char& separator);
 	bool isStatusSuccess(const int& status_code);
 	std::string lower(const std::string& str);
