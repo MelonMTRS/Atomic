@@ -165,7 +165,8 @@ int release() {
                 }
                 items = std::move(temporary);
             }
-        });
+            });
+        update_values.join();
         std::int64_t rolls = 0;
         while (atomicActive) {
             rolls++;
@@ -200,11 +201,15 @@ int release() {
         }
 #ifndef VS_DEBUG
     }
-    catch (...) {
+    catch (const atomic::HttpError& error) {
+        std::cerr << "An unhandled http error has occured: " << error.message << '\n';
+    } catch (const atomic::ForbiddenError& error) {
+        std::cerr << "An unhandled ForbiddenError has occured: " << error.message << '\n';
+    } catch (...) {
         std::cerr << "An unhandled error has occured, restarting Atomic...\n";
-        std::this_thread::sleep_for(5s); // Give the user time to read the message
-        release();
     }
+    std::this_thread::sleep_for(5s); // Give the user time to read the message
+    release();
 #endif
     return EXIT_SUCCESS;
 }
