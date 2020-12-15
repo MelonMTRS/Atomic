@@ -162,7 +162,7 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 				if (std::find(notForTrade.begin(), notForTrade.end(), std::to_string(item.id)) != notForTrade.end())
 					continue;
 			}
-			if (item.value >= requiredAmount && item.value < config.getInt64("minimum_profit")*3 && !itemExists(requesting, item.userAssetId)) {
+			if (item.value >= requiredAmount && item.value < config.getInt64("minimum_profit")*totalOffering && !itemExists(requesting, item.userAssetId)) {
 				requesting[requestingCursor++] = item;
 				totalProfit += item.value;
 				break;
