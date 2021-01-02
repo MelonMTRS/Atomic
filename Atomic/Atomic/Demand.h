@@ -6,7 +6,6 @@
 namespace atomic {
 	atomic::Demand getItemDemand(const atomic::Item& item);
 	int getAveragePrice(const atomic::Item& item);
-	// Conversions
 	atomic::Demand getDemandFromId(int level);
 	std::string getDemandString(const atomic::Demand& demand);
 	int getDemandId(const atomic::Demand& demand);

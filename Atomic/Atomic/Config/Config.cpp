@@ -54,7 +54,7 @@ std::string config::getDefaultConfig() {
 	return defaultConfig.text;
 }
 
-void config::createConfig(std::string configData) {
+void config::createConfig(const std::string& configData) {
 	std::ofstream config{"config.cfg"};
 	if (!config)
 		throw atomic::ConfigLoadFailure{"Failed to create"};
