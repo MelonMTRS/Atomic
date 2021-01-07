@@ -110,12 +110,14 @@ bool itemExists(const atomic::OfferHolder& offer, const std::int64_t& userAssetI
 			}
 			if (item.value > config.getInt64("max_item_value") || itemExists(offering, item.userAssetId))
 				continue;
-			if (rolimons::isProjected(items, randomItem.id))
-				continue;
 			int itemTries = 0;
-			while (itemExists(requesting, randomItem.userAssetId) && itemTries < 25 || randomItem.demand == Demand::Terrible) {
+			int totalTries = VictimInventory.item_count() * 4;
+			while ((itemExists(requesting, randomItem.userAssetId) || randomItem.demand == Demand::Terrible || rolimons::isProjected(items, randomItem.id))) {
 				randomItem = VictimInventory.getRandomItem();
 				itemTries++;
+				if (itemTries >= totalTries) {
+					throw atomic::TradeFormFailure{ atomic::TradeErrorTypes::COULD_NOT_CREATE };
+				}
 			}
 			if (randomItem.demand == atomic::Demand::NotAssigned && demandCache.find(randomItem.id) == demandCache.end()) {
 				try {
