@@ -166,7 +166,6 @@ int release() {
                 items = std::move(temporary);
             }
             });
-        update_values.join();
         std::int64_t rolls = 0;
         while (atomicActive) {
             rolls++;
